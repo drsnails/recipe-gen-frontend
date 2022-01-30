@@ -1,0 +1,16 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .recipe-list {
+        margin-top: 50px;
+        grid-auto-rows:  auto;
+        .recipe-preview {
+            border: 1px solid black;
+            width: max-content;
+            padding: 0.3em;
+            cursor: pointer;
+        }
+    }
+}

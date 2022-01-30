@@ -1,0 +1,11 @@
+.ing-list {
+    display: flex;
+    flex-direction: column;
+    .add-btn{
+        width: 2em;
+        height: 2em;
+        border: none;
+        border-radius: 2px;
+        margin-top: 1.5em;
+    }
+}
