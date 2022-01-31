@@ -8,6 +8,7 @@
 
     @include for-mobile-layout {
         max-width: initial;
+        padding: 10px;
     }
 
     @include for-tablet-layout {

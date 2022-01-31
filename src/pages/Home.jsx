@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
+import { recipeService } from '../services/recipeService';
 import { loadRecipes } from '../store/actions/recipeActions';
 
 export function Home() {
@@ -15,10 +16,18 @@ export function Home() {
 
     const _loadRecipes = async () => {
         console.log('loggedInUser:', loggedInUser);
-        
+
         const recipes = await dispatch(loadRecipes(loggedInUser._id))
         console.log('const_loadRecipes= -> recipes', recipes)
         setRecipes(recipes)
+    }
+
+
+    const addRecipe = async () => {
+        const emptyRecipe = recipeService.getEmptyRecipe()
+        emptyRecipe.userId = loggedInUser._id
+        const newRecipe = await recipeService.save(emptyRecipe)
+        setRecipes([...recipes, newRecipe])
     }
 
     return (
@@ -28,6 +37,7 @@ export function Home() {
                 {recipes && recipes.map(recipe =>
                     <section onClick={() => navigate(`recipe/${recipe._id}`)} className='recipe-preview'>{recipe.name}</section>)
                 }
+                <button onClick={addRecipe}>New Recipe</button>
 
             </section>
         </div>

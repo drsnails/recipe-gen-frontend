@@ -8,7 +8,7 @@ export const useForm = (initialState, cb = () => { }) => {
         cb(fields)
     }, [fields])
 
-    const handleChange = ({ target }) => {
+    const handleIngChange = ({ target }) => {
         const field = target.name
         const value = target.type === 'number' ? +target.value : target.value
         setFields(prevFields => ({ ...prevFields, [field]: value }))
@@ -20,7 +20,7 @@ export const useForm = (initialState, cb = () => { }) => {
             id: field,
             type,
             value: fields[field],
-            onChange: handleChange
+            onChange: handleIngChange
         }
     }
 

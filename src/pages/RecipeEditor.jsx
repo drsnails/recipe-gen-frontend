@@ -19,18 +19,23 @@ export default function RecipeEditor() {
         setRecipe(recipe)
     }
 
+    const saveRecipe = async (recipeToSave) => {
+        await recipeService.save(recipeToSave)
+        setRecipe(recipeToSave)
+    }
+
     const getIngredientToScale = useCallback((recipe) => {
+        console.log('getIngredientToScale -> recipe', recipe)
         const ingToScale = recipe.ingredients.find(ing => ing.id === recipe.ingToScaleId)
         return ingToScale
     }, [recipe]);
 
-    const onChangeIngToScale = async (ingToScaleId) => {
-        const recipeToSave = { ...recipe, ingToScaleId }
-        await recipeService.update(recipeToSave)
-        setRecipe(recipeToSave)
+    const onChangeRecipeData = async (field, value) => {
+        const recipeToSave = { ...recipe, [field]: value }
+        saveRecipe(recipeToSave)
     }
 
-    const handleChange = async ({ target }, ingredient) => {
+    const handleIngChange = async ({ target }, ingredient) => {
         let field, value
         field = target.name
         value = target.value
@@ -57,10 +62,11 @@ export default function RecipeEditor() {
             ingredients: recipe.ingredients.map(ing => ing.id === ingredient.id ? ingToSave : ing)
         }
 
-        await recipeService.update(recipeToSave)
-        setRecipe(recipeToSave)
+        saveRecipe(recipeToSave)
 
     }
+
+
 
 
     const addIngredient = async () => {
@@ -69,21 +75,32 @@ export default function RecipeEditor() {
             ...recipe,
             ingredients: [...recipe.ingredients, ingToAdd]
         }
-        await recipeService.update(recipeToSave)
-        setRecipe(recipeToSave)
+        saveRecipe(recipeToSave)
     }
 
-    const handleEditable = ({ target }) => {
-        console.log('target:', target);
+    const removeIngredient = async (ingId) => {
+        const recipeToSave = {
+            ...recipe,
+            ingredients: recipe.ingredients.filter(ing => ing.id !== ingId)
+        }
+        saveRecipe(recipeToSave)
     }
+
 
     if (!recipe) return <div>Loading...</div>
     const ingToScale = getIngredientToScale(recipe)
     return (
         <div className='recipe-editor'>
-            <h2>{recipe.name}</h2>
+            <h2 onBlur={({ target }) => onChangeRecipeData('name', target.innerText)} contentEditable suppressContentEditableWarning={true} >{recipe.name}</h2>
             <br />
-            <IngList addIngredient={addIngredient} handleEditable={handleEditable} handleChange={handleChange} ingredients={recipe.ingredients} ingToScale={ingToScale} onChangeIngToScale={onChangeIngToScale} />
+            <IngList
+                removeIngredient={removeIngredient}
+                addIngredient={addIngredient}
+                handleIngChange={handleIngChange}
+                ingredients={recipe.ingredients}
+                ingToScale={ingToScale}
+                onChangeRecipeData={onChangeRecipeData}
+            />
         </div>
     );
 }

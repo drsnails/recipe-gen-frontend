@@ -4,14 +4,35 @@
     border: 3px solid #4caf50;
     margin: auto;
     padding: 3%;
+    margin-top: 10%;
+
+    
+
+    * {
+        font-size: 1.2em;
+        
+        
+        @include for-mobile-layout {
+            
+            font-size: 1.1em;
+        }
+    }
 
     h3 {
         color: #3d8f40;
         font-weight: 700;
         margin-block: 5px 20px;
+        @include for-mobile-layout {
+            
+            font-size: 1.3em;
+        }
     }
     form {
-        width: 45vw;
+        width: 70vw;
+        max-width: 500px;
+        // height: 50vw;
+        font-size: 1.5em;
+    
         & > section {
             margin-top: 20px;
             display: flex;
@@ -21,6 +42,11 @@
                 width: 100%;
                 border: none;
                 border-bottom: #4caf50 1px solid;
+                line-height: 1.3em;
+                @include for-mobile-layout {
+                    
+                    line-height: 1.6em;
+                }
             }
         }
 
@@ -35,6 +61,10 @@
         a.signin-link {
             display: inline-block;
             margin-top: 30px;
+            @include for-mobile-layout {
+            
+                font-size: 0.9em;
+            }
         }
     }
 }

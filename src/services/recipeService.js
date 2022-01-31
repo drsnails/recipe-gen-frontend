@@ -7,7 +7,8 @@ export const recipeService = {
     getEmptyRecipe,
     getEmptyIngredient,
     getById,
-    update
+    update,
+    save
 }
 
 const STORAGE_KEY = 'recipes'
@@ -18,7 +19,7 @@ const gDefaultRecipes = [
         _id: 'r1',
         name: 'mango hot sauce',
         createdAt: Date.now(),
-        ingredientToScale: 'r101',
+        ingToScaleId: 'r101',
         ingredients: [
             { id: 'r101', name: 'habanero', amount: 500, units: 'g' },
             { id: 'r102', name: 'mango', amount: 300, units: 'g' },
@@ -56,8 +57,16 @@ async function getById(id) {
 }
 
 
+async function save(recipe) {
+    try {
+        return recipe._id ? httpService.put(BASE_URL, recipe) : httpService.post(BASE_URL, recipe)
+    } catch (err) {
+        return
+    }
+}
+
+
 async function update(recipe) {
-    console.log('update -> recipe', recipe)
     try {
         return httpService.put(BASE_URL, recipe)
     } catch (err) {
@@ -67,7 +76,7 @@ async function update(recipe) {
 
 
 function setIngToScaleId(ingToScaleId) {
-    
+
 }
 
 // function remove(id) {
@@ -93,11 +102,12 @@ function setIngToScaleId(ingToScaleId) {
 
 
 function getEmptyRecipe() {
+    const firstIng = getEmptyIngredient()
     return {
-        name: '',
+        name: 'New Recipe',
         createdAt: Date.now(),
-        ingredientToScale: '',
-        ingredients: [getEmptyIngredient()]
+        ingToScaleId: firstIng.id,
+        ingredients: [firstIng]
     }
 }
 

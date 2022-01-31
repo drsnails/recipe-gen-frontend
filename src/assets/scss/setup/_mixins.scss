@@ -90,3 +90,18 @@
         content: close-quote;
     }
 }
+
+
+@mixin trim($linesNum: null){
+    @if $linesNum != null{
+        display: -webkit-box;
+        -webkit-line-clamp: $linesNum;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    @else {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+}

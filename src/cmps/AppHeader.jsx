@@ -23,8 +23,8 @@ export function AppHeader() {
             <section className='container'>
                 <h3 onClick={() => navigate('/')} className='logo'>Recipe</h3>
                 {loggedInUser && <section className='user'>
-                    {loggedInUser.username}
-                    <button onClick={onLogOut} >logout</button>
+                    <p>Hello, {loggedInUser.username}</p>
+                    <button onClick={onLogOut} >Logout</button>
                 </section>}
                 <nav>
                     <NavLink to={'login'}>

@@ -5,7 +5,6 @@ export function loadRecipes(userId) {
         // const { filterBy } = getState().recipeModule
         try {
             const recipes = await recipeService.query(userId)
-            console.log('return -> recipes', recipes)
             return recipes
         } catch (err) {
             console.log(err);

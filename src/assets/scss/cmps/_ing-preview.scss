@@ -1,28 +1,69 @@
 .ing-preview {
     display: flex;
     align-items: center;
+    
     margin-top: 10px;
-    gap: 10px;
+    font-size: 1.5em;
+    width: 100%;
+    line-height: 1.3em;
+    position: relative;
+    > *:not(.remove-btn, :last-child) {
+        flex-grow: 2;
+        width: 10%;
+    }
 
+   
     .editable {
         padding: 5px;
-    }
-    .amount-unit {
-        border-bottom: 1px solid black;
-        
+        @include trim;
     }
 
-    select {
+    .remove-btn {
+        width: 2em;
+        height: 2em;
         border: none;
+        border-radius: 100%;
+        margin-right: 5%;
+        background-color: #fcaea387;
     }
+
+    .amount-unit {
+        display: flex;
+        align-items: center;
+
+        select {
+            border: none;
+            border-bottom: 1px solid black;
+        }
+    }
+
+    
     p {
+        flex-grow: 0.5 !important;
+        text-align: center;
+        width: 10%;
+        min-width: 100px;
         margin-left: 10px;
         padding: 5px 10px;
         background-color: #efefef;
         cursor: pointer;
+        @include trim;
+
+        @include for-mobile-layout {
+            min-width: 70px;
+        }
 
         &.chosen {
             background-color: #e1fae0;
         }
+    }
+
+
+    @include for-tablet-layout {
+        font-size: 1.3em;
+    }
+
+    @include for-mobile-layout {
+        font-size: 1.1em;
     }
 }
