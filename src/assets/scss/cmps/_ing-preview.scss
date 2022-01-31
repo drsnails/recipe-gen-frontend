@@ -10,6 +10,9 @@
     > *:not(.remove-btn, :last-child) {
         flex-grow: 2;
         width: 10%;
+        @include for-mobile-layout {
+            width: 50%;
+        }
     }
 
    
@@ -25,11 +28,16 @@
         border-radius: 100%;
         margin-right: 5%;
         background-color: #fcaea387;
+
+        @include for-mobile-layout {
+            width: 2.5em;
+        }
     }
 
     .amount-unit {
         display: flex;
         align-items: center;
+        gap: 5px;
 
         select {
             border: none;

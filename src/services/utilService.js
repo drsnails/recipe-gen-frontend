@@ -22,13 +22,23 @@ export const checkFields = (fields) => {
 export const getAmountToScale = (from, to) => {
     const fromAmount = _convertToGrams(from)
     const toAmount = _convertToGrams(to)
-    return (fromAmount / toAmount ).toFixed(2)
+    return (fromAmount / toAmount).toFixed(2)
 }
 
 const _convertToGrams = ({ amount, units }) => {
 
     if (units === 'L' || units === 'Kg') {
         amount *= 1000
+    } else if (units === 'cup') {
+        amount *= 128
+    } else if (units === 'oz') {
+        amount *= 28.35
+    } else if (units === 'tableSpoon') {
+        amount *= 14.7868
+    } else if (units === 'teaSpoon') {
+        amount *= 4.92892
     }
+
+
     return amount
 }
