@@ -7,8 +7,9 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, handleI
 
 
 
-    const ingToScaleClass = ingredient.id === ingToScale.id ? 'chosen' : ''
-    const amountToScale = getAmountToScale(ingredient, ingToScale)
+    
+    const ingToScaleClass = ingredient.id === ingToScale?.id ? 'chosen' : ''
+    const amountToScale = ingToScale ? getAmountToScale(ingredient, ingToScale) : 0
     return (
         <article className="ing-preview">
             <button onClick={() => removeIngredient(ingredient.id)} className="remove-btn">x</button>

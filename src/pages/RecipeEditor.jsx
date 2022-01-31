@@ -79,9 +79,14 @@ export default function RecipeEditor() {
     }
 
     const removeIngredient = async (ingId) => {
+        if (recipe.ingredients.length === 1) return
+
         const recipeToSave = {
             ...recipe,
             ingredients: recipe.ingredients.filter(ing => ing.id !== ingId)
+        }
+        if (recipe.ingToScaleId === ingId) {
+            recipe.ingToScaleId = ''
         }
         saveRecipe(recipeToSave)
     }
