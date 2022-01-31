@@ -15,7 +15,7 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, handleI
             <button onClick={() => removeIngredient(ingredient.id)} className="remove-btn">x</button>
             <h4 title={ingredient.name} data-name="name" onBlur={(ev) => handleIngChange(ev, ingredient)} className="editable" contentEditable suppressContentEditableWarning={true}>{ingredient.name}</h4>
             <section className="amount-unit">
-                <span inputMode="number" data-name="amount" onBlur={(ev) => handleIngChange(ev, ingredient)} className="editable" contentEditable suppressContentEditableWarning={true}>{ingredient.amount}</span>
+                <span inputMode="numeric" data-name="amount" onBlur={(ev) => handleIngChange(ev, ingredient)} className="editable" contentEditable suppressContentEditableWarning={true}>{ingredient.amount}</span>
                 <select onChange={(ev) => handleIngChange(ev, ingredient)} value={ingredient.units} name="units" id="units">
                     <option value="g">g</option>
                     <option value="mL">mL</option>
