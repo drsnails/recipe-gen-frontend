@@ -12,9 +12,10 @@ export function AppHeader() {
 
 
 
-    const onLogOut = async () => {
+    const onLogOut = async (ev) => {
+        ev.stopPropagation()
         await dispatch(logout())
-        navigate('/')
+        navigate('/login')
     }
 
     return (

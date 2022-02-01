@@ -1,10 +1,10 @@
+import { getIdxEquality } from "../services/utilService";
 import { IngPreview } from "./ingPreview";
 
-export function IngList({ ingredients, ingToScale, onChangeRecipeData, handleIngChange, handleEditable, addIngredient, removeIngredient }) {
-    console.log('IngList -> ingredients', ingredients)
+export function IngList({ ingredients, ingToScale, onChangeRecipeData, handleIngChange, handleEditable, addIngredient, removeIngredient, ingToRemoveIdx }) {
     return (
         <section className="ing-list">
-            {ingredients.map(ingredient =>
+            {ingredients.map((ingredient, idx) =>
                 // <>
                 <IngPreview
                     removeIngredient={removeIngredient}
@@ -14,6 +14,7 @@ export function IngList({ ingredients, ingToScale, onChangeRecipeData, handleIng
                     ingredient={ingredient}
                     ingToScale={ingToScale}
                     onChangeRecipeData={onChangeRecipeData}
+                    isRemovedClass={getIdxEquality(idx, ingToRemoveIdx)}
                 />
 
                 // </>

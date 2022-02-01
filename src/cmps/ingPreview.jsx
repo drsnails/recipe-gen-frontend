@@ -1,23 +1,23 @@
 import { getAmountToScale } from "../services/utilService";
 
 
-export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, handleIngChange, removeIngredient }) {
-    console.log('ingToScale:', ingToScale);
+export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, handleIngChange, removeIngredient, isRemovedClass }) {
 
 
 
 
-    
+
     const ingToScaleClass = ingredient.id === ingToScale?.id ? 'chosen' : ''
     const amountToScale = ingToScale ? getAmountToScale(ingredient, ingToScale) : 0
-    var unitsLength = ingredient.units.length+3
+    var unitsLength = ingredient.units.length + 3
+    
     return (
-        <article className="ing-preview">
+        <article className={`ing-preview ${isRemovedClass}`}>
             <button onClick={() => removeIngredient(ingredient.id)} className="remove-btn">x</button>
             <h4 title={ingredient.name} data-name="name" onBlur={(ev) => handleIngChange(ev, ingredient)} className="editable" contentEditable suppressContentEditableWarning={true}>{ingredient.name}</h4>
             <section className="amount-unit">
                 <span inputMode="numeric" data-name="amount" onBlur={(ev) => handleIngChange(ev, ingredient)} className="editable" contentEditable suppressContentEditableWarning={true}>{ingredient.amount}</span>
-                <select style={{width: `${unitsLength}ch`}} onChange={(ev) => handleIngChange(ev, ingredient)} value={ingredient.units} name="units" id="units">
+                <select style={{ width: `${unitsLength}ch` }} onChange={(ev) => handleIngChange(ev, ingredient)} value={ingredient.units} name="units" id="units">
                     <option value="g">g</option>
                     <option value="Kg">Kg</option>
                     <option value="mL">mL</option>

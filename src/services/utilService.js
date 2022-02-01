@@ -15,14 +15,25 @@ export const checkFields = (fields) => {
 }
 
 
-
-
-
-
 export const getAmountToScale = (from, to) => {
     const fromAmount = _convertToGrams(from)
     const toAmount = _convertToGrams(to)
     return (fromAmount / toAmount).toFixed(2)
+}
+
+export const getIdxEquality = (currIdx, ingIdx) => {
+    console.log('getIdxEquality -> ingIdx', ingIdx)
+    console.log('getIdxEquality -> currIdx', currIdx)
+    if (ingIdx === null) return ''
+    if (currIdx === ingIdx) {
+        return 'equal'
+    }
+
+    if (currIdx > ingIdx) {
+        return 'smaller'
+    }
+
+
 }
 
 const _convertToGrams = ({ amount, units }) => {
@@ -42,3 +53,5 @@ const _convertToGrams = ({ amount, units }) => {
 
     return amount
 }
+
+export const sleep = (time = 0) => new Promise((resolve) => setTimeout(resolve, time))

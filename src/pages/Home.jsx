@@ -9,16 +9,14 @@ export function Home() {
     const { loggedInUser } = useSelector(state => state.userModule)
     const dispatch = useDispatch()
     const [recipes, setRecipes] = useState(null);
+    
     useEffect(() => {
         _loadRecipes()
-
     }, []);
 
-    const _loadRecipes = async () => {
-        console.log('loggedInUser:', loggedInUser);
 
+    const _loadRecipes = async () => {
         const recipes = await dispatch(loadRecipes(loggedInUser._id))
-        console.log('const_loadRecipes= -> recipes', recipes)
         setRecipes(recipes)
     }
 
@@ -32,10 +30,10 @@ export function Home() {
 
     return (
         <div className='home'>
-            <h2>Welcome {loggedInUser.username}</h2>
+            {loggedInUser && <h2>Welcome {loggedInUser.username}</h2>}
             <section className='recipe-list simple-cards-grid'>
                 {recipes && recipes.map(recipe =>
-                    <section onClick={() => navigate(`recipe/${recipe._id}`)} className='recipe-preview'>{recipe.name}</section>)
+                    <section key={recipe._id} onClick={() => navigate(`recipe/${recipe._id}`)} className='recipe-preview'>{recipe.name}</section>)
                 }
                 <button onClick={addRecipe}>New Recipe</button>
 

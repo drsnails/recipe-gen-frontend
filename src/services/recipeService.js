@@ -57,9 +57,17 @@ async function getById(id) {
 }
 
 
-async function save(recipe) {
+// async function save(recipe) {
+//     try {
+//         return recipe._id ? httpService.put(BASE_URL, recipe) : httpService.post(BASE_URL, recipe)
+//     } catch (err) {
+//         return
+//     }
+// }
+
+async function save(recipe, field, value, ingId) {
     try {
-        return recipe._id ? httpService.put(BASE_URL, recipe) : httpService.post(BASE_URL, recipe)
+        return recipe._id ? httpService.put(BASE_URL, {recipe, field, value, ingId}) : httpService.post(BASE_URL, recipe)
     } catch (err) {
         return
     }
