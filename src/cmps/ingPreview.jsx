@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getAmountToScale, sleep } from "../services/utilService";
+import { getAmountToScale, selectText, sleep } from "../services/utilService";
 
 
 export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, handleIngChange, removeIngredient, isRemovedClass, providedRef, dragHandleProp, dragProp }) {
@@ -18,12 +18,14 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, handleI
         removeIngredient(ingredient.id)
     }
 
+    
+
     return (
         <article ref={providedRef} {...dragProp} {...dragHandleProp} className={`ing-preview ${className}`}>
             <button onClick={onRemoveIngredient} className="remove-btn">x</button>
-            <h4 title={ingredient.name} data-name="name" onBlur={(ev) => handleIngChange(ev, ingredient)} className="editable" contentEditable suppressContentEditableWarning={true}>{ingredient.name}</h4>
+            <h4 tabIndex="1" onFocus={selectText} title={ingredient.name} data-name="name" onBlur={(ev) => handleIngChange(ev, ingredient)} className="editable" contentEditable suppressContentEditableWarning={true}>{ingredient.name}</h4>
             <section className="amount-unit">
-                <span inputMode="numeric" data-name="amount" onBlur={(ev) => handleIngChange(ev, ingredient)} className="editable" contentEditable suppressContentEditableWarning={true}>{ingredient.amount}</span>
+                <span onFocus={selectText} inputMode="numeric" data-name="amount" onBlur={(ev) => handleIngChange(ev, ingredient)} className="editable" contentEditable suppressContentEditableWarning={true}>{ingredient.amount}</span>
                 <select style={{ width: `${unitsLength}ch` }} onChange={(ev) => handleIngChange(ev, ingredient)} value={ingredient.units} name="units" id="units">
                     <option value="g">g</option>
                     <option value="Kg">Kg</option>

@@ -2,22 +2,30 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { recipeService } from '../services/recipeService';
+import { userService } from '../services/userService';
 import { loadRecipes } from '../store/actions/recipeActions';
 
 export function Home() {
     const navigate = useNavigate()
-    const { loggedInUser } = useSelector(state => state.userModule)
+    let { loggedInUser } = useSelector(state => state.userModule)
     const dispatch = useDispatch()
     const [recipes, setRecipes] = useState(null);
-    
+
     useEffect(() => {
+        (async () => {
+            const userFromSession = await userService.getUserFromSession()
+            console.log('userFromSession', userFromSession)
+        })()
+        loggedInUser = loggedInUser || userService.getLoggedInUser()
         _loadRecipes()
+        
     }, []);
 
 
     const _loadRecipes = async () => {
         const recipes = await dispatch(loadRecipes(loggedInUser._id))
         setRecipes(recipes)
+
     }
 
 

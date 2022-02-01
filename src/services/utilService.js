@@ -22,8 +22,6 @@ export const getAmountToScale = (from, to) => {
 }
 
 export const getIdxEquality = (currIdx, ingIdx) => {
-    console.log('getIdxEquality -> ingIdx', ingIdx)
-    console.log('getIdxEquality -> currIdx', currIdx)
     if (ingIdx === null) return ''
     if (currIdx === ingIdx) {
         return 'equal'
@@ -83,6 +81,23 @@ export const reOrderList = (list, destIdx, sourceIdx) => {
     return newList
 }
 
+
+export const selectText = ({ target }) => {
+    window.setTimeout(function () {
+        var sel, range;
+        if (window.getSelection && document.createRange) {
+            range = document.createRange();
+            range.selectNodeContents(target);
+            sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+        } else if (document.body.createTextRange) {
+            range = document.body.createTextRange();
+            range.moveToElementText(target);
+            range.select();
+        }
+    }, 1);
+};
 
 
 export const sleep = (time = 0) => new Promise((resolve) => setTimeout(resolve, time))

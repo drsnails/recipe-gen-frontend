@@ -2,7 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { IngList } from "../cmps/IngList";
 import { recipeService } from "../services/recipeService";
-import { reOrderList, sleep } from "../services/utilService";
+import { userService } from "../services/userService";
+import { reOrderList, selectText, sleep } from "../services/utilService";
 var cloneDeep = require('lodash.clonedeep');
 
 export default function RecipeEditor() {
@@ -12,7 +13,7 @@ export default function RecipeEditor() {
 
     const params = useParams()
     useEffect(() => {
-
+        
         loadRecipe()
     }, [params.id]);
 
@@ -29,7 +30,7 @@ export default function RecipeEditor() {
             setRecipe(recipeToSave)
             await recipeService.save(recipeToSave, field, value, ingId)
             // * if field is null thats means were removing an ingredient
-            
+
             // setIngToRemoveIdx(null)
 
         } catch (err) {
@@ -149,7 +150,7 @@ export default function RecipeEditor() {
     const ingToScale = getIngredientToScale(recipe)
     return (
         <div className='recipe-editor'>
-            <h2 onBlur={({ target }) => onChangeRecipeData('name', target.innerText)} contentEditable suppressContentEditableWarning={true} >{recipe.name}</h2>
+            <h2 onFocus={selectText} onBlur={({ target }) => onChangeRecipeData('name', target.innerText)} contentEditable suppressContentEditableWarning={true} >{recipe.name}</h2>
             <br />
             <strong>Ingredients</strong>
             <IngList

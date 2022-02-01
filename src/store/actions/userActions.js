@@ -30,6 +30,8 @@ export function setUser() {
   return async (dispatch) => {
     try {
       const user = userService.getLoggedInUser()
+      
+
       if (user) {
 
         return dispatch({ type: 'SET_USER', user })
