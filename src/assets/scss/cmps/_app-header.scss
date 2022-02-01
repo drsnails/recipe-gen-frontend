@@ -2,12 +2,14 @@
     height: 70px;
     background-color: #8cbcff0f;
     box-shadow: 0 0 12px #607d8b70;
+    margin-bottom: 2em;
 
     width: 100vw;
-    height: 100%;
+    height: 80px;
     section.container {
         display: flex;
         align-items: center;
+        height: 100%;
 
         .logo {
             flex-grow: 1;
