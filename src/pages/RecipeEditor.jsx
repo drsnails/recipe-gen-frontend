@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { IngList } from "../cmps/IngList";
 import { recipeService } from "../services/recipeService";
-import { sleep } from "../services/utilService";
+import { reOrderList, sleep } from "../services/utilService";
 var cloneDeep = require('lodash.clonedeep');
 
 export default function RecipeEditor() {
@@ -118,9 +118,19 @@ export default function RecipeEditor() {
         const { index: sourceIdx } = result.source
 
         let ingredients = [...recipe.ingredients]
-        let temp = ingredients[destIdx]
-        ingredients[destIdx] = ingredients[sourceIdx]
-        ingredients[sourceIdx] = temp
+        
+        /*TEST START*/
+        ingredients = reOrderList(ingredients, destIdx, sourceIdx)
+        /*TEST END*/
+        
+        
+        
+        /*ORIGINAL START*/
+        
+        // let temp = ingredients[destIdx]
+        // ingredients[destIdx] = ingredients[sourceIdx]
+        // ingredients[sourceIdx] = temp
+        /*ORIGINAL END*/
         // [ingredients[destIdx], ingredients[sourceIdx]] = [ingredients[sourceIdx], ingredients[destIdx]]
         const recipeToSave = {
             ...recipe,

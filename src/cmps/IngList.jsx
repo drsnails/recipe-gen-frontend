@@ -75,7 +75,7 @@ export function IngList({
                                     )}
                                 </Draggable>
                             )}
-                            <button onClick={addIngredient} className="add-btn">+</button>
+                            {!snapshot.isDraggingOver && <button onClick={addIngredient} className="add-btn">+</button>}
                         </section>
                     </div>
 

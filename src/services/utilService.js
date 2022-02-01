@@ -54,4 +54,34 @@ const _convertToGrams = ({ amount, units }) => {
     return amount
 }
 
+
+
+export const reOrderList = (list, destIdx, sourceIdx) => {
+    const newList = []
+    for (let i = 0; i < list.length; i++) {
+        if (destIdx >= sourceIdx) {
+
+            if (i >= sourceIdx && i < destIdx) {
+                newList.push(list[i + 1])
+            } else if (i === destIdx) {
+                newList.push(list[sourceIdx])
+            } else {
+                newList.push(list[i])
+            }
+            
+        } else {
+            if (i > destIdx && i <= sourceIdx) {
+                newList.push(list[i - 1])
+            } else if (i === destIdx) {
+                newList.push(list[sourceIdx])
+            } else {
+                newList.push(list[i])
+            }
+        }
+
+    }
+
+    return newList
+}
+
 export const sleep = (time = 0) => new Promise((resolve) => setTimeout(resolve, time))
