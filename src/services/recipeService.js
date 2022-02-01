@@ -80,15 +80,15 @@ function getEmptyIngredient() {
 
 function copyRecipeToClipboard(recipe) {
     let recipeTxt = ''
-    recipeTxt += capitalizeSentence(recipe.name) + '\n\n'
+    recipeTxt += capitalizeSentence(recipe.name) + '\n\n\n\n'
     const relativeIng = recipe.ingredients.find(ing => ing.id === recipe.ingToScaleId)
     for (const ingredient of recipe.ingredients) {
         
         const relativeAmount = relativeIng && getAmountToScale(ingredient,relativeIng)
-        recipeTxt += capitalize(ingredient.name) + '\t '
-        recipeTxt += ingredient.amount + ' ' + ingredient.units + '\t '
+        recipeTxt += capitalize(ingredient.name) + '\t\t '
+        recipeTxt += ingredient.amount + ' ' + ingredient.units + '\t\t '
         recipeTxt += relativeAmount
-        recipeTxt += '\n'
+        recipeTxt += '\n\n'
     }
 
     copyToClipboard(recipeTxt)

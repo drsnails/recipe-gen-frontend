@@ -45,7 +45,6 @@ async function signin(credentials) {
 }
 
 function getLoggedInUser() {
-
     return JSON.parse(sessionStorage.getItem(STORAGE_KEY));
 }
 
