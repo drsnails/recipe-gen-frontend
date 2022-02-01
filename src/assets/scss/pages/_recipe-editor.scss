@@ -1,6 +1,12 @@
 .recipe-editor {
-    textarea {
-        width: 100%;
-        resize: none;
+    .instructions {
+
+        margin-top: 20%;
+        textarea {
+            font-size: 1.1em;
+            width: 100%;
+            resize: none;
+        }
+
     }
 }

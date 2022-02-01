@@ -29,12 +29,7 @@ export default function RecipeEditor() {
             setRecipe(recipeToSave)
             await recipeService.save(recipeToSave, field, value, ingId)
             // * if field is null thats means were removing an ingredient
-            // if (field === null) {
-            //     const ingToRemoveIdx = recipe.ingredients.findIndex(ing => ing.id === ingId)
-            //     setIngToRemoveIdx(ingToRemoveIdx)
-            //     // return
-            //     await sleep(400)
-            // }
+            
             // setIngToRemoveIdx(null)
 
         } catch (err) {
@@ -156,7 +151,7 @@ export default function RecipeEditor() {
         <div className='recipe-editor'>
             <h2 onBlur={({ target }) => onChangeRecipeData('name', target.innerText)} contentEditable suppressContentEditableWarning={true} >{recipe.name}</h2>
             <br />
-            <h4>Ingredients</h4>
+            <strong>Ingredients</strong>
             <IngList
                 removeIngredient={removeIngredient}
                 addIngredient={addIngredient}
@@ -168,10 +163,8 @@ export default function RecipeEditor() {
                 onReOrderIngs={onReOrderIngs}
             />
 
-            <br />
-            <br />
-            <h4>Instructions</h4>
-            <section>
+            <section className="instructions">
+                <strong>Instructions</strong>
                 <textarea onChange={(({ target }) => onChangeRecipeData('instructions', target.value))} value={recipe.instructions} name="instructions" id="" cols="30" rows="30"></textarea>
             </section>
         </div>
