@@ -99,5 +99,6 @@ export const selectText = ({ target }) => {
     }, 1);
 };
 
+export const copyToClipboard = (text) => navigator.clipboard.writeText(text);
 
 export const sleep = (time = 0) => new Promise((resolve) => setTimeout(resolve, time))

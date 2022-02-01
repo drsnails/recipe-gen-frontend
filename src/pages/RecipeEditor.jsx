@@ -13,7 +13,7 @@ export default function RecipeEditor() {
 
     const params = useParams()
     useEffect(() => {
-        
+
         loadRecipe()
     }, [params.id]);
 
@@ -150,7 +150,10 @@ export default function RecipeEditor() {
     const ingToScale = getIngredientToScale(recipe)
     return (
         <div className='recipe-editor'>
-            <h2 onFocus={selectText} onBlur={({ target }) => onChangeRecipeData('name', target.innerText)} contentEditable suppressContentEditableWarning={true} >{recipe.name}</h2>
+            <section className="title-container">
+                <h2 onFocus={selectText} onBlur={({ target }) => onChangeRecipeData('name', target.innerText)} contentEditable suppressContentEditableWarning={true} >{recipe.name}</h2>
+                <button className="btn" onClick={() => recipeService.copyRecipeToClipboard(recipe)}>Copy To Clipboard</button>
+            </section>
             <br />
             <strong>Ingredients</strong>
             <IngList
@@ -163,6 +166,7 @@ export default function RecipeEditor() {
                 ingToRemoveIdx={ingToRemoveIdx}
                 onReOrderIngs={onReOrderIngs}
             />
+
 
             <section className="instructions">
                 <strong>Instructions</strong>

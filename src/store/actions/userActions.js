@@ -29,8 +29,9 @@ export function signin(creds) {
 export function setUser() {
   return async (dispatch) => {
     try {
-      const user = userService.getLoggedInUser()
-      
+      // const user = userService.getLoggedInUser()
+      const user = await userService.getUserFromSession()
+
 
       if (user) {
 

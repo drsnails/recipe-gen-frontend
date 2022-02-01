@@ -1,6 +1,6 @@
 import { httpService } from './httpService.js'
 import { storageService } from './storageService.js'
-import { makeId } from './utilService.js'
+import { copyToClipboard, getAmountToScale, makeId } from './utilService.js'
 
 export const recipeService = {
     query,
@@ -8,7 +8,8 @@ export const recipeService = {
     getEmptyIngredient,
     getById,
     update,
-    save
+    save,
+    copyRecipeToClipboard
 }
 
 const STORAGE_KEY = 'recipes'
@@ -73,6 +74,24 @@ function getEmptyIngredient() {
         amount: 1,
         units: 'g'
     }
+}
+
+
+function copyRecipeToClipboard(recipe) {
+    let recipeTxt = ''
+    recipeTxt += recipe.name + '\n\n'
+    const relativeIng = recipe.ingredients.find(ing => ing.id === recipe.ingToScaleId)
+    for (const ingredient of recipe.ingredients) {
+        
+        const relativeAmount = relativeIng && getAmountToScale(ingredient,relativeIng)
+        recipeTxt += ingredient.name + '\t '
+        recipeTxt += ingredient.amount + ' ' + ingredient.units + '\t '
+        recipeTxt += relativeAmount
+        recipeTxt += '\n'
+    }
+
+    copyToClipboard(recipeTxt)
+
 }
 
 

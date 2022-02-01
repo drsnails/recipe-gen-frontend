@@ -1,4 +1,10 @@
 .recipe-editor {
+
+    .title-container {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
     .instructions {
 
         margin-top: 20%;
