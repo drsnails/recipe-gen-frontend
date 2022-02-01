@@ -102,3 +102,8 @@ export const selectText = ({ target }) => {
 export const copyToClipboard = (text) => navigator.clipboard.writeText(text);
 
 export const sleep = (time = 0) => new Promise((resolve) => setTimeout(resolve, time))
+
+export const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
+
+export const capitalizeSentence = sentence => sentence.split(' ').map(capitalize).join(' ')
+

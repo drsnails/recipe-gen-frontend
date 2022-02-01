@@ -1,6 +1,7 @@
+import { capitalize } from 'lodash'
 import { httpService } from './httpService.js'
 import { storageService } from './storageService.js'
-import { copyToClipboard, getAmountToScale, makeId } from './utilService.js'
+import { capitalizeSentence, copyToClipboard, getAmountToScale, makeId } from './utilService.js'
 
 export const recipeService = {
     query,
@@ -79,12 +80,12 @@ function getEmptyIngredient() {
 
 function copyRecipeToClipboard(recipe) {
     let recipeTxt = ''
-    recipeTxt += recipe.name + '\n\n'
+    recipeTxt += capitalizeSentence(recipe.name) + '\n\n'
     const relativeIng = recipe.ingredients.find(ing => ing.id === recipe.ingToScaleId)
     for (const ingredient of recipe.ingredients) {
         
         const relativeAmount = relativeIng && getAmountToScale(ingredient,relativeIng)
-        recipeTxt += ingredient.name + '\t '
+        recipeTxt += capitalize(ingredient.name) + '\t '
         recipeTxt += ingredient.amount + ' ' + ingredient.units + '\t '
         recipeTxt += relativeAmount
         recipeTxt += '\n'
