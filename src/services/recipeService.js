@@ -61,7 +61,8 @@ function getEmptyRecipe() {
         name: 'New Recipe',
         createdAt: Date.now(),
         ingToScaleId: firstIng.id,
-        ingredients: [firstIng]
+        ingredients: [firstIng],
+        instructions: ''
     }
 }
 
