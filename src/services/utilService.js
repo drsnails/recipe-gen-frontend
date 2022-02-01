@@ -68,7 +68,6 @@ export const reOrderList = (list, destIdx, sourceIdx) => {
             } else {
                 newList.push(list[i])
             }
-            
         } else {
             if (i > destIdx && i <= sourceIdx) {
                 newList.push(list[i - 1])
@@ -83,5 +82,7 @@ export const reOrderList = (list, destIdx, sourceIdx) => {
 
     return newList
 }
+
+
 
 export const sleep = (time = 0) => new Promise((resolve) => setTimeout(resolve, time))

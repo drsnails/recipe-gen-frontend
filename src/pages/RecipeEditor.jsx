@@ -112,21 +112,29 @@ export default function RecipeEditor() {
     }
 
 
+    // const handleChange = ({ target }) => {
+    //   const field = target.name
+    //   const value = target.type === 'number' ? +target.value : target.value
+    //   setFields(fields => ({ ...fields, [field]: value }))
+
+    // }
+
+
     const onReOrderIngs = (result) => {
         console.log('onReOrderIngs -> result', result)
         const { index: destIdx } = result.destination
         const { index: sourceIdx } = result.source
 
         let ingredients = [...recipe.ingredients]
-        
+
         /*TEST START*/
         ingredients = reOrderList(ingredients, destIdx, sourceIdx)
         /*TEST END*/
-        
-        
-        
+
+
+
         /*ORIGINAL START*/
-        
+
         // let temp = ingredients[destIdx]
         // ingredients[destIdx] = ingredients[sourceIdx]
         // ingredients[sourceIdx] = temp
@@ -148,6 +156,7 @@ export default function RecipeEditor() {
         <div className='recipe-editor'>
             <h2 onBlur={({ target }) => onChangeRecipeData('name', target.innerText)} contentEditable suppressContentEditableWarning={true} >{recipe.name}</h2>
             <br />
+            <h4>Ingredients</h4>
             <IngList
                 removeIngredient={removeIngredient}
                 addIngredient={addIngredient}
@@ -158,6 +167,13 @@ export default function RecipeEditor() {
                 ingToRemoveIdx={ingToRemoveIdx}
                 onReOrderIngs={onReOrderIngs}
             />
+
+            <br />
+            <br />
+            <h4>Instructions</h4>
+            <section>
+                <textarea onChange={(({ target }) => onChangeRecipeData('instructions', target.value))} value={recipe.instructions} name="instructions" id="" cols="30" rows="30"></textarea>
+            </section>
         </div>
     );
 }
