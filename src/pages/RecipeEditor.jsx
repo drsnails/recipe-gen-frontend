@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import { IngList } from "../cmps/IngList";
 import { recipeService } from "../services/recipeService";
 import { sleep } from "../services/utilService";
+var cloneDeep = require('lodash.clonedeep');
 
 export default function RecipeEditor() {
     const [recipe, setRecipe] = useState();
@@ -22,8 +23,10 @@ export default function RecipeEditor() {
     }
 
     const saveRecipe = async (recipeToSave, field, value, ingId) => {
-        
+
+        const oldRecipe = cloneDeep(recipe)
         try {
+            setRecipe(recipeToSave)
             await recipeService.save(recipeToSave, field, value, ingId)
             // * if field is null thats means were removing an ingredient
             // if (field === null) {
@@ -32,12 +35,11 @@ export default function RecipeEditor() {
             //     // return
             //     await sleep(400)
             // }
-
-            setRecipe(recipeToSave)
-            setIngToRemoveIdx(null)
+            // setIngToRemoveIdx(null)
 
         } catch (err) {
             console.log('cant save recipe: ', err);
+            setRecipe(oldRecipe)
         } finally {
         }
     }
@@ -110,6 +112,26 @@ export default function RecipeEditor() {
     }
 
 
+    const onReOrderIngs = (result) => {
+        console.log('onReOrderIngs -> result', result)
+        const { index: destIdx } = result.destination
+        const { index: sourceIdx } = result.source
+
+        let ingredients = [...recipe.ingredients]
+        let temp = ingredients[destIdx]
+        ingredients[destIdx] = ingredients[sourceIdx]
+        ingredients[sourceIdx] = temp
+        // [ingredients[destIdx], ingredients[sourceIdx]] = [ingredients[sourceIdx], ingredients[destIdx]]
+        const recipeToSave = {
+            ...recipe,
+            ingredients: ingredients
+        }
+
+        saveRecipe(recipeToSave, null, null)
+
+    }
+
+
     if (!recipe) return <div>Loading...</div>
     const ingToScale = getIngredientToScale(recipe)
     return (
@@ -124,6 +146,7 @@ export default function RecipeEditor() {
                 ingToScale={ingToScale}
                 onChangeRecipeData={onChangeRecipeData}
                 ingToRemoveIdx={ingToRemoveIdx}
+                onReOrderIngs={onReOrderIngs}
             />
         </div>
     );

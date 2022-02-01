@@ -1,7 +1,7 @@
 import { getAmountToScale } from "../services/utilService";
 
 
-export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, handleIngChange, removeIngredient, isRemovedClass }) {
+export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, handleIngChange, removeIngredient, isRemovedClass, providedRef, dragHandleProp, dragProp }) {
 
 
 
@@ -12,7 +12,7 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, handleI
     var unitsLength = ingredient.units.length + 3
     
     return (
-        <article className={`ing-preview ${isRemovedClass}`}>
+        <article ref={providedRef} {...dragProp} {...dragHandleProp} className={`ing-preview ${isRemovedClass}`}>
             <button onClick={() => removeIngredient(ingredient.id)} className="remove-btn">x</button>
             <h4 title={ingredient.name} data-name="name" onBlur={(ev) => handleIngChange(ev, ingredient)} className="editable" contentEditable suppressContentEditableWarning={true}>{ingredient.name}</h4>
             <section className="amount-unit">
