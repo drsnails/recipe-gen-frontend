@@ -1,6 +1,9 @@
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+
 import { getIdxEquality } from "../services/utilService";
 import { IngPreview } from "./ingPreview";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 const grid = 8;
 
 export function IngList({
@@ -58,7 +61,7 @@ export function IngList({
                             {ingredients.map((ingredient, idx) =>
                                 // <>
                                 <Draggable key={ingredient.id} draggableId={ingredient.id} index={idx}>
-                                    {(provided, snapshot) => (
+                                    {(provided) => (
                                         <IngPreview
                                             providedRef={provided.innerRef}
                                             dragProp={provided.draggableProps}
@@ -75,7 +78,7 @@ export function IngList({
                                     )}
                                 </Draggable>
                             )}
-                            {!snapshot.isDraggingOver && <button onClick={addIngredient} className="add-btn">+</button>}
+                            {!snapshot.isDraggingOver && <button onClick={addIngredient} className="add-btn"><FontAwesomeIcon icon={faPlus}/></button>}
                         </section>
                     </div>
 

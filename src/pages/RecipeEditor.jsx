@@ -154,8 +154,7 @@ export default function RecipeEditor() {
                 <h2 onFocus={selectText} onBlur={({ target }) => onChangeRecipeData('name', target.innerText)} contentEditable suppressContentEditableWarning={true} >{recipe.name}</h2>
                 <button className="btn" onClick={() => recipeService.copyRecipeToClipboard(recipe)}>Copy To Clipboard</button>
             </section>
-            <br />
-            <strong>Ingredients</strong>
+            <strong className="ingredients">Ingredients</strong>
             <IngList
                 removeIngredient={removeIngredient}
                 addIngredient={addIngredient}

@@ -1,4 +1,8 @@
 import { useState } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
+
 import { getAmountToScale, selectText, sleep } from "../services/utilService";
 
 
@@ -18,12 +22,17 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, handleI
         removeIngredient(ingredient.id)
     }
 
-    
+
 
     return (
         <article ref={providedRef} {...dragProp} {...dragHandleProp} className={`ing-preview ${className}`}>
-            <button onClick={onRemoveIngredient} className="remove-btn">x</button>
-            <h4 tabIndex="1" onFocus={selectText} title={ingredient.name} data-name="name" onBlur={(ev) => handleIngChange(ev, ingredient)} className="editable" contentEditable suppressContentEditableWarning={true}>{ingredient.name}</h4>
+            {/* <button onClick={onRemoveIngredient} className="remove-btn"></button> */}
+            <span className="remove-icon" ><FontAwesomeIcon onClick={onRemoveIngredient} icon={faTrash} /></span>
+
+
+            <section className="editable" className="ing-name">
+                <span tabIndex="1" onFocus={selectText} title={ingredient.name} data-name="name" onBlur={(ev) => handleIngChange(ev, ingredient)}  contentEditable suppressContentEditableWarning={true}>{ingredient.name}</span>
+            </section> 
             <section className="amount-unit">
                 <span onFocus={selectText} inputMode="numeric" data-name="amount" onBlur={(ev) => handleIngChange(ev, ingredient)} className="editable" contentEditable suppressContentEditableWarning={true}>{ingredient.amount}</span>
                 <select style={{ width: `${unitsLength}ch` }} onChange={(ev) => handleIngChange(ev, ingredient)} value={ingredient.units} name="units" id="units">
