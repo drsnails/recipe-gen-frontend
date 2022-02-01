@@ -31,10 +31,8 @@ export function setUser() {
     try {
       // const user = userService.getLoggedInUser()
       const user = await userService.getUserFromSession()
-
-
       if (user) {
-
+        sessionStorage.setItem('loggedInUser', JSON.stringify(user));
         return dispatch({ type: 'SET_USER', user })
       }
     } catch (err) {
