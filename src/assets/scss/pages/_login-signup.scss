@@ -1,7 +1,8 @@
 .login-signup {
     width: max-content;
     height: 100%;
-    border: 3px solid #4caf50;
+    // border: 3px solid #4caf50;
+    border: 3px solid #4d97ff;
     margin: auto;
     padding: 3%;
     margin-top: 10%;
@@ -19,7 +20,7 @@
     }
 
     h3 {
-        color: #3d8f40;
+        color: #1778ff;
         font-weight: 700;
         margin-block: 5px 20px;
         @include for-mobile-layout {
@@ -31,7 +32,7 @@
         width: 70vw;
         max-width: 500px;
         // height: 50vw;
-        font-size: 1.5em;
+        font-size: 1.4em;
     
         & > section {
             margin-top: 20px;
@@ -41,18 +42,19 @@
             input {
                 width: 100%;
                 border: none;
-                border-bottom: #4caf50 1px solid;
+                border-bottom: #4d97ff 2px solid;
                 line-height: 1.3em;
                 @include for-mobile-layout {
                     
-                    line-height: 1.6em;
+                    line-height: 1.4em;
                 }
             }
         }
 
         .login-btn {
-            background-color: #4caf5073;
+            background-color: #4d97ff;
             margin-top: 35px;
+            color: white;
             border: none;
             padding: 0.5em 1em;
             width: 100%;
@@ -61,6 +63,7 @@
         a.signin-link {
             display: inline-block;
             margin-top: 30px;
+            font-size: 0.8em;
             @include for-mobile-layout {
             
                 font-size: 0.9em;

@@ -82,7 +82,7 @@ export function LoginSignup(props) {
 
                 <button className="login-btn">{isSignin ? 'Register' : 'Login'}</button>
 
-                {!isSignin ? <Link className="signin-link" replace to='/signin'>Dont have an account? click here to sign up</Link>
+                {!isSignin ? <Link className="signin-link" replace to='/signin'>Don't have an account? click here to sign up</Link>
                     : <Link className="signin-link" replace to='/login'>Already a user? click here to log in</Link>}
 
             </form>
