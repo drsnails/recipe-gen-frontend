@@ -2,6 +2,8 @@ import React from 'react';
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPalette, faPepperHot } from '@fortawesome/free-solid-svg-icons'
 import { logout } from '../store/actions/userActions';
 
 
@@ -22,7 +24,8 @@ export function AppHeader() {
 
         <header className='app-header'>
             <section className='container'>
-                <h3 onClick={() => navigate('/')} className='logo'>Recipe</h3>
+                <h3 onClick={() => navigate('/')} className='logo'><FontAwesomeIcon icon={faPepperHot} /></h3>
+                
 
                 <nav>
                     {loggedInUser ?

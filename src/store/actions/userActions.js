@@ -8,6 +8,7 @@ export function login(creds) {
       return dispatch({ type: 'SET_USER', user })
     } catch (err) {
       console.log('err:', err);
+      throw { err, type: 'login' }
     }
   }
 }
@@ -20,6 +21,7 @@ export function signin(creds) {
       return dispatch({ type: 'SET_USER', user })
     } catch (err) {
       console.log('err:', err);
+      throw { err, type: 'signin' }
 
     }
   }
@@ -29,8 +31,9 @@ export function signin(creds) {
 export function setUser() {
   return async (dispatch) => {
     try {
-      // const user = userService.getLoggedInUser()
-      const user = await userService.getUserFromSession()
+      const _user = userService.getLoggedInUser()
+      let user = await userService.getUserFromSession()
+      user = user || _user
       if (user) {
         sessionStorage.setItem('loggedInUser', JSON.stringify(user));
         return dispatch({ type: 'SET_USER', user })
@@ -51,6 +54,7 @@ export function logout() {
       });
     } catch (err) {
       console.log('Could not logout', err);
+      throw err
     }
   };
 }

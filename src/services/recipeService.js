@@ -8,6 +8,7 @@ export const recipeService = {
     getEmptyRecipe,
     getEmptyIngredient,
     getById,
+    remove,
     update,
     save,
     copyRecipeToClipboard
@@ -36,6 +37,16 @@ async function getById(id) {
 }
 
 
+
+
+
+async function remove(recipeId) {
+    try {
+        return httpService.delete(`${BASE_URL}/${recipeId}`)
+    } catch (err) {
+        return
+    }
+}
 
 async function save(recipe, field, value, ingId) {
     try {
@@ -80,13 +91,13 @@ function getEmptyIngredient() {
 
 function copyRecipeToClipboard(recipe) {
     let recipeTxt = ''
-    recipeTxt += capitalizeSentence(recipe.name) + '\n\n\n\n'
+    recipeTxt += capitalizeSentence(recipe.name) + '\n\n\n'
     const relativeIng = recipe.ingredients.find(ing => ing.id === recipe.ingToScaleId)
     for (const ingredient of recipe.ingredients) {
-        
-        const relativeAmount = relativeIng && getAmountToScale(ingredient,relativeIng)
-        recipeTxt += capitalize(ingredient.name) + '\t\t '
-        recipeTxt += ingredient.amount + ' ' + ingredient.units + '\t\t '
+
+        const relativeAmount = relativeIng && getAmountToScale(ingredient, relativeIng)
+        recipeTxt += capitalize(ingredient.name) + '\t\t'
+        recipeTxt += ingredient.amount + ' ' + ingredient.units + '\t\t'
         recipeTxt += relativeAmount
         recipeTxt += '\n\n'
     }

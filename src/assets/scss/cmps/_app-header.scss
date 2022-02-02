@@ -13,7 +13,24 @@
 
         .logo {
             flex-grow: 1;
+            color: #4d97ff;
+            font-size: 1.7em;
             cursor: pointer;
+            position: relative;
+        }
+
+        .logo::after {
+            // display: block;
+            position: absolute;
+            margin-left: 5px;
+            content: "Recipe Gen";
+            font-size: 0.9em;
+            // font-family: "Prompt", sans-serif;
+            font-family: "Righteous", cursive;
+            // font-family: "Satisfy", cursive;
+
+            // width: 100px;
+            // height: 100px;
         }
 
         .user {

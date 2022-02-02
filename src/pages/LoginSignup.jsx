@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react"
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router"
 import { Link } from "react-router-dom";
 import { useForm } from "../hooks/useFormRegister";
+import { showErrorMsg } from "../services/eventBusService";
+import { userService } from "../services/userService";
 import { checkFields } from "../services/utilService";
 import { login, signin } from "../store/actions/userActions";
 
@@ -11,11 +14,21 @@ export function LoginSignup(props) {
     const dispatch = useDispatch()
     const location = useLocation();
     const navigate = useNavigate()
+    const { loggedInUser } = useSelector(state => state.userModule)
+
 
     const [setCreds, creds, register] = useForm({
         username: '',
         password: ''
     })
+
+    useEffect(() => {
+        (async () => {
+            if (loggedInUser) navigate('/')
+        })()
+
+    }, [loggedInUser]);
+
 
     useEffect(() => {
         const isSignin = location.pathname === '/signin'
@@ -27,6 +40,7 @@ export function LoginSignup(props) {
                 password: ''
             })
         }
+
     }, [location.pathname]);
 
 
@@ -36,12 +50,13 @@ export function LoginSignup(props) {
         const missingFields = checkFields(creds)
         if (missingFields) {
             console.log(`Some fields are missing. (${missingFields})`);
+            showErrorMsg({txt:`Some fields are missing. (${missingFields})`})
         }
         try {
             await dispatch(creds.email ? signin(creds) : login(creds))
             navigate('/')
         } catch (err) {
-
+            showErrorMsg({txt:`There was a problem while ${err.type}`})
         }
 
     }
@@ -66,7 +81,8 @@ export function LoginSignup(props) {
 
                 <button className="login-btn">{isSignin ? 'Register' : 'Login'}</button>
 
-                {!isSignin && <Link className="signin-link" replace to='/signin'>Dont have an account? click here to sign in</Link>}
+                {!isSignin ? <Link className="signin-link" replace to='/signin'>Dont have an account? click here to sign up</Link>
+                    : <Link className="signin-link" replace to='/login'>Already a user? click here to log in</Link>}
 
             </form>
         </div>

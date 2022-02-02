@@ -20,11 +20,7 @@
         }
     }
 
-   .remove-icon {
-       color: #fa8686;
-       font-size: 0.9em;
-       flex-grow: 0.5;
-   }
+   
 
    .ing-name {
        flex-grow: 2;
@@ -35,18 +31,7 @@
         @include trim;
     }
 
-    .remove-btn {
-        width: 2em;
-        height: 2em;
-        border: none;
-        border-radius: 100%;
-        margin-right: 5%;
-        background-color: #fcaea387;
-
-        @include for-mobile-layout {
-            width: 2.5em;
-        }
-    }
+    
 
     .amount-unit {
         display: flex;

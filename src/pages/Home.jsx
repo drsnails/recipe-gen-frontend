@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { recipeService } from '../services/recipeService';
 import { userService } from '../services/userService';
 import { loadRecipes } from '../store/actions/recipeActions';
@@ -18,7 +20,7 @@ export function Home() {
         })()
         loggedInUser = loggedInUser || userService.getLoggedInUser()
         _loadRecipes()
-        
+
     }, []);
 
 
@@ -36,14 +38,26 @@ export function Home() {
         setRecipes([...recipes, newRecipe])
     }
 
+    const removeRecipe = async (ev, recipeId) => {
+        ev.stopPropagation()
+        await recipeService.remove(recipeId)
+        const newRecipes = recipes.filter(recipe => recipe._id !== recipeId)
+        setRecipes(newRecipes)
+    }
+
     return (
         <div className='home'>
             {loggedInUser && <h2>Welcome {loggedInUser.username}</h2>}
             <section className='recipe-list simple-cards-grid'>
                 {recipes && recipes.map(recipe =>
-                    <section key={recipe._id} onClick={() => navigate(`recipe/${recipe._id}`)} className='recipe-preview'>{recipe.name}</section>)
+                    <section key={recipe._id} onClick={() => navigate(`recipe/${recipe._id}`)} className='recipe-preview'>
+                        <span>
+                            {recipe.name}
+                        </span>
+                        <span onClick={(ev) => removeRecipe(ev, recipe._id)} className="remove-icon" ><FontAwesomeIcon icon={faTrash} /></span>
+                    </section>)
                 }
-                <button onClick={addRecipe}>New Recipe</button>
+                <button className='nice-btn blue' onClick={addRecipe}>New Recipe</button>
 
             </section>
         </div>
