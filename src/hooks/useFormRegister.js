@@ -25,6 +25,6 @@ export const useForm = (initialState, cb = () => { }) => {
     }
 
 
-    return [setFields, fields, register]
+    return [fields,setFields, register]
 
 }

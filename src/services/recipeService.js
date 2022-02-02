@@ -18,9 +18,9 @@ const STORAGE_KEY = 'recipes'
 const BASE_URL = 'recipe'
 
 
-async function query(userId) {
+async function query(userId, filterBy) {
     try {
-        return httpService.get(BASE_URL, { userId })
+        return httpService.get(BASE_URL, { userId, filterBy })
     } catch (err) {
         return
     }

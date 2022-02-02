@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
+
 import { recipeService } from '../services/recipeService';
 import { userService } from '../services/userService';
 import { loadRecipes } from '../store/actions/recipeActions';
+import { RecipeList } from '../cmps/RecipeList';
+import { RecipeFilter } from '../cmps/RecipeFilter';
+import { useEffectUpdate } from '../hooks/useEffectUpdate';
 
 export function Home() {
-    const navigate = useNavigate()
+
     let { loggedInUser } = useSelector(state => state.userModule)
     const dispatch = useDispatch()
     const [recipes, setRecipes] = useState(null);
+    const [filterBy, setFilterBy] = useState({ term: '' })
 
     useEffect(() => {
         (async () => {
@@ -23,9 +25,16 @@ export function Home() {
 
     }, []);
 
+    useEffectUpdate(() => {
+
+        loggedInUser && _loadRecipes()
+
+    }, [filterBy]);
+
+
 
     const _loadRecipes = async () => {
-        const recipes = await dispatch(loadRecipes(loggedInUser._id))
+        const recipes = await dispatch(loadRecipes(loggedInUser._id, filterBy))
         setRecipes(recipes)
 
     }
@@ -45,21 +54,22 @@ export function Home() {
         setRecipes(newRecipes)
     }
 
+    const onChangeFilterBy = (filterBy) => {
+        setFilterBy(filterBy)
+
+    }
+    // const onChangeFilterBy = useCallback((filterBy) => {
+    //     setFilterBy(filterBy)
+    //     _loadRecipes()
+
+    // }, []);
+
+
     return (
         <div className='home'>
-            {loggedInUser && <h2>Welcome {loggedInUser.username}</h2>}
-            <section className='recipe-list simple-cards-grid'>
-                {recipes && recipes.map(recipe =>
-                    <section key={recipe._id} onClick={() => navigate(`recipe/${recipe._id}`)} className='recipe-preview'>
-                        <span>
-                            {recipe.name}
-                        </span>
-                        <span onClick={(ev) => removeRecipe(ev, recipe._id)} className="remove-icon" ><FontAwesomeIcon icon={faTrash} /></span>
-                    </section>)
-                }
-                <button className='nice-btn blue' onClick={addRecipe}>Add New Recipe</button>
-
-            </section>
+            {loggedInUser && <h2 className='greet'>Welcome, {loggedInUser.username}</h2>}
+            <RecipeFilter filterBy={filterBy} onChangeFilterBy={onChangeFilterBy} />
+            <RecipeList recipes={recipes} removeRecipe={removeRecipe} addRecipe={addRecipe} />
         </div>
     );
 }

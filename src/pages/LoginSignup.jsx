@@ -17,7 +17,7 @@ export function LoginSignup(props) {
     const { loggedInUser } = useSelector(state => state.userModule)
 
 
-    const [setCreds, creds, register] = useForm({
+    const [creds, setCreds,register] = useForm({
         username: '',
         password: ''
     })
