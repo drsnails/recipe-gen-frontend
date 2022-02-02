@@ -1,6 +1,7 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { useState } from "react";
 
 import { getIdxEquality } from "../services/utilService";
 import { IngPreview } from "./ingPreview";
@@ -17,6 +18,7 @@ export function IngList({
     ingToRemoveIdx,
     onReOrderIngs
 }) {
+    const [isDrag, setIsDrag] = useState(false);
     const getItemStyle = (isDragging, draggableStyle) => ({
         // some basic styles to make the items look a bit nicer
 
@@ -37,9 +39,13 @@ export function IngList({
         // width: 250
     });
 
+    const onDragStart = () => {
+        setIsDrag(true)
 
-    const reOrder = () => {
-
+    }
+    const onDragEnd = (res) => {
+        setIsDrag(false)
+        onReOrderIngs(res)
     }
 
     // const onDragEnd = (result) => {
@@ -49,42 +55,46 @@ export function IngList({
 
 
     return (
-        <DragDropContext onDragEnd={onReOrderIngs}>
-            <Droppable droppableId="droppable">
-                {(provided, snapshot) => (
-                    <div
-                        {...provided.droppableProps}
-                        ref={provided.innerRef}
-                        style={getListStyle(snapshot.isDraggingOver)}
-                    >
-                        <section className="ing-list">
-                            {ingredients.map((ingredient, idx) =>
-                                // <>
-                                <Draggable key={ingredient.id} draggableId={ingredient.id} index={idx}>
-                                    {(provided) => (
-                                        <IngPreview
-                                            providedRef={provided.innerRef}
-                                            dragProp={provided.draggableProps}
-                                            dragHandleProp={provided.dragHandleProps}
-                                            removeIngredient={removeIngredient}
-                                            handleEditable={handleEditable}
-                                            handleIngChange={handleIngChange}
-                                            key={ingredient.id}
-                                            ingredient={ingredient}
-                                            ingToScale={ingToScale}
-                                            onChangeRecipeData={onChangeRecipeData}
-                                            isRemovedClass={getIdxEquality(idx, ingToRemoveIdx)}
-                                        />
-                                    )}
-                                </Draggable>
-                            )}
-                            {!snapshot.isDraggingOver && <button onClick={addIngredient} className="add-btn"><FontAwesomeIcon icon={faPlus}/></button>}
-                        </section>
-                    </div>
+        <>
 
-                )}
-            </Droppable>
-        </DragDropContext>
+            <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
+                <Droppable droppableId="droppable">
+                    {(provided, snapshot) => (
+                        <div
+                            {...provided.droppableProps}
+                            ref={provided.innerRef}
+                            style={getListStyle(snapshot.isDraggingOver)}
+                        >
+                            <section className="ing-list">
+                                {ingredients.map((ingredient, idx) =>
+                                    // <>
+                                    <Draggable key={ingredient.id} draggableId={ingredient.id} index={idx}>
+                                        {(provided) => (
+                                            <IngPreview
+                                                providedRef={provided.innerRef}
+                                                dragProp={provided.draggableProps}
+                                                dragHandleProp={provided.dragHandleProps}
+                                                removeIngredient={removeIngredient}
+                                                handleEditable={handleEditable}
+                                                handleIngChange={handleIngChange}
+                                                key={ingredient.id}
+                                                ingredient={ingredient}
+                                                ingToScale={ingToScale}
+                                                onChangeRecipeData={onChangeRecipeData}
+                                                isRemovedClass={getIdxEquality(idx, ingToRemoveIdx)}
+                                            />
+                                        )}
+                                    </Draggable>
+                                )}
+                                {!snapshot.isDraggingOver && <button onClick={addIngredient} className="add-btn"><FontAwesomeIcon icon={faPlus} /></button>}
 
+                            </section>
+                        </div>
+
+                    )}
+                </Droppable>
+            </DragDropContext>
+            {isDrag && <div className="gap"></div>}
+        </>
     );
 }

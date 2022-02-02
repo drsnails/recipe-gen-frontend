@@ -19,18 +19,21 @@ export function AppHeader() {
     }
 
     return (
-        
+
         <header className='app-header'>
             <section className='container'>
                 <h3 onClick={() => navigate('/')} className='logo'>Recipe</h3>
-                {loggedInUser && <section className='user'>
-                    <p>Hello, {loggedInUser.username}</p>
-                    <button onClick={onLogOut} >Logout</button>
-                </section>}
+
                 <nav>
-                    <NavLink to={'login'}>
-                        Login
-                    </NavLink>
+                    {loggedInUser ?
+                        <section className='user'>
+                            <p>Hello, {loggedInUser.username}</p>
+                            <button onClick={onLogOut} >Logout</button>
+                        </section> :
+                        <NavLink to={'login'}>
+                            Login
+                        </NavLink>
+                    }
 
                 </nav>
 

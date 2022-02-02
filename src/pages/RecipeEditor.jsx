@@ -168,9 +168,12 @@ export default function RecipeEditor() {
 
 
             <section className="instructions">
+                {/* <section className="gap"></section> */}
+
                 <strong>Instructions</strong>
                 <textarea onChange={(({ target }) => onChangeRecipeData('instructions', target.value))} value={recipe.instructions} name="instructions" id="" cols="30" rows="30"></textarea>
             </section>
+
         </div>
     );
 }

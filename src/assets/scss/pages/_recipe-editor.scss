@@ -1,25 +1,23 @@
 .recipe-editor {
-
     .title-container {
         width: 100%;
         display: flex;
         justify-content: space-between;
-        margin-bottom: 3em;
+        margin-bottom: 4em;
     }
 
     strong {
         display: inline-block;
         margin-bottom: 1em;
-
     }
+    
     .instructions {
-
-        margin-top: 20%;
+        // margin-top: 20%;
         textarea {
             font-size: 1.1em;
             width: 100%;
             resize: none;
         }
-
+        
     }
 }

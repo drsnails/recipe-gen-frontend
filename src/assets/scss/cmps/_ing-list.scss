@@ -1,6 +1,7 @@
 .ing-list {
     display: flex;
     flex-direction: column;
+    margin-bottom: 100px;
     // gap: 10px;
     .add-btn {
         // width: 5em;
@@ -17,4 +18,10 @@
             font-size: 1.2em;
         }
     }
+
+}
+
+.gap {
+    height: 133px;
+    // background-color: red;
 }

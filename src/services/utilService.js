@@ -55,31 +55,39 @@ const _convertToGrams = ({ amount, units }) => {
 
 
 export const reOrderList = (list, destIdx, sourceIdx) => {
-    const newList = []
-    for (let i = 0; i < list.length; i++) {
-        if (destIdx >= sourceIdx) {
-
-            if (i >= sourceIdx && i < destIdx) {
-                newList.push(list[i + 1])
-            } else if (i === destIdx) {
-                newList.push(list[sourceIdx])
-            } else {
-                newList.push(list[i])
-            }
-        } else {
-            if (i > destIdx && i <= sourceIdx) {
-                newList.push(list[i - 1])
-            } else if (i === destIdx) {
-                newList.push(list[sourceIdx])
-            } else {
-                newList.push(list[i])
-            }
-        }
-
-    }
-
-    return newList
+    list = [...list]
+    const [source] = list.splice(sourceIdx, 1)
+    list.splice(destIdx, 0, source)
+    return list
 }
+
+
+// export const reOrderList = (list, destIdx, sourceIdx) => {
+//     const newList = []
+//     for (let i = 0; i < list.length; i++) {
+//         if (destIdx >= sourceIdx) {
+
+//             if (i >= sourceIdx && i < destIdx) {
+//                 newList.push(list[i + 1])
+//             } else if (i === destIdx) {
+//                 newList.push(list[sourceIdx])
+//             } else {
+//                 newList.push(list[i])
+//             }
+//         } else {
+//             if (i > destIdx && i <= sourceIdx) {
+//                 newList.push(list[i - 1])
+//             } else if (i === destIdx) {
+//                 newList.push(list[sourceIdx])
+//             } else {
+//                 newList.push(list[i])
+//             }
+//         }
+
+//     }
+
+//     return newList
+// }
 
 
 export const selectText = ({ target }) => {
