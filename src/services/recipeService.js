@@ -96,8 +96,8 @@ function copyRecipeToClipboard(recipe) {
     for (const ingredient of recipe.ingredients) {
 
         const relativeAmount = relativeIng && getAmountToScale(ingredient, relativeIng)
-        recipeTxt += capitalize(ingredient.name) + '\t\t'
-        recipeTxt += ingredient.amount + ' ' + ingredient.units + '\t\t'
+        recipeTxt += capitalize(ingredient.name) + '\t\t '
+        recipeTxt += ingredient.amount + ' ' + ingredient.units + '\t\t '
         recipeTxt += relativeAmount
         recipeTxt += '\n\n'
     }

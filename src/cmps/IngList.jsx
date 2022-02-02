@@ -85,6 +85,7 @@ export function IngList({
                                                     onChangeRecipeData={onChangeRecipeData}
                                                     
                                                     isRemovedClass={getIdxEquality(idx, ingToRemoveIdx)}
+                                                    ingredientsLength={ingredients.length}
                                                 />
                                             )
                                         }}

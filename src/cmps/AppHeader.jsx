@@ -25,20 +25,22 @@ export function AppHeader() {
         <header className='app-header'>
             <section className='container'>
                 <h3 onClick={() => navigate('/')} className='logo'><FontAwesomeIcon icon={faPepperHot} /></h3>
-                
+
 
                 <nav>
-                    {loggedInUser ?
+                    {loggedInUser &&
                         <section className='user'>
                             <p>Hello, {loggedInUser.username}</p>
-                            <button onClick={onLogOut} >Logout</button>
-                        </section> :
-                        <NavLink to={'login'}>
-                            Login
-                        </NavLink>
+                        </section>
+
                     }
 
                 </nav>
+                {!loggedInUser ?
+                    <NavLink to={'login'}>
+                        Login
+                    </NavLink> :
+                    <button className='btn logout' onClick={onLogOut} >Logout</button>}
 
             </section>
         </header>

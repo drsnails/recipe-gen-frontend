@@ -3,9 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPepperHot, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 import { getAmountToScale, selectText, sleep } from "../services/utilService";
+import { showErrorMsg } from "../services/eventBusService";
 
 
-export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, handleIngChange, removeIngredient, providedRef, dragHandleProp, dragProp }) {
+export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredientsLength, handleIngChange, removeIngredient, providedRef, dragHandleProp, dragProp }) {
 
 
     const [className, setClassName] = useState('');
@@ -16,6 +17,12 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, handleI
     var unitsLength = ingredient.units.length + 3
 
     const onRemoveIngredient = async () => {
+
+        if (ingredientsLength === 1) {
+            showErrorMsg({ txt: 'Sorry, for now you need to have at least 1 ingredient' })
+            return
+        }
+        
         setClassName('equal')
         await sleep(350)
         removeIngredient(ingredient.id)
@@ -29,7 +36,7 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, handleI
     //     delete ingredient.isNew
     // }
     // console.log('newClass:', newClass);
-    
+
 
     return (
         <article ref={providedRef} {...dragProp} {...dragHandleProp} className={`ing-preview ${className}`}>

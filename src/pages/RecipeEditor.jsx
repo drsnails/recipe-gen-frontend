@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { IngList } from "../cmps/IngList";
-import { showSuccessMsg } from "../services/eventBusService";
+import { showErrorMsg, showSuccessMsg } from "../services/eventBusService";
 import { recipeService } from "../services/recipeService";
 import { userService } from "../services/userService";
 import { reOrderList, selectText, sleep } from "../services/utilService";
@@ -98,7 +98,7 @@ export default function RecipeEditor() {
     }
 
     const removeIngredient = async (ingId) => {
-        if (recipe.ingredients.length === 1) return
+        
 
         const recipeToSave = {
             ...recipe,
@@ -145,7 +145,7 @@ export default function RecipeEditor() {
         <div className='recipe-editor'>
             <section className="title-container">
                 <h2 onFocus={selectText} onBlur={({ target }) => onChangeRecipeData('name', target.innerText)} contentEditable suppressContentEditableWarning={true} >{recipe.name}</h2>
-                <button className="btn" onClick={onCopyToClipBoard}>Copy To Clipboard</button>
+                <button className="btn copy" onClick={onCopyToClipBoard}>Copy To Clipboard</button>
             </section>
             <strong className="ingredients">Ingredients</strong>
             <IngList

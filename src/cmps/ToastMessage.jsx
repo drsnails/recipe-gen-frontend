@@ -7,7 +7,9 @@ export const ToastMessage = () => {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    eventBusService.on('show-toast-message', onAddMessage);
+    const removeEvent = eventBusService.on('show-toast-message', onAddMessage);
+
+    return removeEvent
   }, []);
 
   const onAddMessage = message => {

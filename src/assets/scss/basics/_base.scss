@@ -89,6 +89,15 @@ a.my-active {
 .btn {
   border: none;
   padding: 0.5em 1em;
+  box-shadow: 0 0 0px 1px #00000047;
+  border-radius: 2px;
+  background: none;
+  transition: transform .15s;
+  
+}
+
+.btn:active {
+  transform: scale(0.98);
 }
 
 .nice-btn {

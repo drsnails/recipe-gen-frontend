@@ -33,8 +33,23 @@
             // height: 100px;
         }
 
-        .user {
+
+        nav {
+
             flex-grow: 1;
+            .user {
+    
+                p {
+                    // display: inline-block;
+                    // margin-inline: 10px;
+                }
+                .logout.btn {
+                    margin-block: 5px;
+                    display: inline-block;
+                    padding: 3px;
+                }
+            }
         }
+
     }
 }
