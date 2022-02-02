@@ -4,7 +4,7 @@
     justify-content: center;
     .recipe-list {
         margin-top: 50px;
-        grid-template-columns: repeat(auto-fill, minmax(100px, auto));
+        grid-template-columns: repeat(auto-fill, minmax(150px, auto));
 
         grid-auto-rows: minmax(80px, auto);
 
