@@ -69,21 +69,25 @@ export function IngList({
                                 {ingredients.map((ingredient, idx) =>
                                     // <>
                                     <Draggable key={ingredient.id} draggableId={ingredient.id} index={idx}>
-                                        {(provided) => (
-                                            <IngPreview
-                                                providedRef={provided.innerRef}
-                                                dragProp={provided.draggableProps}
-                                                dragHandleProp={provided.dragHandleProps}
-                                                removeIngredient={removeIngredient}
-                                                handleEditable={handleEditable}
-                                                handleIngChange={handleIngChange}
-                                                key={ingredient.id}
-                                                ingredient={ingredient}
-                                                ingToScale={ingToScale}
-                                                onChangeRecipeData={onChangeRecipeData}
-                                                isRemovedClass={getIdxEquality(idx, ingToRemoveIdx)}
-                                            />
-                                        )}
+                                        {(provided) => {
+
+                                            return (
+                                                <IngPreview
+                                                    providedRef={provided.innerRef}
+                                                    dragProp={provided.draggableProps}
+                                                    dragHandleProp={provided.dragHandleProps}
+                                                    removeIngredient={removeIngredient}
+                                                    handleEditable={handleEditable}
+                                                    handleIngChange={handleIngChange}
+                                                    key={ingredient.id}
+                                                    ingredient={ingredient}
+                                                    ingToScale={ingToScale}
+                                                    onChangeRecipeData={onChangeRecipeData}
+                                                    
+                                                    isRemovedClass={getIdxEquality(idx, ingToRemoveIdx)}
+                                                />
+                                            )
+                                        }}
                                     </Draggable>
                                 )}
                                 {!snapshot.isDraggingOver && <button onClick={addIngredient} className="add-btn"><FontAwesomeIcon icon={faPlus} /></button>}

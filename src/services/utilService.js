@@ -9,8 +9,11 @@ export function makeId(length = 5) {
 }
 
 
-export const checkFields = (fields) => {
-    const missingFields = Object.keys(fields).filter(field => !fields[field]).join(', ')
+export const checkFields = (fields, isSign) => {
+    const missingFields = Object.keys(fields).filter(field => {
+        if (!isSign && field === 'email') return false
+        return !fields[field]
+    }).join(', ')
     return missingFields
 }
 

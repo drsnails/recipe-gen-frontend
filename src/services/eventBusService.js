@@ -26,5 +26,5 @@ export function showErrorMsg(toastMessage) {
   showToastMessage({ ...toastMessage, type: 'error' });
 }
 
-window.myBus = eventBusService;
-window.showToastMessage = showToastMessage;
+// window.myBus = eventBusService;
+// window.showToastMessage = showToastMessage;

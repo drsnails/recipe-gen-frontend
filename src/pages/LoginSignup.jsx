@@ -47,16 +47,17 @@ export function LoginSignup(props) {
     const onSubmit = async (ev) => {
         ev.stopPropagation()
         ev.preventDefault()
-        const missingFields = checkFields(creds)
+        const missingFields = checkFields(creds, isSignin)
         if (missingFields) {
             console.log(`Some fields are missing. (${missingFields})`);
-            showErrorMsg({txt:`Some fields are missing. (${missingFields})`})
+            showErrorMsg({ txt: `Some fields are missing. (${missingFields})` })
+            return
         }
         try {
             await dispatch(creds.email ? signin(creds) : login(creds))
             navigate('/')
         } catch (err) {
-            showErrorMsg({txt:`There was a problem while ${err.type}`})
+            showErrorMsg({ txt: `There was a problem while ${err.type}` })
         }
 
     }

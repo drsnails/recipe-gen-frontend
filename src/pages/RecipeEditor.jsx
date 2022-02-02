@@ -88,6 +88,8 @@ export default function RecipeEditor() {
 
     const addIngredient = async () => {
         const ingToAdd = recipeService.getEmptyIngredient()
+        ingToAdd.isNew = true
+        console.log('addIngredient -> ingToAdd', ingToAdd)
         const recipeToSave = {
             ...recipe,
             ingredients: [...recipe.ingredients, ingToAdd]

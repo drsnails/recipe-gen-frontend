@@ -57,7 +57,7 @@ export function Home() {
                         <span onClick={(ev) => removeRecipe(ev, recipe._id)} className="remove-icon" ><FontAwesomeIcon icon={faTrash} /></span>
                     </section>)
                 }
-                <button className='nice-btn blue' onClick={addRecipe}>New Recipe</button>
+                <button className='nice-btn blue' onClick={addRecipe}>Add New Recipe</button>
 
             </section>
         </div>

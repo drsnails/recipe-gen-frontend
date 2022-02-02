@@ -5,7 +5,7 @@ import { faPepperHot, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { getAmountToScale, selectText, sleep } from "../services/utilService";
 
 
-export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, handleIngChange, removeIngredient, isRemovedClass, providedRef, dragHandleProp, dragProp }) {
+export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, handleIngChange, removeIngredient, providedRef, dragHandleProp, dragProp }) {
 
 
     const [className, setClassName] = useState('');
@@ -22,6 +22,14 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, handleI
     }
 
 
+    // let newClass = ''
+    // if (ingredient.isNew) {
+    //     console.log('isNEWWWW:');
+    //     newClass = 'new-ing'
+    //     delete ingredient.isNew
+    // }
+    // console.log('newClass:', newClass);
+    
 
     return (
         <article ref={providedRef} {...dragProp} {...dragHandleProp} className={`ing-preview ${className}`}>
@@ -30,8 +38,8 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, handleI
 
 
             <section className="editable" className="ing-name">
-                <span tabIndex="1" onFocus={selectText} title={ingredient.name} data-name="name" onBlur={(ev) => handleIngChange(ev, ingredient)}  contentEditable suppressContentEditableWarning={true}>{ingredient.name}</span>
-            </section> 
+                <span tabIndex="1" onFocus={selectText} title={ingredient.name} data-name="name" onBlur={(ev) => handleIngChange(ev, ingredient)} contentEditable suppressContentEditableWarning={true}>{ingredient.name}</span>
+            </section>
             <section className="amount-unit">
                 <span onFocus={selectText} inputMode="numeric" data-name="amount" onBlur={(ev) => handleIngChange(ev, ingredient)} className="editable" contentEditable suppressContentEditableWarning={true}>{ingredient.amount}</span>
                 <select style={{ width: `${unitsLength}ch` }} onChange={(ev) => handleIngChange(ev, ingredient)} value={ingredient.units} name="units" id="units">
