@@ -28,19 +28,14 @@ export function AppHeader() {
 
 
                 <nav>
-                    {loggedInUser &&
-                        <section className='user'>
-                            <p>Hello, {loggedInUser.username}</p>
-                        </section>
-
-                    }
+                    {!loggedInUser ?
+                        <NavLink to={'login'}>
+                            Login
+                        </NavLink> :
+                        <button className='btn logout' onClick={onLogOut} >Logout</button>}
 
                 </nav>
-                {!loggedInUser ?
-                    <NavLink to={'login'}>
-                        Login
-                    </NavLink> :
-                    <button className='btn logout' onClick={onLogOut} >Logout</button>}
+                
 
             </section>
         </header>
