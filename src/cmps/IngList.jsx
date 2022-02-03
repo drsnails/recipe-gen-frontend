@@ -83,7 +83,7 @@ export function IngList({
                                                     ingredient={ingredient}
                                                     ingToScale={ingToScale}
                                                     onChangeRecipeData={onChangeRecipeData}
-                                                    
+
                                                     isRemovedClass={getIdxEquality(idx, ingToRemoveIdx)}
                                                     ingredientsLength={ingredients.length}
                                                 />
@@ -91,6 +91,7 @@ export function IngList({
                                         }}
                                     </Draggable>
                                 )}
+                                {/* {(!snapshot.isDraggingOver || true) && <button onClick={addIngredient} className="add-btn"><FontAwesomeIcon icon={faPlus} /></button>} */}
                                 {!snapshot.isDraggingOver && <button onClick={addIngredient} className="add-btn"><FontAwesomeIcon icon={faPlus} /></button>}
 
                             </section>

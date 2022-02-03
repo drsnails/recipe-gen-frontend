@@ -1,15 +1,30 @@
-import { useState } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPepperHot, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 import { getAmountToScale, selectText, sleep } from "../services/utilService";
 import { showErrorMsg } from "../services/eventBusService";
 
 
-export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredientsLength, handleIngChange, removeIngredient, providedRef, dragHandleProp, dragProp }) {
+function _IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredientsLength, handleIngChange, removeIngredient, providedRef, dragHandleProp, dragProp }) {
 
 
     const [className, setClassName] = useState('');
+
+    const articleRef = useRef()
+
+    // useEffect(() => {
+
+    //     console.log('articleRef.current:', articleRef.current);
+
+
+    // }, []);
+
+    const moreRef = (el) => {
+        console.log('moreREf el:', el);
+
+    }
+
 
 
     const ingToScaleClass = ingredient.id === ingToScale?.id ? 'chosen' : ''
@@ -22,11 +37,26 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredi
             showErrorMsg({ txt: 'Sorry, for now you need to have at least 1 ingredient' })
             return
         }
-        
+
         setClassName('equal')
         await sleep(350)
         removeIngredient(ingredient.id)
     }
+
+    const mergeRefs = (...refs) => {
+        const filteredRefs = refs.filter(Boolean);
+        if (!filteredRefs.length) return null;
+        if (filteredRefs.length === 0) return filteredRefs[0];
+        return inst => {
+            for (const ref of filteredRefs) {
+                if (typeof ref === 'function') {
+                    ref(inst);
+                } else if (ref) {
+                    ref.current = inst;
+                }
+            }
+        };
+    };
 
 
     // let newClass = ''
@@ -39,6 +69,9 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredi
 
 
     return (
+
+
+        // <article ref={mergeRefs(providedRef, articleRef)} {...dragProp} {...dragHandleProp} className={`ing-preview ${className}`}>
         <article ref={providedRef} {...dragProp} {...dragHandleProp} className={`ing-preview ${className}`}>
             {/* <button onClick={onRemoveIngredient} className="remove-btn"></button> */}
             <span className="remove-icon" ><FontAwesomeIcon onClick={onRemoveIngredient} icon={faTrash} /></span>
@@ -63,3 +96,4 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredi
         </article>
     );
 }
+export const IngPreview = forwardRef(_IngPreview)

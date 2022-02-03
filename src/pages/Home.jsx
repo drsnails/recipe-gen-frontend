@@ -7,6 +7,8 @@ import { loadRecipes } from '../store/actions/recipeActions';
 import { RecipeList } from '../cmps/RecipeList';
 import { RecipeFilter } from '../cmps/RecipeFilter';
 import { useEffectUpdate } from '../hooks/useEffectUpdate';
+import { createPortal } from "react-dom";
+
 
 export function Home() {
 
@@ -65,9 +67,11 @@ export function Home() {
     // }, []);
 
 
+
     return (
         <div className='home'>
             {loggedInUser && <h2 className='greet'>Welcome, {loggedInUser.username}</h2>}
+
             <RecipeFilter filterBy={filterBy} onChangeFilterBy={onChangeFilterBy} />
             <RecipeList recipes={recipes} removeRecipe={removeRecipe} addRecipe={addRecipe} />
         </div>
