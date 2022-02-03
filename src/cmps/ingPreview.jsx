@@ -6,19 +6,13 @@ import { getAmountToScale, selectText, sleep } from "../services/utilService";
 import { showErrorMsg } from "../services/eventBusService";
 
 
-function _IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredientsLength, handleIngChange, removeIngredient, providedRef, dragHandleProp, dragProp }) {
+function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredientsLength, handleIngChange, removeIngredient, providedRef, dragHandleProp, dragProp }) {
 
 
     const [className, setClassName] = useState('');
 
-    const articleRef = useRef()
 
-    // useEffect(() => {
-
-    //     console.log('articleRef.current:', articleRef.current);
-
-
-    // }, []);
+  
 
     const moreRef = (el) => {
         console.log('moreREf el:', el);
@@ -96,4 +90,3 @@ function _IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredientsLe
         </article>
     );
 }
-export const IngPreview = forwardRef(_IngPreview)
