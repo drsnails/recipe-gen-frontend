@@ -50,8 +50,16 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredi
         };
     };
 
+    const onChangeRecipeDataWrap = () => {
+        if (ingredient.units === 'units') {
+            showErrorMsg({txt:"Can't set 'Units' as a main relative quantity"})
+            return
+        }
+        onChangeRecipeData('ingToScaleId', ingredient.id)
+    }
 
-    
+
+
 
     // let newClass = ''
     // if (ingredient.isNew) {
@@ -95,7 +103,7 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredi
                     <option value="units">Units</option>
                 </select>
             </section>
-            <p title={amountToScale} onClick={() => onChangeRecipeData('ingToScaleId', ingredient.id)} className={ingToScaleClass}>{amountToScale}</p>
+            <p title={amountToScale} onClick={onChangeRecipeDataWrap} className={ingToScaleClass}>{amountToScale}</p>
         </article>
     );
 }

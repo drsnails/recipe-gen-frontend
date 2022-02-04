@@ -19,8 +19,10 @@ export const checkFields = (fields, isSign) => {
 
 
 export const getAmountToScale = (from, to) => {
+console.log('getAmountToScale -> from', from)
     const fromAmount = _convertToGrams(from)
     const toAmount = _convertToGrams(to)
+    
     return (fromAmount / toAmount).toFixed(2)
 }
 

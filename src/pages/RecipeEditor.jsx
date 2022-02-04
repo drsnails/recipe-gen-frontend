@@ -52,6 +52,7 @@ export default function RecipeEditor() {
     }, [recipe]);
 
     const onChangeRecipeData = async (field, value) => {
+
         const recipeToSave = { ...recipe, [field]: value }
         saveRecipe(recipeToSave, field, value)
     }
@@ -77,11 +78,18 @@ export default function RecipeEditor() {
             if (value === ingredient[field]) return
         }
 
+
+
         const ingToSave = { ...ingredient, [field]: value }
         const recipeToSave = {
             ...recipe,
             ingredients: recipe.ingredients.map(ing => ing.id === ingredient.id ? ingToSave : ing)
         }
+
+        if (field === 'units' && value === 'units' && recipeToSave.ingToScaleId === ingToSave.id) {
+            recipeToSave.ingToScaleId = ''
+        }
+
 
         await saveRecipe(recipeToSave, field, value, ingredient.id)
 
@@ -92,8 +100,8 @@ export default function RecipeEditor() {
         let value = +target.value
         console.log('handleNumOfDishesChange -> value', value)
         console.log('numsOfDishes:', numOfDishes);
-        
-        if ( !value || value < 0) value = ''
+
+        if (!value || value < 0) value = ''
         setNumOfDishes(value)
 
     }
