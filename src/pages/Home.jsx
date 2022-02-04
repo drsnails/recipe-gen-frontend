@@ -45,7 +45,7 @@ export function Home() {
     const addRecipe = async () => {
         const emptyRecipe = recipeService.getEmptyRecipe()
         emptyRecipe.userId = loggedInUser._id
-        const newRecipe = await recipeService.save(emptyRecipe)
+        const newRecipe = await recipeService.save({ recipe: emptyRecipe })
         setRecipes([...recipes, newRecipe])
     }
 

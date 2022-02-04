@@ -160,7 +160,8 @@ export default function RecipeEditor() {
             ...recipe,
             ingredients: [...recipe.ingredients, ingToAdd]
         }
-        saveRecipe({ recipe: recipeToSave }, 'general')
+        // saveRecipe({ recipe: recipeToSave }, 'general')
+        triggerSaveBtn(recipeToSave)
     }
 
     const removeIngredient = async (ingId) => {
