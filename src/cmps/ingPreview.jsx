@@ -21,9 +21,7 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredi
 
 
 
-    const ingToScaleClass = ingredient.id === ingToScale?.id ? 'chosen' : ''
-    const amountToScale = ingToScale ? getAmountToScale(ingredient, ingToScale) : 0
-    var unitsLength = ingredient.units.length + 3
+
 
     const onRemoveIngredient = async () => {
 
@@ -53,6 +51,8 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredi
     };
 
 
+    
+
     // let newClass = ''
     // if (ingredient.isNew) {
     //     console.log('isNEWWWW:');
@@ -60,11 +60,16 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredi
     //     delete ingredient.isNew
     // }
     // console.log('newClass:', newClass);
-    const amount = useMemo(() => {
+
+    const dishesAmount = useMemo(() => {
         numOfDishes ||= 1
         return (ingredient.amount * numOfDishes) % 1 === 0 ? (ingredient.amount * numOfDishes) : (ingredient.amount * numOfDishes).toFixed(2)
     }, [numOfDishes])
 
+
+    const ingToScaleClass = ingredient.id === ingToScale?.id ? 'chosen' : ''
+    const amountToScale = (ingToScale && ingredient.units !== 'units') ? getAmountToScale(ingredient, ingToScale) : 0
+    var unitsLength = ingredient.units.length + 3
     return (
 
 
@@ -78,7 +83,7 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredi
                 <span tabIndex="1" onFocus={selectText} title={ingredient.name} data-name="name" onBlur={(ev) => handleIngChange(ev, ingredient)} contentEditable suppressContentEditableWarning={true}>{ingredient.name}</span>
             </section>
             <section className="amount-unit">
-                <span onFocus={selectText} inputMode="numeric" data-name="amount" onBlur={(ev) => handleIngChange(ev, ingredient)} className="editable" contentEditable suppressContentEditableWarning={true}>{amount}</span>
+                <span onFocus={selectText} inputMode="numeric" data-name="amount" onBlur={(ev) => handleIngChange(ev, ingredient)} className="editable" contentEditable suppressContentEditableWarning={true}>{dishesAmount}</span>
                 <select style={{ width: `${unitsLength}ch` }} onChange={(ev) => handleIngChange(ev, ingredient)} value={ingredient.units} name="units" id="units">
                     <option value="g">g</option>
                     <option value="Kg">Kg</option>
@@ -87,6 +92,7 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredi
                     <option value="cup">Cup</option>
                     <option value="tableSpoon">Table spoon</option>
                     <option value="teaSpoon">Tea spoon</option>
+                    <option value="units">Units</option>
                 </select>
             </section>
             <p title={amountToScale} onClick={() => onChangeRecipeData('ingToScaleId', ingredient.id)} className={ingToScaleClass}>{amountToScale}</p>
