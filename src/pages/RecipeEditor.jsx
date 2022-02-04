@@ -92,15 +92,14 @@ export default function RecipeEditor() {
         }
     }
 
-    const handleIngChange = async ({ target }, ingredient) => {
+    const handleIngChange = async (ev, ingredient) => {
+        const { target } = ev
         let field, value
         field = target.name
         value = target.value
-
         if (target.nodeName !== 'SELECT' && target.nodeName !== 'INPUT') {
             field = target.dataset.name
             value = target.innerText
-
             if (field === 'amount') {
                 value = +value
                 if (!value) {
@@ -110,8 +109,10 @@ export default function RecipeEditor() {
                 }
             }
 
-            if (value === ingredient[field]) return
         }
+
+        if (value === ingredient[field]) return
+
 
 
         const ingToSave = { ...ingredient, [field]: value }
@@ -244,6 +245,7 @@ export default function RecipeEditor() {
                 ingToRemoveIdx={ingToRemoveIdx}
                 onReOrderIngs={onReOrderIngs}
                 numOfDishes={numOfDishes}
+                
             />
 
 

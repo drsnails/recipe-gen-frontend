@@ -59,6 +59,16 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredi
     }
 
 
+    const handleKeyPress = (ev) => {
+        if (ev.key==='Enter') {
+            ev.target.blur()
+            window.getSelection().empty()
+        }
+        
+    }
+
+
+
 
 
     // let newClass = ''
@@ -84,15 +94,15 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredi
         // <article ref={mergeRefs(providedRef, articleRef)} {...dragProp} {...dragHandleProp} className={`ing-preview ${className}`}>
         <article ref={providedRef} {...dragProp} {...dragHandleProp} className={`ing-preview ${className}`}>
             {/* <button onClick={onRemoveIngredient} className="remove-btn"></button> */}
-            <span className="remove-icon" ><FontAwesomeIcon onClick={onRemoveIngredient} icon={faTrash} /></span>
+            <span tabIndex="-1" className="remove-icon" ><FontAwesomeIcon onClick={onRemoveIngredient} icon={faTrash} /></span>
 
 
             <section className="editable" className="ing-name">
-                <span tabIndex="1" onFocus={selectText} title={ingredient.name} data-name="name" onBlur={(ev) => handleIngChange(ev, ingredient)} contentEditable suppressContentEditableWarning={true}>{ingredient.name}</span>
+                <span tabIndex="0" onKeyPress={handleKeyPress}  onFocus={selectText} title={ingredient.name} data-name="name" onBlur={(ev) => handleIngChange(ev, ingredient)} contentEditable suppressContentEditableWarning={true}>{ingredient.name}</span>
             </section>
             <section className="amount-unit">
-                <span onFocus={selectText} inputMode="numeric" data-name="amount" onBlur={(ev) => handleIngChange(ev, ingredient)} className="editable" contentEditable suppressContentEditableWarning={true}>{dishesAmount}</span>
-                <select style={{ width: `${unitsLength}ch` }} onChange={(ev) => handleIngChange(ev, ingredient)} value={ingredient.units} name="units" id="units">
+                <span tabIndex="0" onKeyPress={handleKeyPress} onFocus={selectText} inputMode="numeric" data-name="amount" onBlur={(ev) => handleIngChange(ev, ingredient)} className="editable" contentEditable suppressContentEditableWarning={true}>{dishesAmount}</span>
+                <select tabIndex="0" style={{ width: `${unitsLength}ch` }} onChange={(ev) => handleIngChange(ev, ingredient)} value={ingredient.units} name="units" id="units">
                     <option value="g">g</option>
                     <option value="Kg">Kg</option>
                     <option value="mL">mL</option>
