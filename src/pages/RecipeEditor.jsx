@@ -100,6 +100,10 @@ export default function RecipeEditor() {
         if (target.nodeName !== 'SELECT' && target.nodeName !== 'INPUT') {
             field = target.dataset.name
             value = target.innerText
+            if (value.includes('\n')) {
+                ev.target.blur()
+                window.getSelection().empty()
+            }
             if (field === 'amount') {
                 value = +value
                 if (!value) {

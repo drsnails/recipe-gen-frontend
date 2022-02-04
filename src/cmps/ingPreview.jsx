@@ -62,7 +62,9 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredi
     const handleKeyPress = (ev) => {
         console.log('ev:', ev);
 
-        if (ev.which === 13 || ev.charCode === 13) {
+        // if (ev.which === 13 || ev.charCode === 13 || ev.code==='Enter' || ev.nativeEvent.keyCode===13) {
+        if (ev.nativeEvent.keyCode === 13) {
+            // if (ev.keyCode === 13) {
             ev.target.blur()
             window.getSelection().empty()
         }
