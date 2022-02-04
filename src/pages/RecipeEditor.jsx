@@ -12,7 +12,8 @@ export default function RecipeEditor() {
     const [recipe, setRecipe] = useState();
     const [ingToRemoveIdx, setIngToRemoveIdx] = useState(null);
     const [numOfDishes, setNumOfDishes] = useState('');
-
+    const [isEdited, setIsEdited] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
 
     const params = useParams()
     useEffect(() => {
@@ -26,25 +27,54 @@ export default function RecipeEditor() {
     const loadRecipe = async () => {
         const recipe = params.id ? await recipeService.getById(params.id) : recipeService.getEmptyRecipe()
         // getIngredientToScale(recipe)
+
         setRecipe(recipe)
+
     }
 
-    const saveRecipe = async (recipeToSave, field, value, ingId) => {
-
+    /*TEST START*/
+    const saveRecipe = async (data, type) => {
+        const { recipe } = data
         const oldRecipe = cloneDeep(recipe)
         try {
-            setRecipe(recipeToSave)
-            await recipeService.save(recipeToSave, field, value, ingId)
+            setRecipe(recipe)
+            await recipeService.save(data, type)
+            return 'res'
             // * if field is null thats means were removing an ingredient
-
             // setIngToRemoveIdx(null)
 
         } catch (err) {
             console.log('cant save recipe: ', err);
             setRecipe(oldRecipe)
+            throw err
         } finally {
+
         }
     }
+
+    /*TEST END*/
+
+
+
+
+    /*ORIGINAL START*/
+    // const saveRecipe = async (recipeToSave, field, value, ingId) => {
+
+    //     const oldRecipe = cloneDeep(recipe)
+    //     try {
+    //         setRecipe(recipeToSave)
+    //         await recipeService.save(recipeToSave, field, value, ingId)
+    //         // * if field is null thats means were removing an ingredient
+
+    //         // setIngToRemoveIdx(null)
+
+    //     } catch (err) {
+    //         console.log('cant save recipe: ', err);
+    //         setRecipe(oldRecipe)
+    //     } finally {
+    //     }
+    // }
+    /*ORIGINAL END*/
 
     const getIngredientToScale = useCallback((recipe) => {
         const ingToScale = recipe.ingredients.find(ing => ing.id === recipe.ingToScaleId)
@@ -54,7 +84,12 @@ export default function RecipeEditor() {
     const onChangeRecipeData = async (field, value) => {
 
         const recipeToSave = { ...recipe, [field]: value }
-        saveRecipe(recipeToSave, field, value)
+        // if (!isEdited) setIsEdited(true)
+        if (field === 'ingToScaleId') {
+            saveRecipe({ recipe: recipeToSave, field, value }, 'updateRecipe')
+        } else {
+            triggerSaveBtn(recipeToSave)
+        }
     }
 
     const handleIngChange = async ({ target }, ingredient) => {
@@ -85,13 +120,23 @@ export default function RecipeEditor() {
             ingredients: recipe.ingredients.map(ing => ing.id === ingredient.id ? ingToSave : ing)
         }
 
+
         if (field === 'units' && value === 'units' && recipeToSave.ingToScaleId === ingToSave.id) {
-            return showErrorMsg({txt: "Can't change main relative quantity to 'Units'" })
+            return showErrorMsg({ txt: "Can't change main relative quantity to 'Units'" })
         }
 
-        await saveRecipe(recipeToSave, field, value, ingredient.id)
+        triggerSaveBtn(recipeToSave)
+
+    }
 
 
+
+    const triggerSaveBtn = (recipeToSave) => {
+        setRecipe(recipeToSave)
+        if (!isEdited) {
+            setIsEdited(true)
+            setIsMounted(true)
+        }
     }
 
     const handleNumOfDishesChange = ({ target }) => {
@@ -115,11 +160,10 @@ export default function RecipeEditor() {
             ...recipe,
             ingredients: [...recipe.ingredients, ingToAdd]
         }
-        saveRecipe(recipeToSave)
+        saveRecipe({ recipe: recipeToSave }, 'general')
     }
 
     const removeIngredient = async (ingId) => {
-
 
         const recipeToSave = {
             ...recipe,
@@ -128,7 +172,19 @@ export default function RecipeEditor() {
         if (recipe.ingToScaleId === ingId) {
             recipe.ingToScaleId = ''
         }
-        saveRecipe(recipeToSave, null, null, ingId)
+
+        triggerSaveBtn(recipeToSave)
+    }
+
+
+    const onSaveRecipe = async () => {
+        try {
+            setIsEdited(false)
+            await saveRecipe({ recipe }, 'general')
+            showSuccessMsg({ txt: 'Recipe saved', time: 2000 })
+        } catch (err) {
+            showErrorMsg({ txt: 'Saving recipe failed', time: 2000 })
+        }
     }
 
 
@@ -150,8 +206,7 @@ export default function RecipeEditor() {
             ingredients: ingredients
         }
 
-        saveRecipe(recipeToSave, null, null)
-
+        saveRecipe({ recipe: recipeToSave }, 'general')
     }
 
     const onCopyToClipBoard = () => {
@@ -162,6 +217,7 @@ export default function RecipeEditor() {
 
     if (!recipe) return <div>Loading...</div>
     const ingToScale = getIngredientToScale(recipe)
+    const floatBtnClass = isEdited ? 'animate-in' : 'animate-out'
     return (
         <div className='recipe-editor'>
             <section className="title-container">
@@ -196,6 +252,9 @@ export default function RecipeEditor() {
                 <strong className="instructions-title">Instructions</strong>
                 <textarea onChange={(({ target }) => onChangeRecipeData('instructions', target.value))} value={recipe.instructions} name="instructions" id="" cols="30" rows="30"></textarea>
             </section>
+
+
+            {isMounted && <button onClick={onSaveRecipe} className={`save-recipe ${floatBtnClass}`}>Save Changes</button>}
 
         </div>
     );

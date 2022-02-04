@@ -49,6 +49,42 @@
         }
     }
 
+
+
+
+    button.save-recipe {
+        background-color:#0C9;
+        display: none;
+        color: white;
+        font-size: 1.1em;
+        font-weight: 500;
+        border: none;
+        border-radius: 3px;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        padding: 0.7em 1.2em;
+        box-shadow: 2px 2px 3px #999;
+        
+    }
+    
+    
+    button.save-recipe.animate-in {
+        display: inline-block;
+        animation: fade-scale-up .25s ease forwards;
+    }
+    button.save-recipe.animate-out {
+        display: inline-block;
+        animation: fade-scale-down .25s ease forwards;
+    }
+
+    
+
+
+    
+
     
 }
 

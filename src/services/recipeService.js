@@ -48,13 +48,30 @@ async function remove(recipeId) {
     }
 }
 
-async function save(recipe, field, value, ingId) {
+
+/*TEST START*/
+async function save(data, type) {
     try {
-        return recipe._id ? httpService.put(BASE_URL, { recipe, field, value, ingId }) : httpService.post(BASE_URL, recipe)
+        return data?.recipe._id ? httpService.put(BASE_URL, {data, type}) : httpService.post(BASE_URL, data.recipe)
     } catch (err) {
         return
     }
 }
+/*TEST END*/
+
+
+
+/*ORIGINAL START*/
+// async function save(recipe, field, value, ingId) {
+//     try {
+//         return recipe._id ? httpService.put(BASE_URL, { recipe, field, value, ingId }) : httpService.post(BASE_URL, recipe)
+//     } catch (err) {
+//         return
+//     }
+// }
+/*ORIGINAL END*/
+
+
 
 
 async function update(recipe) {

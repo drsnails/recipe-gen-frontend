@@ -19,7 +19,7 @@ export const ToastMessage = () => {
       setMessages(prevMessages =>
         prevMessages.filter(currMessage => currMessage.id !== message.id)
       );
-    }, 4000);
+    }, message.time || 4000);
   };
 
   return messages.length
