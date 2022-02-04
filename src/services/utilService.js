@@ -42,7 +42,7 @@ const _convertToGrams = ({ amount, units }) => {
     if (units === 'L' || units === 'Kg') {
         amount *= 1000
     } else if (units === 'cup') {
-        amount *= 128
+        amount *= 236.588
     } else if (units === 'oz') {
         amount *= 28.35
     } else if (units === 'tableSpoon') {

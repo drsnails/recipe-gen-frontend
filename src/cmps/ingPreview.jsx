@@ -6,7 +6,7 @@ import { getAmountToScale, selectText, sleep } from "../services/utilService";
 import { showErrorMsg } from "../services/eventBusService";
 
 
-function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredientsLength, handleIngChange, removeIngredient, providedRef, dragHandleProp, dragProp }) {
+export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredientsLength, handleIngChange, removeIngredient, providedRef, dragHandleProp, dragProp }) {
 
 
     const [className, setClassName] = useState('');
