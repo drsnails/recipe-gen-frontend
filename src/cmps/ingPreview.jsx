@@ -67,6 +67,8 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredi
             // if (ev.keyCode === 13) {
             ev.target.blur()
             window.getSelection().empty()
+            ev.stopPropagation()
+            
         }
 
     }
