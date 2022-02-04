@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useRef, useState } from "react";
+import { forwardRef, useEffect, useMemo, useRef, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
@@ -6,13 +6,13 @@ import { getAmountToScale, selectText, sleep } from "../services/utilService";
 import { showErrorMsg } from "../services/eventBusService";
 
 
-export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredientsLength, handleIngChange, removeIngredient, providedRef, dragHandleProp, dragProp }) {
+export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredientsLength, handleIngChange, removeIngredient, providedRef, dragHandleProp, dragProp, numOfDishes }) {
 
 
     const [className, setClassName] = useState('');
 
 
-  
+
 
     const moreRef = (el) => {
         console.log('moreREf el:', el);
@@ -33,7 +33,7 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredi
         }
 
         setClassName('equal')
-    await sleep(350)
+        await sleep(350)
         removeIngredient(ingredient.id)
     }
 
@@ -60,7 +60,10 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredi
     //     delete ingredient.isNew
     // }
     // console.log('newClass:', newClass);
-
+    const amount = useMemo(() => {
+        numOfDishes ||= 1
+        return (ingredient.amount * numOfDishes) % 1 === 0 ? (ingredient.amount * numOfDishes) : (ingredient.amount * numOfDishes).toFixed(2)
+    }, [numOfDishes])
 
     return (
 
@@ -75,7 +78,7 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredi
                 <span tabIndex="1" onFocus={selectText} title={ingredient.name} data-name="name" onBlur={(ev) => handleIngChange(ev, ingredient)} contentEditable suppressContentEditableWarning={true}>{ingredient.name}</span>
             </section>
             <section className="amount-unit">
-                <span onFocus={selectText} inputMode="numeric" data-name="amount" onBlur={(ev) => handleIngChange(ev, ingredient)} className="editable" contentEditable suppressContentEditableWarning={true}>{ingredient.amount}</span>
+                <span onFocus={selectText} inputMode="numeric" data-name="amount" onBlur={(ev) => handleIngChange(ev, ingredient)} className="editable" contentEditable suppressContentEditableWarning={true}>{amount}</span>
                 <select style={{ width: `${unitsLength}ch` }} onChange={(ev) => handleIngChange(ev, ingredient)} value={ingredient.units} name="units" id="units">
                     <option value="g">g</option>
                     <option value="Kg">Kg</option>

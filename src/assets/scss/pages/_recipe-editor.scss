@@ -6,13 +6,42 @@
         margin-bottom: 4em;
     }
 
-    strong {
-        display: inline-block;
+    .title-edit {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
         margin-bottom: 1em;
+
+        .nice-form {
+            margin-bottom: 0;
+        }
+        
+
+        .dishes-form {
+            font-size: 1em !important;
+            
+            .form__field {
+                max-width: 190px;
+            }
+
+            
+
+            
+        }
+
     }
+
+
+
+
+    
 
     .instructions {
         // margin-top: 20%;
+        .instructions-title {
+            margin-bottom: 1em;
+            display: inline-block;
+        }
         textarea {
             font-size: 1.1em;
             width: 100%;
@@ -22,3 +51,5 @@
 
     
 }
+
+

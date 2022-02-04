@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { IngList } from "../cmps/IngList";
+import { useForm } from "../hooks/useFormRegister";
 import { showErrorMsg, showSuccessMsg } from "../services/eventBusService";
 import { recipeService } from "../services/recipeService";
 import { userService } from "../services/userService";
@@ -10,6 +11,7 @@ var cloneDeep = require('lodash.clonedeep');
 export default function RecipeEditor() {
     const [recipe, setRecipe] = useState();
     const [ingToRemoveIdx, setIngToRemoveIdx] = useState(null);
+    const [numOfDishes, setNumOfDishes] = useState('');
 
 
     const params = useParams()
@@ -17,6 +19,9 @@ export default function RecipeEditor() {
 
         loadRecipe()
     }, [params.id]);
+
+
+
 
     const loadRecipe = async () => {
         const recipe = params.id ? await recipeService.getById(params.id) : recipeService.getEmptyRecipe()
@@ -83,6 +88,16 @@ export default function RecipeEditor() {
 
     }
 
+    const handleNumOfDishesChange = ({ target }) => {
+        let value = +target.value
+        console.log('handleNumOfDishesChange -> value', value)
+        console.log('numsOfDishes:', numOfDishes);
+        
+        if ( !value || value < 0) value = ''
+        setNumOfDishes(value)
+
+    }
+
 
 
 
@@ -98,7 +113,7 @@ export default function RecipeEditor() {
     }
 
     const removeIngredient = async (ingId) => {
-        
+
 
         const recipeToSave = {
             ...recipe,
@@ -147,7 +162,15 @@ export default function RecipeEditor() {
                 <h2 onFocus={selectText} onBlur={({ target }) => onChangeRecipeData('name', target.innerText)} contentEditable suppressContentEditableWarning={true} >{recipe.name}</h2>
                 <button className="btn copy" onClick={onCopyToClipBoard}>Copy To Clipboard</button>
             </section>
-            <strong className="ingredients">Ingredients</strong>
+            <section className="title-edit">
+                <strong className="ingredients">Ingredients</strong>
+                <form className="nice-form">
+                    <div className="form__group field dishes-form">
+                        <input value={numOfDishes} onChange={handleNumOfDishesChange} type="number" id="numOfDishes" name="numOfDishes" className="form__field" placeholder="Search by recipe or ingredient" />
+                        <label htmlFor="numOfDishes" className="form__label">Number Of Dishes</label>
+                    </div>
+                </form>
+            </section>
             <IngList
                 removeIngredient={removeIngredient}
                 addIngredient={addIngredient}
@@ -157,13 +180,14 @@ export default function RecipeEditor() {
                 onChangeRecipeData={onChangeRecipeData}
                 ingToRemoveIdx={ingToRemoveIdx}
                 onReOrderIngs={onReOrderIngs}
+                numOfDishes={numOfDishes}
             />
 
 
             <section className="instructions">
                 {/* <section className="gap"></section> */}
 
-                <strong>Instructions</strong>
+                <strong className="instructions-title">Instructions</strong>
                 <textarea onChange={(({ target }) => onChangeRecipeData('instructions', target.value))} value={recipe.instructions} name="instructions" id="" cols="30" rows="30"></textarea>
             </section>
 

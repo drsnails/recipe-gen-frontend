@@ -16,7 +16,8 @@ export function IngList({
     addIngredient,
     removeIngredient,
     ingToRemoveIdx,
-    onReOrderIngs
+    onReOrderIngs,
+    numOfDishes
 }) {
     const [isDrag, setIsDrag] = useState(false);
     const getItemStyle = (isDragging, draggableStyle) => ({
@@ -65,7 +66,7 @@ export function IngList({
                             ref={provided.innerRef}
                             style={getListStyle(snapshot.isDraggingOver)}
                         >
-                            
+
                             <section className="ing-list">
                                 {ingredients.map((ingredient, idx) =>
                                     // <>
@@ -84,7 +85,7 @@ export function IngList({
                                                     ingredient={ingredient}
                                                     ingToScale={ingToScale}
                                                     onChangeRecipeData={onChangeRecipeData}
-
+                                                    numOfDishes={numOfDishes}
                                                     isRemovedClass={getIdxEquality(idx, ingToRemoveIdx)}
                                                     ingredientsLength={ingredients.length}
                                                 />
