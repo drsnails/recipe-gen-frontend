@@ -10,8 +10,8 @@ export function RecipeList({ recipes, removeRecipe, addRecipe }) {
                 <RecipePreview key={recipe._id} recipe={recipe} removeRecipe={removeRecipe} />
             )}
 
-            <button className='nice-btn blue' onClick={addRecipe}>Add New Recipe</button>
 
+            <button className='nice-btn blue' onClick={addRecipe}>Add New Recipe</button>
         </section>
     )
 

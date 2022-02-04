@@ -72,6 +72,8 @@ export function Home() {
         <div className='home'>
             {loggedInUser && <h2 className='greet'>Welcome, {loggedInUser.username}</h2>}
 
+            {/* <label for="ice-cream-choice">Choose a flavor:</label> */}
+
             <RecipeFilter filterBy={filterBy} onChangeFilterBy={onChangeFilterBy} />
             <RecipeList recipes={recipes} removeRecipe={removeRecipe} addRecipe={addRecipe} />
         </div>

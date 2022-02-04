@@ -33,7 +33,7 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredi
         }
 
         setClassName('equal')
-        await sleep(350)
+    await sleep(350)
         removeIngredient(ingredient.id)
     }
 
