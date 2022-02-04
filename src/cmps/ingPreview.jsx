@@ -76,7 +76,7 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredi
 
 
     const ingToScaleClass = ingredient.id === ingToScale?.id ? 'chosen' : ''
-    const amountToScale = (ingToScale && ingredient.units !== 'units') ? getAmountToScale(ingredient, ingToScale) : 0
+    const amountToScale = (ingToScale && ingredient.units !== 'units') ? getAmountToScale(ingredient, ingToScale) : '-'
     var unitsLength = ingredient.units.length + 3
     return (
 

@@ -79,7 +79,6 @@ export default function RecipeEditor() {
         }
 
 
-
         const ingToSave = { ...ingredient, [field]: value }
         const recipeToSave = {
             ...recipe,
@@ -87,9 +86,8 @@ export default function RecipeEditor() {
         }
 
         if (field === 'units' && value === 'units' && recipeToSave.ingToScaleId === ingToSave.id) {
-            recipeToSave.ingToScaleId = ''
+            return showErrorMsg({txt: "Can't change main relative quantity to 'Units'" })
         }
-
 
         await saveRecipe(recipeToSave, field, value, ingredient.id)
 
@@ -172,7 +170,7 @@ export default function RecipeEditor() {
             </section>
             <section className="title-edit">
                 <strong className="ingredients">Ingredients</strong>
-                <form className="nice-form">
+                <form onSubmit={ev => ev.preventDefault()} className="nice-form">
                     <div className="form__group field dishes-form">
                         <input value={numOfDishes} onChange={handleNumOfDishesChange} type="number" id="numOfDishes" name="numOfDishes" className="form__field" placeholder="Search by recipe or ingredient" />
                         <label htmlFor="numOfDishes" className="form__label">Number Of Dishes</label>
