@@ -65,6 +65,7 @@ export function IngList({
                             ref={provided.innerRef}
                             style={getListStyle(snapshot.isDraggingOver)}
                         >
+                            
                             <section className="ing-list">
                                 {ingredients.map((ingredient, idx) =>
                                     // <>
@@ -91,10 +92,11 @@ export function IngList({
                                         }}
                                     </Draggable>
                                 )}
-                                {/* {(!snapshot.isDraggingOver || true) && <button onClick={addIngredient} className="add-btn"><FontAwesomeIcon icon={faPlus} /></button>} */}
                                 {!snapshot.isDraggingOver && <button onClick={addIngredient} className="add-btn"><FontAwesomeIcon icon={faPlus} /></button>}
+                                {/* {(!snapshot.isDraggingOver||true) && <button style={{top: `${snapshot.isDraggingOver?}`}} onClick={addIngredient} className="add-btn"><FontAwesomeIcon icon={faPlus} /></button>} */}
 
                             </section>
+                            {/* {provided.placeholder} */}
                         </div>
 
                     )}
