@@ -108,12 +108,9 @@ export default function RecipeEditor() {
                     return
                 }
             }
-
         }
 
         if (value === ingredient[field]) return
-
-
 
         const ingToSave = { ...ingredient, [field]: value }
         const recipeToSave = {

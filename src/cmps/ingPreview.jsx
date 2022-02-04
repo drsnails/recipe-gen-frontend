@@ -52,7 +52,7 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredi
 
     const onChangeRecipeDataWrap = () => {
         if (ingredient.units === 'units') {
-            showErrorMsg({txt:"Can't set 'Units' as a main relative quantity"})
+            showErrorMsg({ txt: "Can't set 'Units' as a main relative quantity" })
             return
         }
         onChangeRecipeData('ingToScaleId', ingredient.id)
@@ -60,11 +60,13 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredi
 
 
     const handleKeyPress = (ev) => {
-        if (ev.key==='Enter') {
+        console.log('ev:', ev);
+
+        if (ev.which === 13 || ev.charCode === 13) {
             ev.target.blur()
             window.getSelection().empty()
         }
-        
+
     }
 
 
@@ -98,7 +100,7 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredi
 
 
             <section className="editable" className="ing-name">
-                <span tabIndex="0" onKeyPress={handleKeyPress}  onFocus={selectText} title={ingredient.name} data-name="name" onBlur={(ev) => handleIngChange(ev, ingredient)} contentEditable suppressContentEditableWarning={true}>{ingredient.name}</span>
+                <span tabIndex="0" onKeyPress={handleKeyPress} onFocus={selectText} title={ingredient.name} data-name="name" onBlur={(ev) => handleIngChange(ev, ingredient)} contentEditable suppressContentEditableWarning={true}>{ingredient.name}</span>
             </section>
             <section className="amount-unit">
                 <span tabIndex="0" onKeyPress={handleKeyPress} onFocus={selectText} inputMode="numeric" data-name="amount" onBlur={(ev) => handleIngChange(ev, ingredient)} className="editable" contentEditable suppressContentEditableWarning={true}>{dishesAmount}</span>
