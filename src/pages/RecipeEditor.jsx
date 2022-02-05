@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import { IngList } from "../cmps/IngList";
 import { useForm } from "../hooks/useFormRegister";
@@ -6,6 +7,7 @@ import { showErrorMsg, showSuccessMsg } from "../services/eventBusService";
 import { recipeService } from "../services/recipeService";
 import { userService } from "../services/userService";
 import { reOrderList, selectText, sleep } from "../services/utilService";
+
 var cloneDeep = require('lodash.clonedeep');
 
 export default function RecipeEditor() {
@@ -14,6 +16,7 @@ export default function RecipeEditor() {
     const [numOfDishes, setNumOfDishes] = useState('');
     const [isEdited, setIsEdited] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
+    
 
     const params = useParams()
     useEffect(() => {
@@ -27,7 +30,7 @@ export default function RecipeEditor() {
     const loadRecipe = async () => {
         const recipe = params.id ? await recipeService.getById(params.id) : recipeService.getEmptyRecipe()
         // getIngredientToScale(recipe)
-
+        
         setRecipe(recipe)
 
     }
@@ -165,6 +168,7 @@ export default function RecipeEditor() {
 
     const removeIngredient = async (ingId) => {
 
+
         const recipeToSave = {
             ...recipe,
             ingredients: recipe.ingredients.filter(ing => ing.id !== ingId)
@@ -254,7 +258,8 @@ export default function RecipeEditor() {
             </section>
 
 
-            {isMounted && <button onClick={onSaveRecipe} className={`save-recipe ${floatBtnClass}`}>Save Changes</button>}
+            {/* {isMounted && <button onClick={()=>setIsEdited(false)} className={`edit-btn cancel-changes ${floatBtnClass}`}>Cancel</button>} */}
+            {isMounted && <button onClick={onSaveRecipe} className={`edit-btn save-changes ${floatBtnClass}`}>Save Changes</button>}
 
         </div>
     );

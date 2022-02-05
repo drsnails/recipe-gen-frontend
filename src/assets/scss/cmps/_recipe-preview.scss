@@ -10,5 +10,9 @@
         position: absolute;
         bottom: 5%;
         right: 5%;
+        transition: transform 0.2s;
+        &:hover {
+            transform: scale(1.3);
+        }
     }
 }

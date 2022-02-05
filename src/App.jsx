@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import { userService } from './services/userService';
 import { useDispatch } from 'react-redux';
 import { login, setUser } from './store/actions/userActions';
+import { ConfirmDialog } from './cmps/ConfirmDialog';
 
 function App() {
   const dispatch = useDispatch()
@@ -22,7 +23,6 @@ function App() {
     <>
       <Router>
         <AppHeader />
-        <ToastMessage />
         <main className='container'>
           <Routes>
             <Route path="/" element={
@@ -43,6 +43,8 @@ function App() {
           </Routes>
 
         </main>
+        <ToastMessage />
+        <ConfirmDialog />
       </Router>
     </>
 

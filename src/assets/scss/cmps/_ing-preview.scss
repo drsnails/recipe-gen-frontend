@@ -20,21 +20,16 @@
         }
     }
 
-   
+    
 
-   .ing-name {
-       flex-grow: 2;
-   }
+    .ing-name {
+        flex-grow: 2;
+    }
 
     .editable {
         // padding: 5px;
         @include trim;
     }
-
-    
-    
-
-    
 
     .amount-unit {
         display: flex;

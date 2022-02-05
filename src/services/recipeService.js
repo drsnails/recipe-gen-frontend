@@ -120,7 +120,7 @@ function copyRecipeToClipboard(recipe) {
         recipeTxt += '\n\n'
     }
     recipeTxt += '\n\n'
-    recipeTxt += '--Instructions--\n\n'
+    recipeTxt += '--Instructions--\n'
     recipeTxt += recipe.instructions
 
 

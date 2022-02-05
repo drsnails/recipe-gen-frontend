@@ -7,15 +7,15 @@ import { loadRecipes } from '../store/actions/recipeActions';
 import { RecipeList } from '../cmps/RecipeList';
 import { RecipeFilter } from '../cmps/RecipeFilter';
 import { useEffectUpdate } from '../hooks/useEffectUpdate';
-import { createPortal } from "react-dom";
+import { setDialogOpen } from "../store/actions/dialogMsgActions";
 
 
 export function Home() {
 
-    let { loggedInUser } = useSelector(state => state.userModule)
     const dispatch = useDispatch()
     const [recipes, setRecipes] = useState(null);
     const [filterBy, setFilterBy] = useState({ term: '' })
+    let { loggedInUser } = useSelector(state => state.userModule)
 
     useEffect(() => {
         (async () => {
@@ -49,8 +49,12 @@ export function Home() {
         setRecipes([...recipes, newRecipe])
     }
 
-    const removeRecipe = async (ev, recipeId) => {
-        ev.stopPropagation()
+    const onRemoveRecipe = (recipeId, recipeName) => {
+        dispatch(setDialogOpen({ txt: 'This recipe will be permanently deleted', title: `Are you sure you want to delete "${recipeName}"?`, successCb: () => removeRecipe(recipeId) }))
+
+    }
+
+    const removeRecipe = async (recipeId) => {
         await recipeService.remove(recipeId)
         const newRecipes = recipes.filter(recipe => recipe._id !== recipeId)
         setRecipes(newRecipes)
@@ -75,7 +79,7 @@ export function Home() {
             {/* <label for="ice-cream-choice">Choose a flavor:</label> */}
 
             <RecipeFilter filterBy={filterBy} onChangeFilterBy={onChangeFilterBy} />
-            <RecipeList recipes={recipes} removeRecipe={removeRecipe} addRecipe={addRecipe} />
+            <RecipeList recipes={recipes} removeRecipe={onRemoveRecipe} addRecipe={addRecipe} />
         </div>
     );
 }
