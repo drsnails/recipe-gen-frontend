@@ -15,50 +15,45 @@
         .nice-form {
             margin-bottom: 0;
         }
+        
 
         .dishes-form {
             font-size: 1em !important;
-
+            
             .form__field {
                 max-width: 190px;
             }
+
+            
+
+            
         }
+
     }
 
-    .instructions {
-        overflow: hidden;
-        width: 0;
-        padding-inline: 20px;
-        padding-bottom: 20px;
-        height: 2.6em;
-        // background-color: rgba(55, 151, 241, 0.37);
-        background: #000000b5;
 
-        position: fixed;
-        border-radius: 5px;
-        top: 5vh;
-        left: -100%;
-        right: 0;
-        margin: auto;
+
+
+    
+
+    .instructions {
         // margin-top: 20%;
         .instructions-title {
-            height: 2em;
-            color: white;
-            font-size: 1.3em;
+            margin-bottom: 1em;
             display: inline-block;
-            display: flex;
-            align-items: center;
         }
         textarea.instructions-area {
             font-size: 1.1em;
             width: 100%;
-            height: calc(100% - 2.5em);
             resize: none;
         }
     }
 
+
+
+
     button.save-recipe {
-        background-color: #0c9;
+        background-color:#0C9;
         display: none;
         color: white;
         font-size: 1.1em;
@@ -72,26 +67,25 @@
         margin: auto;
         padding: 0.7em 1.2em;
         box-shadow: 2px 2px 3px #999;
+        
     }
-
+    
+    
     button.save-recipe.animate-in {
         display: inline-block;
-        animation: fade-scale-up 0.25s ease forwards;
+        animation: fade-scale-up .25s ease forwards;
     }
     button.save-recipe.animate-out {
         display: inline-block;
-        animation: fade-scale-down 0.25s ease forwards;
+        animation: fade-scale-down .25s ease forwards;
     }
+
+    
+
+
+    
+
+    
 }
 
-.open-animation {
-    animation: open-right-left 0.4s ease-out forwards, open-top-down 0.4s ease-out 0.4s forwards;
-}
 
-.screen {
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    background-color: rgba(0, 0, 0, 0.5);
-    inset: 0;
-}

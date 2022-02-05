@@ -97,7 +97,7 @@ export function IngList({
                                 {/* {(!snapshot.isDraggingOver||true) && <button style={{top: `${snapshot.isDraggingOver?}`}} onClick={addIngredient} className="add-btn"><FontAwesomeIcon icon={faPlus} /></button>} */}
 
                             </section>
-                            {provided.placeholder}
+                            {/* {provided.placeholder} */}
                         </div>
 
                     )}

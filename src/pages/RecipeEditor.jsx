@@ -14,13 +14,10 @@ export default function RecipeEditor() {
     const [numOfDishes, setNumOfDishes] = useState('');
     const [isEdited, setIsEdited] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
-    const [isOpenInstructions, setIsOpenInstructions] = useState(false);
 
     const params = useParams()
     useEffect(() => {
-        setTimeout(() => {
-            setIsOpenInstructions(true)
-        }, 1500);
+        
         loadRecipe()
     }, [params.id]);
 
@@ -221,7 +218,6 @@ export default function RecipeEditor() {
     if (!recipe) return <div>Loading...</div>
     const ingToScale = getIngredientToScale(recipe)
     const floatBtnClass = isEdited ? 'animate-in' : 'animate-out'
-    const openInstructionsClass = isOpenInstructions ? 'open-animation' : ''
     return (
         <div className='recipe-editor'>
             <section className="title-container">
@@ -251,13 +247,11 @@ export default function RecipeEditor() {
 
 
             {/* <section className="gap"></section> */}
-            {isOpenInstructions && <section onClick={() => setIsOpenInstructions(false)} className="screen">
-                <section className={`instructions ${openInstructionsClass}`}>
+            <section className="instructions">
 
-                    <strong className="instructions-title">Instructions</strong>
-                    <textarea onClick={(ev) => ev.stopPropagation()} className="instructions-area" onChange={(({ target }) => onChangeRecipeData('instructions', target.value))} value={recipe.instructions} name="instructions" id="" cols="30" rows="30"></textarea>
-                </section>
-            </section>}
+                <strong className="instructions-title">Instructions</strong>
+                <textarea onClick={(ev) => ev.stopPropagation()} className="instructions-area" onChange={(({ target }) => onChangeRecipeData('instructions', target.value))} value={recipe.instructions} name="instructions" id="" cols="30" rows="30"></textarea>
+            </section>
 
 
             {isMounted && <button onClick={onSaveRecipe} className={`save-recipe ${floatBtnClass}`}>Save Changes</button>}
