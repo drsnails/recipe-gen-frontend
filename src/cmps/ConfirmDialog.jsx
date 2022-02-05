@@ -14,10 +14,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 
 export function ConfirmDialog() {
-
   const { dialogData, successCb, failCb } = useSelector(state => state.dialogMsgModule)
   const dispatch = useDispatch()
-  console.log('ConfirmDialog -> dialogData', dialogData)
   const useStyles = makeStyles({
     root: {
       '& .MuiDialog-container': {

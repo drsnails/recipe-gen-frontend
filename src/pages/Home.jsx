@@ -8,6 +8,7 @@ import { RecipeList } from '../cmps/RecipeList';
 import { RecipeFilter } from '../cmps/RecipeFilter';
 import { useEffectUpdate } from '../hooks/useEffectUpdate';
 import { setDialogOpen } from "../store/actions/dialogMsgActions";
+import { showErrorMsg } from '../services/eventBusService';
 
 
 export function Home() {
@@ -43,10 +44,17 @@ export function Home() {
 
 
     const addRecipe = async () => {
-        const emptyRecipe = recipeService.getEmptyRecipe()
-        emptyRecipe.userId = loggedInUser._id
-        const newRecipe = await recipeService.save({ recipe: emptyRecipe })
-        setRecipes([...recipes, newRecipe])
+
+        try {
+            const emptyRecipe = recipeService.getEmptyRecipe()
+            emptyRecipe.userId = loggedInUser._id
+            const newRecipe = await recipeService.save({ recipe: emptyRecipe })
+            setRecipes([...recipes, newRecipe])
+
+        } catch (err) {
+            console.log('err:', err);
+            showErrorMsg({ txt: "Couldn't add recipe" })
+        }
     }
 
     const onRemoveRecipe = (recipeId, recipeName) => {
@@ -55,6 +63,7 @@ export function Home() {
     }
 
     const removeRecipe = async (recipeId) => {
+        
         await recipeService.remove(recipeId)
         const newRecipes = recipes.filter(recipe => recipe._id !== recipeId)
         setRecipes(newRecipes)
