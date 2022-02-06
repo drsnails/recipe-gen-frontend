@@ -62,14 +62,14 @@ export function LoginSignup(props) {
         try {
             if (!_creds.googleId) {
                 console.log('try first if');
-                dispatch(_creds.email ? signin(_creds) : login(_creds))
+                await dispatch(_creds.email ? signin(_creds) : login(_creds))
             } else {
                 const googleUser = await userService.getUserByGoogleId(_creds.googleId)
 
                 // if (!googleUser) return 
                 // await dispatch(!googleUser ? signin(_creds) : login(_creds))
-                if (!googleUser) return dispatch(signin(_creds))
-                dispatch(login(_creds))
+                if (!googleUser) return await dispatch(signin(_creds))
+                await dispatch(login(_creds))
             }
 
             navigate('/')
