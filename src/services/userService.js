@@ -5,7 +5,8 @@ export const userService = {
     logout,
     signin,
     getLoggedInUser,
-    getUserFromSession
+    getUserFromSession,
+    getUserByGoogleId
 };
 
 const STORAGE_KEY = 'loggedInUser';
@@ -17,7 +18,7 @@ async function login(credentials) {
         console.log('login -> user', user)
         sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user));
         // localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
-        
+
         return user;
     } catch (err) {
         throw err;
@@ -42,6 +43,11 @@ async function signin(credentials) {
     } catch (err) {
         throw err;
     }
+}
+
+
+async function getUserByGoogleId(googleId) {
+    return await httpService.get(`${BASE_URL}/${googleId}`);
 }
 
 function getLoggedInUser() {

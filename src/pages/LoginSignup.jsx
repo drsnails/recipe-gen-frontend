@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react"
+// import GoogleLogin from "react-google-login";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router"
 import { Link } from "react-router-dom";
+import { GoogleLoginBtn } from "../cmps/GoogleLoginBtn";
+import { GoogleLogoutBtn } from "../cmps/GoogleLogoutBtn";
+// import { GoogleLogout } from "../cmps/GoogleLogOut";
 import { useForm } from "../hooks/useFormRegister";
 import { showErrorMsg } from "../services/eventBusService";
 import { userService } from "../services/userService";
@@ -17,7 +21,7 @@ export function LoginSignup(props) {
     const { loggedInUser } = useSelector(state => state.userModule)
 
 
-    const [creds, setCreds,register] = useForm({
+    const [creds, setCreds, register] = useForm({
         username: '',
         password: ''
     })
@@ -44,17 +48,28 @@ export function LoginSignup(props) {
     }, [location.pathname]);
 
 
-    const onSubmit = async (ev) => {
-        ev.stopPropagation()
-        ev.preventDefault()
-        const missingFields = checkFields(creds, isSignin)
+    const onSubmit = async (ev, _creds = creds) => {
+        if (ev) {
+            ev.stopPropagation()
+            ev.preventDefault()
+        }
+        const missingFields = checkFields(_creds, isSignin)
         if (missingFields) {
             console.log(`Some fields are missing. (${missingFields})`);
             showErrorMsg({ txt: `Some fields are missing. (${missingFields})` })
             return
         }
         try {
-            await dispatch(creds.email ? signin(creds) : login(creds))
+            if (!_creds.googleId) {
+                dispatch(_creds.email ? signin(_creds) : login(_creds))
+            } else {
+                const googleUser = await userService.getUserByGoogleId(_creds.googleId)
+                console.log('onSubmit -> googleUser', googleUser)
+                // if (!googleUser) return 
+                await dispatch(!googleUser ? signin(_creds) : login(_creds))
+                
+                
+            }
             navigate('/')
         } catch (err) {
             showErrorMsg({ txt: `There was a problem while ${err.type}` })
@@ -78,7 +93,12 @@ export function LoginSignup(props) {
                 </section>
                 <section>
                     <input autoComplete="" {...register('password', 'password')} placeholder="Password" />
+
                 </section>
+
+                <GoogleLoginBtn onSubmit={onSubmit} setCreds={setCreds} />
+                <GoogleLogoutBtn />
+                {/* <GoogleLogout/> */}
 
                 <button className="login-btn">{isSignin ? 'Register' : 'Login'}</button>
 
