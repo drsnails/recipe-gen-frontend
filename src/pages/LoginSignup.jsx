@@ -11,6 +11,7 @@ import { useForm } from "../hooks/useFormRegister";
 import { showErrorMsg } from "../services/eventBusService";
 import { userService } from "../services/userService";
 import { checkFields } from "../services/utilService";
+import { setLoading } from "../store/actions/loaderActions";
 import { login, signin } from "../store/actions/userActions";
 
 export function LoginSignup(props) {
@@ -60,6 +61,7 @@ export function LoginSignup(props) {
             return
         }
         try {
+            dispatch(setLoading(true))
             if (!_creds.googleId) {
                 console.log('try first if');
                 await dispatch(_creds.email ? signin(_creds) : login(_creds))
@@ -75,6 +77,8 @@ export function LoginSignup(props) {
             navigate('/')
         } catch (err) {
             showErrorMsg({ txt: `There was a problem while ${err.type}` })
+        } finally {
+            dispatch(setLoading(false))
         }
 
     }

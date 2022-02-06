@@ -1,0 +1,29 @@
+.loader-screen {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    inset: 0;
+    background-color: rgb(83 99 255 / 9%);
+    filter: drop-shadow(2px 4px 6px #00000079);
+    
+    .loader {
+        width: 200px;
+        height: 200px;
+        position: fixed;
+        inset: 0;
+        top: -20%;
+        margin: auto;
+
+        svg {
+            path:nth-child(1) {
+                fill: #1c7afd;
+            }
+            path:nth-child(2) {
+                fill: #d46be5;
+            }
+            path:nth-child(3) {
+                fill: #ff6bb2;
+            }
+        }
+    }
+}

@@ -1,4 +1,6 @@
+
 import './assets/scss/global.scss';
+// import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 import { Route, Routes, useNavigate } from 'react-router';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -13,6 +15,7 @@ import { userService } from './services/userService';
 import { useDispatch } from 'react-redux';
 import { login, setUser } from './store/actions/userActions';
 import { ConfirmDialog } from './cmps/ConfirmDialog';
+import { Loader } from './cmps/Loader';
 
 function App() {
   const dispatch = useDispatch()
@@ -45,6 +48,7 @@ function App() {
         </main>
         <ToastMessage />
         <ConfirmDialog />
+        <Loader />
       </Router>
     </>
 

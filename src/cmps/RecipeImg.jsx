@@ -1,19 +1,43 @@
 import { useRef } from 'react'
+import { useDispatch } from 'react-redux'
 import { uploadImg } from '../services/cloudinary-service'
+import { setDialogOpen } from '../store/actions/dialogMsgActions'
+import { setLoading } from '../store/actions/loaderActions'
 
-export function RecipeImg({ imgUrl, onChangeImg }) {
+export function RecipeImg({ imgUrl, onChangeImg, isEdited }) {
+    const dispatch = useDispatch()
 
     const inputRef = useRef()
 
     const onUploadImg = async (ev) => {
-        const res = await uploadImg(ev)
-        onChangeImg(res.url)
+
+        const _uploadImg = async () => {
+            try {
+                dispatch(setLoading(true))
+                const res = await uploadImg(ev)
+                onChangeImg(res.url)
+            } catch (err) {
+                console.log(err);
+            } finally {
+
+            }
+        }
+        _uploadImg(ev)
+        // if (isEdited) {
+        //     dispatch(setDialogOpen({ txt: 'Are you sure you want to proceed?', title: 'This will save any unsaved changes', successCb: () => _uploadImg(ev) }))
+
+        // } else {
+        //     _uploadImg(ev)
+        // }
+
 
     }
 
 
 
     const onTriggerImgUpload = () => {
+
+
         inputRef.current.click()
     }
 

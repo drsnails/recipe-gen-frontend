@@ -8,6 +8,7 @@ import { showErrorMsg, showSuccessMsg } from "../services/eventBusService";
 import { recipeService } from "../services/recipeService";
 import { userService } from "../services/userService";
 import { reOrderList, selectText, sleep } from "../services/utilService";
+import { setLoading } from "../store/actions/loaderActions";
 
 var cloneDeep = require('lodash.clonedeep');
 
@@ -17,6 +18,7 @@ export default function RecipeEditor() {
     const [numOfDishes, setNumOfDishes] = useState('');
     const [isEdited, setIsEdited] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
+    const dispatch = useDispatch()
 
 
     const params = useParams()
@@ -41,7 +43,9 @@ export default function RecipeEditor() {
         const { recipe } = data
         const oldRecipe = cloneDeep(recipe)
         try {
+            // dispatch(setLoading(true))
             setRecipe(recipe)
+
             await recipeService.save(data, type)
             return 'res'
             // * if field is null thats means were removing an ingredient
@@ -52,6 +56,7 @@ export default function RecipeEditor() {
             setRecipe(oldRecipe)
             throw err
         } finally {
+            dispatch(setLoading(false))
 
         }
     }
@@ -86,15 +91,17 @@ export default function RecipeEditor() {
     }, [recipe]);
 
     const onChangeRecipeData = async (field, value) => {
-
+        console.log('recipe:', recipe);
+        
         const recipeToSave = { ...recipe, [field]: value }
         // if (!isEdited) setIsEdited(true)
         console.log('onChangeRecipeData -> recipeToSave', recipeToSave)
-        if (field === 'ingToScaleId') {
+        if (field === 'ingToScaleId' || field === 'imgUrl') {
             saveRecipe({ recipe: recipeToSave, field, value }, 'updateRecipe')
         } else {
             triggerSaveBtn(recipeToSave)
         }
+
     }
 
     const handleIngChange = async (ev, ingredient) => {
@@ -193,10 +200,11 @@ export default function RecipeEditor() {
     }
 
 
-    const onChangeRecipeImg = (imgUrl) => {
-        console.log('recipe:', recipe);
-        
-        onChangeRecipeData('imgUrl', imgUrl)
+    const onChangeRecipeImg = async (imgUrl) => {
+
+        await onChangeRecipeData('imgUrl', imgUrl)
+        dispatch(setLoading(false))
+        // setIsEdited(false)
 
 
     }
@@ -245,7 +253,7 @@ export default function RecipeEditor() {
                 <h2 onFocus={selectText} onBlur={({ target }) => onChangeRecipeData('name', target.innerText)} contentEditable suppressContentEditableWarning={true} >{recipe.name}</h2>
                 <button className="btn copy" onClick={onCopyToClipBoard}>Copy To Clipboard</button>
             </section>
-            <RecipeImg imgUrl={recipe.imgUrl} onChangeImg={onChangeRecipeImg} />
+            <RecipeImg imgUrl={recipe.imgUrl} isEdited={isEdited} onChangeImg={onChangeRecipeImg} />
             <section className="title-edit">
                 <strong className="ingredients">Ingredients</strong>
                 <form onSubmit={ev => ev.preventDefault()} className="nice-form">
