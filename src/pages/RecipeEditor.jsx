@@ -209,8 +209,12 @@ export default function RecipeEditor() {
             ...recipe,
             ingredients: ingredients
         }
+        if (!isEdited) {
+            saveRecipe({ recipe: recipeToSave }, 'general')
 
-        saveRecipe({ recipe: recipeToSave }, 'general')
+        } else {
+            setRecipe(recipeToSave)
+        }
     }
 
     const onCopyToClipBoard = () => {

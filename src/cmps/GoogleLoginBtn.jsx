@@ -1,6 +1,8 @@
 
 import { GoogleLogin } from 'react-google-login';
+import { useDispatch, useSelector } from 'react-redux';
 import { refreshTokenSetup } from '../services/utilService';
+import { setUser } from '../store/actions/userActions';
 // refresh token
 
 // const clientId =
@@ -9,8 +11,10 @@ const clientId = '207535718576-hdkb870gloso3ln5s90rrd1rfkjl62g2.apps.googleuserc
 
 export function GoogleLoginBtn({ onSubmit, setCreds, txt }) {
 
-  const onSuccess = (res) => {
-    console.log('Login Success: currentUser:', res.profileObj);
+  const dispatch = useDispatch()
+  const { loggedInUser } = useSelector(state => state.userModule)
+
+  const onSuccess = async (res) => {
     const user = {
       email: res.profileObj.email,
       username: res.profileObj.name,
@@ -18,10 +22,10 @@ export function GoogleLoginBtn({ onSubmit, setCreds, txt }) {
       googleId: res.profileObj.googleId,
       isGoogle: true
     }
-    onSubmit(null, user)
-    // alert(
-    //   `Logged in successfully welcome ${res.profileObj.name} 😍. \n See console for full profile object.`
-    // );
+    await onSubmit(null, user)
+    if (!loggedInUser || loggedInUser.email !== user.email) {
+      dispatch(setUser())
+    }
     refreshTokenSetup(res);
   };
 

@@ -15,9 +15,9 @@ import { login, signin } from "../store/actions/userActions";
 
 export function LoginSignup(props) {
     const [isSignin, setIsSignin] = useState(false);
-    const dispatch = useDispatch()
     const location = useLocation();
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const { loggedInUser } = useSelector(state => state.userModule)
 
 
