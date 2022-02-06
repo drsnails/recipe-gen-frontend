@@ -35,7 +35,6 @@ export const getIdxEquality = (currIdx, ingIdx) => {
         return 'smaller'
     }
 
-
 }
 
 const _convertToGrams = ({ amount, units }) => {

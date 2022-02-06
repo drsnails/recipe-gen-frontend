@@ -3,11 +3,12 @@ import { GoogleLogin } from 'react-google-login';
 import { refreshTokenSetup } from '../services/utilService';
 // refresh token
 
-// const clientId = '207535718576-hdkb870gloso3ln5s90rrd1rfkjl62g2.apps.googleusercontent.com'
-const clientId =
-  '707788443358-u05p46nssla3l8tmn58tpo9r5sommgks.apps.googleusercontent.com';
+// const clientId =
+//   '707788443358-u05p46nssla3l8tmn58tpo9r5sommgks.apps.googleusercontent.com';
+const clientId = '207535718576-hdkb870gloso3ln5s90rrd1rfkjl62g2.apps.googleusercontent.com'
 
-export function GoogleLoginBtn({ onSubmit, setCreds }) {
+export function GoogleLoginBtn({ onSubmit, setCreds, txt }) {
+
   const onSuccess = (res) => {
     console.log('Login Success: currentUser:', res.profileObj);
     const user = {
@@ -36,7 +37,7 @@ export function GoogleLoginBtn({ onSubmit, setCreds }) {
     <div>
       <GoogleLogin
         clientId={clientId}
-        buttonText="Login"
+        buttonText={txt}
         onSuccess={onSuccess}
         onFailure={onFailure}
         cookiePolicy={'single_host_origin'}

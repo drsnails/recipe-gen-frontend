@@ -45,6 +45,14 @@
                     padding: 3px;
                 }
             }
+
+            div button div {
+                display: none;
+            }
+
+            div button span {
+                padding-left: 10px !important;
+            }
         }
     }
 }

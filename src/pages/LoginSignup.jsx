@@ -61,15 +61,17 @@ export function LoginSignup(props) {
         }
         try {
             if (!_creds.googleId) {
+                console.log('try first if');
                 dispatch(_creds.email ? signin(_creds) : login(_creds))
             } else {
                 const googleUser = await userService.getUserByGoogleId(_creds.googleId)
-                console.log('onSubmit -> googleUser', googleUser)
+
                 // if (!googleUser) return 
-                await dispatch(!googleUser ? signin(_creds) : login(_creds))
-                
-                
+                // await dispatch(!googleUser ? signin(_creds) : login(_creds))
+                if (!googleUser) return dispatch(signin(_creds))
+                dispatch(login(_creds))
             }
+
             navigate('/')
         } catch (err) {
             showErrorMsg({ txt: `There was a problem while ${err.type}` })
@@ -96,8 +98,8 @@ export function LoginSignup(props) {
 
                 </section>
 
-                <GoogleLoginBtn onSubmit={onSubmit} setCreds={setCreds} />
-                <GoogleLogoutBtn />
+
+                {/* <GoogleLogoutBtn /> */}
                 {/* <GoogleLogout/> */}
 
                 <button className="login-btn">{isSignin ? 'Register' : 'Login'}</button>
@@ -106,6 +108,7 @@ export function LoginSignup(props) {
                     : <Link className="signin-link" replace to='/login'>Already a user? click here to log in</Link>}
 
             </form>
+            <GoogleLoginBtn txt={`${isSignin ? 'Sign' : 'Log'} in with google`} onSubmit={onSubmit} setCreds={setCreds} />
         </div>
     )
 }

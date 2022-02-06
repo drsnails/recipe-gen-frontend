@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPalette, faPepperHot } from '@fortawesome/free-solid-svg-icons'
 import { logout } from '../store/actions/userActions';
+import { GoogleLogoutBtn } from './GoogleLogoutBtn';
 
 
 export function AppHeader() {
@@ -32,10 +33,11 @@ export function AppHeader() {
                         <NavLink to={'login'}>
                             Login
                         </NavLink> :
-                        <button className='btn logout' onClick={onLogOut} >Logout</button>}
+                        // <button className='btn logout' onClick={onLogOut} >Logout</button>}
+                        <GoogleLogoutBtn />}
 
                 </nav>
-                
+
 
             </section>
         </header>
