@@ -32,9 +32,7 @@ export function GoogleLoginBtn({ onSubmit, setCreds, txt }) {
   const onFailure = (res) => {
     console.log('Login failed: res:', res);
     console.table(res.details)
-    // alert(
-    //   `Failed to login. 😢 Please ping this to repo owner twitter.com/sivanesh_fiz`
-    // );
+   
   };
 
   return (
