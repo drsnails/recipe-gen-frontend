@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+// var cloneDeep = require('lodash.clonedeep');
+import cloneDeep from 'lodash.clonedeep'
 
 import { recipeService } from '../services/recipeService';
 import { userService } from '../services/userService';
@@ -19,10 +21,10 @@ export function Home() {
     let { loggedInUser } = useSelector(state => state.userModule)
 
     useEffect(() => {
-        (async () => {
-            const userFromSession = await userService.getUserFromSession()
-            console.log('userFromSession', userFromSession)
-        })()
+        // (async () => {
+        //     const userFromSession = await userService.getUserFromSession()
+        //     console.log('userFromSession', userFromSession)
+        // })()
         loggedInUser = loggedInUser || userService.getLoggedInUser()
         _loadRecipes()
 
@@ -42,19 +44,31 @@ export function Home() {
 
     }
 
-
-    const addRecipe = async () => {
-
+    const saveRecipe = async (recipe) => {
         try {
-            const emptyRecipe = recipeService.getEmptyRecipe()
-            emptyRecipe.userId = loggedInUser._id
-            const newRecipe = await recipeService.save({ recipe: emptyRecipe })
+            const newRecipe = await recipeService.save({ recipe })
             setRecipes([...recipes, newRecipe])
-
         } catch (err) {
             console.log('err:', err);
             showErrorMsg({ txt: "Couldn't add recipe" })
         }
+    }
+
+
+    const onAddRecipe = async () => {
+        const emptyRecipe = recipeService.getEmptyRecipe()
+        emptyRecipe.userId = loggedInUser._id
+        saveRecipe(emptyRecipe)
+    }
+
+
+    const onCopyRecipe = (recipe) => {
+        const copiedRecipe = cloneDeep(recipe)
+        delete copiedRecipe._id
+        const currRecipeName = copiedRecipe.name.replace(/ \(\d+\)$/, '')
+        const recipeNum = recipes.filter(recipe => recipe.name.slice(0, currRecipeName.length) === currRecipeName).length + 1
+        copiedRecipe.name = currRecipeName + ` (${recipeNum})`
+        saveRecipe(copiedRecipe)
     }
 
     const onRemoveRecipe = (recipeId, recipeName) => {
@@ -63,7 +77,7 @@ export function Home() {
     }
 
     const removeRecipe = async (recipeId) => {
-        
+
         await recipeService.remove(recipeId)
         const newRecipes = recipes.filter(recipe => recipe._id !== recipeId)
         setRecipes(newRecipes)
@@ -88,7 +102,7 @@ export function Home() {
             {/* <label for="ice-cream-choice">Choose a flavor:</label> */}
 
             <RecipeFilter filterBy={filterBy} onChangeFilterBy={onChangeFilterBy} />
-            <RecipeList recipes={recipes} removeRecipe={onRemoveRecipe} addRecipe={addRecipe} />
+            <RecipeList copyRecipe={onCopyRecipe} recipes={recipes} removeRecipe={onRemoveRecipe} addRecipe={onAddRecipe} />
         </div>
     );
 }

@@ -35,20 +35,20 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredi
         removeIngredient(ingredient.id)
     }
 
-    const mergeRefs = (...refs) => {
-        const filteredRefs = refs.filter(Boolean);
-        if (!filteredRefs.length) return null;
-        if (filteredRefs.length === 0) return filteredRefs[0];
-        return inst => {
-            for (const ref of filteredRefs) {
-                if (typeof ref === 'function') {
-                    ref(inst);
-                } else if (ref) {
-                    ref.current = inst;
-                }
-            }
-        };
-    };
+    // const mergeRefs = (...refs) => {
+    //     const filteredRefs = refs.filter(Boolean);
+    //     if (!filteredRefs.length) return null;
+    //     if (filteredRefs.length === 0) return filteredRefs[0];
+    //     return inst => {
+    //         for (const ref of filteredRefs) {
+    //             if (typeof ref === 'function') {
+    //                 ref(inst);
+    //             } else if (ref) {
+    //                 ref.current = inst;
+    //             }
+    //         }
+    //     };
+    // };
 
     const onChangeRecipeDataWrap = () => {
         if (ingredient.units === 'units') {
@@ -111,6 +111,7 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredi
                     <option value="Kg">Kg</option>
                     <option value="mL">mL</option>
                     <option value="L">L</option>
+                    <option value="oz">oz</option>
                     <option value="cup">Cup</option>
                     <option value="tableSpoon">Table spoon</option>
                     <option value="teaSpoon">Tea spoon</option>

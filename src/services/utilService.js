@@ -51,7 +51,6 @@ const _convertToGrams = ({ amount, units }) => {
         amount *= 4.92892
     }
 
-
     return amount
 }
 
