@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import { IngList } from "../cmps/IngList";
+import { RecipeImg } from "../cmps/RecipeImg";
 import { useForm } from "../hooks/useFormRegister";
 import { showErrorMsg, showSuccessMsg } from "../services/eventBusService";
 import { recipeService } from "../services/recipeService";
@@ -16,11 +17,11 @@ export default function RecipeEditor() {
     const [numOfDishes, setNumOfDishes] = useState('');
     const [isEdited, setIsEdited] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
-    
+
 
     const params = useParams()
     useEffect(() => {
-        
+
         loadRecipe()
     }, [params.id]);
 
@@ -30,7 +31,7 @@ export default function RecipeEditor() {
     const loadRecipe = async () => {
         const recipe = params.id ? await recipeService.getById(params.id) : recipeService.getEmptyRecipe()
         // getIngredientToScale(recipe)
-        
+
         setRecipe(recipe)
 
     }
@@ -88,6 +89,7 @@ export default function RecipeEditor() {
 
         const recipeToSave = { ...recipe, [field]: value }
         // if (!isEdited) setIsEdited(true)
+        console.log('onChangeRecipeData -> recipeToSave', recipeToSave)
         if (field === 'ingToScaleId') {
             saveRecipe({ recipe: recipeToSave, field, value }, 'updateRecipe')
         } else {
@@ -132,6 +134,17 @@ export default function RecipeEditor() {
     }
 
 
+    const onSaveRecipe = async () => {
+        try {
+            setIsEdited(false)
+            await saveRecipe({ recipe }, 'general')
+            showSuccessMsg({ txt: 'Recipe saved', time: 2000 })
+        } catch (err) {
+            showErrorMsg({ txt: 'Saving recipe failed', time: 2000 })
+        }
+    }
+
+
 
     const triggerSaveBtn = (recipeToSave) => {
         setRecipe(recipeToSave)
@@ -157,7 +170,6 @@ export default function RecipeEditor() {
     const addIngredient = async () => {
         const ingToAdd = recipeService.getEmptyIngredient()
         ingToAdd.isNew = true
-        console.log('addIngredient -> ingToAdd', ingToAdd)
         const recipeToSave = {
             ...recipe,
             ingredients: [...recipe.ingredients, ingToAdd]
@@ -181,15 +193,15 @@ export default function RecipeEditor() {
     }
 
 
-    const onSaveRecipe = async () => {
-        try {
-            setIsEdited(false)
-            await saveRecipe({ recipe }, 'general')
-            showSuccessMsg({ txt: 'Recipe saved', time: 2000 })
-        } catch (err) {
-            showErrorMsg({ txt: 'Saving recipe failed', time: 2000 })
-        }
+    const onChangeRecipeImg = (imgUrl) => {
+        console.log('recipe:', recipe);
+        
+        onChangeRecipeData('imgUrl', imgUrl)
+
+
     }
+
+
 
 
     // const handleChange = ({ target }) => {
@@ -198,6 +210,7 @@ export default function RecipeEditor() {
     //   setFields(fields => ({ ...fields, [field]: value }))
 
     // }
+
 
 
     const onReOrderIngs = (result) => {
@@ -232,6 +245,7 @@ export default function RecipeEditor() {
                 <h2 onFocus={selectText} onBlur={({ target }) => onChangeRecipeData('name', target.innerText)} contentEditable suppressContentEditableWarning={true} >{recipe.name}</h2>
                 <button className="btn copy" onClick={onCopyToClipBoard}>Copy To Clipboard</button>
             </section>
+            <RecipeImg imgUrl={recipe.imgUrl} onChangeImg={onChangeRecipeImg} />
             <section className="title-edit">
                 <strong className="ingredients">Ingredients</strong>
                 <form onSubmit={ev => ev.preventDefault()} className="nice-form">
