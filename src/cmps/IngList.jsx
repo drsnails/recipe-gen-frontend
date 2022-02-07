@@ -72,7 +72,6 @@ export function IngList({
                                     // <>
                                     <Draggable key={ingredient.id} draggableId={ingredient.id} index={idx}>
                                         {(provided) => {
-
                                             return (
                                                 <IngPreview
                                                     providedRef={provided.innerRef}
