@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { uploadImg } from '../services/cloudinary-service'
 import { setDialogOpen } from '../store/actions/dialogMsgActions'
 import { setLoading } from '../store/actions/loaderActions'
-import { faImage } from '@fortawesome/free-solid-svg-icons'
+import { faImage, faTrash } from '@fortawesome/free-solid-svg-icons'
 export function RecipeImg({ imgUrl, onChangeImg, isEdited }) {
     const dispatch = useDispatch()
     const [isExpand, setIsExpand] = useState();
@@ -44,6 +44,14 @@ export function RecipeImg({ imgUrl, onChangeImg, isEdited }) {
         inputRef.current.click()
     }
 
+    
+    const onRemoveImg = (ev) => {
+        ev.stopPropagation()
+        onChangeImg(null, true)
+        setIsExpand(false)
+    }
+
+
     const expandClass = isExpand ? 'expand' : ''
     const imgClass = imgUrl ? 'img-class' : ''
 
@@ -55,7 +63,8 @@ export function RecipeImg({ imgUrl, onChangeImg, isEdited }) {
                 {imgUrl ?
                     <section onClick={() => setIsExpand(prevExpand => !prevExpand)} className="img-container" style={{ backgroundImage: `url(${imgUrl})` }} >
                         <section className={`img-actions ${expandClass}`}>
-                            <button onClick={onTriggerImgUpload}><FontAwesomeIcon icon={faImage} /> <span>change</span></button>
+                            <button onClick={onTriggerImgUpload}><FontAwesomeIcon icon={faImage} /> <span>Change</span></button>
+                            <button onClick={onRemoveImg}><FontAwesomeIcon icon={faTrash} /> <span>Remove</span></button>
                         </section>
                     </section> :
 

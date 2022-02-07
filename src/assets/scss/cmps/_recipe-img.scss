@@ -23,7 +23,7 @@
             height: 60vh;
             // position: fixed;
             // inset: 0;
-            border-radius: 7px;
+            border-radius: 2%;
             z-index: 10;
             margin: 0;
         }
@@ -42,7 +42,6 @@
             overflow: hidden;
             .img-actions {
                 position: absolute;
-                // display: none;
                 transform: translateY(100%);
 
                 &.expand {
@@ -55,12 +54,13 @@
                 padding: 10px;
                 bottom: 0;
                 background-image: linear-gradient(transparent, #000000bf);
-                justify-content: center;
+                justify-content: space-around;
                 button {
                     background: none;
                     border: none;
                     color: white;
                     font-size: 1.1em;
+                    margin-top: 3.5%;
                 }
             }
         }
