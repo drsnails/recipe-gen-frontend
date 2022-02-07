@@ -3,13 +3,13 @@
     height: 100%;
     display: flex;
     justify-content: center;
+    margin-bottom: 3em;
 
     .recipe-img {
         width: 300px;
         border-radius: 100%;
         overflow: hidden;
         // margin: auto;
-        margin-bottom: 3em;
         cursor: pointer;
         // transition: width 0.5s, height .5s, border-radius .5s ;
         transition: 0.5s;

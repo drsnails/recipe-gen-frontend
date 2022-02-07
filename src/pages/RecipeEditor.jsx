@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import { IngList } from "../cmps/IngList";
+import { Loader } from "../cmps/Loader";
 import { RecipeImg } from "../cmps/RecipeImg";
 import { useForm } from "../hooks/useFormRegister";
 import { showErrorMsg, showSuccessMsg } from "../services/eventBusService";
@@ -92,7 +93,7 @@ export default function RecipeEditor() {
 
     const onChangeRecipeData = async (field, value) => {
         console.log('recipe:', recipe);
-        
+
         const recipeToSave = { ...recipe, [field]: value }
         // if (!isEdited) setIsEdited(true)
         console.log('onChangeRecipeData -> recipeToSave', recipeToSave)
@@ -244,7 +245,7 @@ export default function RecipeEditor() {
     }
 
 
-    if (!recipe) return <div>Loading...</div>
+    if (!recipe) return <Loader _isLoading={true} />
     const ingToScale = getIngredientToScale(recipe)
     const floatBtnClass = isEdited ? 'animate-in' : 'animate-out'
     return (

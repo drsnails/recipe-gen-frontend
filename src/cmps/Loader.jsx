@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux"
 
-export function Loader() {
+export function Loader({ _isLoading }) {
     const { isLoading } = useSelector(state => state.loaderModule)
 
     return (
         <>
-            {isLoading && <section className="loader-screen">
+            {(isLoading || _isLoading) && <section className="loader-screen">
                 <section className="loader">
                     <svg version="1.1" id="L7" x="0px" y="0px"
                         viewBox="0 0 100 100" enableBackground="new 0 0 100 100" >
