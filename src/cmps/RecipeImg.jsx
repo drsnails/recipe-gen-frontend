@@ -12,9 +12,11 @@ export function RecipeImg({ imgUrl, onChangeImg, isEdited }) {
     const onUploadImg = async (ev) => {
 
         const _uploadImg = async () => {
+            if (!ev.target.files[0]) return
             try {
                 dispatch(setLoading(true))
                 const res = await uploadImg(ev)
+
                 onChangeImg(res.url)
             } catch (err) {
                 console.log(err);
@@ -22,6 +24,7 @@ export function RecipeImg({ imgUrl, onChangeImg, isEdited }) {
 
             }
         }
+
         _uploadImg(ev)
         // if (isEdited) {
         //     dispatch(setDialogOpen({ txt: 'Are you sure you want to proceed?', title: 'This will save any unsaved changes', successCb: () => _uploadImg(ev) }))
@@ -36,8 +39,6 @@ export function RecipeImg({ imgUrl, onChangeImg, isEdited }) {
 
 
     const onTriggerImgUpload = () => {
-
-
         inputRef.current.click()
     }
 

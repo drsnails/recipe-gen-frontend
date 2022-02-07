@@ -201,7 +201,7 @@ export default function RecipeEditor() {
 
 
     const onChangeRecipeImg = async (imgUrl) => {
-
+        if (!imgUrl) return
         await onChangeRecipeData('imgUrl', imgUrl)
         dispatch(setLoading(false))
         // setIsEdited(false)
