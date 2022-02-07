@@ -1,12 +1,13 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { uploadImg } from '../services/cloudinary-service'
 import { setDialogOpen } from '../store/actions/dialogMsgActions'
 import { setLoading } from '../store/actions/loaderActions'
-
+import { faImage } from '@fortawesome/free-solid-svg-icons'
 export function RecipeImg({ imgUrl, onChangeImg, isEdited }) {
     const dispatch = useDispatch()
-
+    const [isExpand, setIsExpand] = useState();
     const inputRef = useRef()
 
     const onUploadImg = async (ev) => {
@@ -38,24 +39,33 @@ export function RecipeImg({ imgUrl, onChangeImg, isEdited }) {
 
 
 
-    const onTriggerImgUpload = () => {
+    const onTriggerImgUpload = (ev) => {
+        ev.stopPropagation()
         inputRef.current.click()
     }
 
+    const expandClass = isExpand ? 'expand' : ''
+    const imgClass = imgUrl ? 'img-class' : ''
+
     const imgSrc = require('../assets/imgs/cloud-upload.jpeg')
     return (
-        <section className="recipe-img">
-            {imgUrl ?
-                <section onClick={onTriggerImgUpload} className="img-container" style={{ backgroundImage: `url(${imgUrl})` }} >
+        <section className='recipe-img-container'>
 
-                </section> :
+            <section className={`recipe-img ${expandClass} ${imgClass}`}>
+                {imgUrl ?
+                    <section onClick={() => setIsExpand(prevExpand => !prevExpand)} className="img-container" style={{ backgroundImage: `url(${imgUrl})` }} >
+                        <section className={`img-actions ${expandClass}`}>
+                            <button onClick={onTriggerImgUpload}><FontAwesomeIcon icon={faImage} /> <span>change</span></button>
+                        </section>
+                    </section> :
 
-                <section className="img-upload">
-                    <label htmlFor="imgUploader">
-                        <img className='img-placeholder' src={imgSrc} alt="" />
-                    </label>
-                </section>}
-            <input ref={inputRef} type="file" id="imgUploader" onChange={onUploadImg} hidden />
+                    <section className="img-upload">
+                        <label htmlFor="imgUploader">
+                            <img className='img-placeholder' src={imgSrc} alt="" />
+                        </label>
+                    </section>}
+                <input ref={inputRef} type="file" id="imgUploader" onChange={onUploadImg} hidden />
+            </section>
         </section>
     )
 }
