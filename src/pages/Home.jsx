@@ -94,7 +94,6 @@ export function Home() {
     // }, []);
 
 
-
     return (
         <div className='home'>
             {loggedInUser && <h2 className='greet'>Welcome, {loggedInUser.username}</h2>}

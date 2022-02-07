@@ -4,11 +4,12 @@ import { useParams } from "react-router";
 import { IngList } from "../cmps/IngList";
 import { Loader } from "../cmps/Loader";
 import { RecipeImg } from "../cmps/RecipeImg";
+import { ShareButton } from "../cmps/ShareButton";
 import { useForm } from "../hooks/useFormRegister";
 import { showErrorMsg, showSuccessMsg } from "../services/eventBusService";
 import { recipeService } from "../services/recipeService";
 import { userService } from "../services/userService";
-import { reOrderList, selectText, sleep } from "../services/utilService";
+import { copyToClipboard, reOrderList, selectText, sleep } from "../services/utilService";
 import { setLoading } from "../store/actions/loaderActions";
 
 var cloneDeep = require('lodash.clonedeep');
@@ -19,6 +20,7 @@ export default function RecipeEditor() {
     const [numOfDishes, setNumOfDishes] = useState('');
     const [isEdited, setIsEdited] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
+    const [errMsg, setErrMsg] = useState('');
     const dispatch = useDispatch()
 
 
@@ -32,10 +34,19 @@ export default function RecipeEditor() {
 
 
     const loadRecipe = async () => {
-        const recipe = params.id ? await recipeService.getById(params.id) : recipeService.getEmptyRecipe()
+        try {
+            console.log('trying');
+            const recipe = params.id ? await recipeService.getById(params.id) : recipeService.getEmptyRecipe()
+            setRecipe(recipe)
+
+        } catch (err) {
+            console.log('failing');
+            setErrMsg("Sorry,  can't find this recipe at the moment")
+        } finally {
+
+        }
         // getIngredientToScale(recipe)
 
-        setRecipe(recipe)
 
     }
 
@@ -240,21 +251,30 @@ export default function RecipeEditor() {
     }
 
     const onCopyToClipBoard = () => {
-        recipeService.copyRecipeToClipboard(recipe)
+        const recipeTxt = recipeService.getRecipeTxt(recipe)
+        copyToClipboard(recipeTxt)
         showSuccessMsg({ txt: 'Copied to clipboard' })
     }
 
 
-    if (!recipe) return <Loader _isLoading={true} />
+    if (!recipe) return <div>{errMsg || <Loader _isLoading={true} />}</div>
     const ingToScale = getIngredientToScale(recipe)
     const floatBtnClass = isEdited ? 'animate-in' : 'animate-out'
+    const recipeTxt = recipeService.getRecipeTxt(recipe)
     return (
         <div className='recipe-editor'>
+
             <section className="title-container">
                 <h2 onFocus={selectText} onBlur={({ target }) => onChangeRecipeData('name', target.innerText)} contentEditable suppressContentEditableWarning={true} >{recipe.name}</h2>
                 <button className="btn copy" onClick={onCopyToClipBoard}>Copy To Clipboard</button>
             </section>
             <RecipeImg imgUrl={recipe.imgUrl} isEdited={isEdited} onChangeImg={onChangeRecipeImg} />
+            <section className="share-btns">
+                <ShareButton url=" " type="whatsapp" title={recipeTxt} />
+                <ShareButton url="facebook.com" type="facebook" quote={recipeTxt} />
+                <ShareButton url="telegram.com" type="telegram" title={recipeTxt} />
+
+            </section>
             <section className="title-edit">
                 <strong className="ingredients">Ingredients</strong>
                 <form onSubmit={ev => ev.preventDefault()} className="nice-form">

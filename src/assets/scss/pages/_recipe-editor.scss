@@ -27,6 +27,20 @@
         }
     }
 
+    .share-btns {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 2em;
+        button.react-share__ShareButton {
+            > * {
+                width: 2em;
+                height: 2em;
+                border-radius: 50%;
+            }
+        }
+    }
+
     .instructions {
         // margin-top: 20%;
         .instructions-title {
@@ -60,8 +74,6 @@
     button.save-changes {
         background-color: #0c9;
     }
-    
-    
 
     button.save-changes {
         &.animate-in {

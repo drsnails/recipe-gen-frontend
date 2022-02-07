@@ -11,7 +11,7 @@ export const recipeService = {
     remove,
     update,
     save,
-    copyRecipeToClipboard
+    getRecipeTxt
 }
 
 const STORAGE_KEY = 'recipes'
@@ -30,9 +30,11 @@ async function query(userId, filterBy) {
 
 async function getById(id) {
     try {
-        return httpService.get(BASE_URL + '/' + id)
+        const res = await httpService.get(BASE_URL + '/' + id)
+        // if (res)
+        return res
     } catch (err) {
-        return
+        throw err
     }
 }
 
@@ -92,6 +94,7 @@ function getEmptyRecipe() {
         createdAt: Date.now(),
         ingToScaleId: firstIng.id,
         ingredients: [firstIng],
+        imgUrl:'',
         instructions: ''
     }
 }
@@ -106,7 +109,7 @@ function getEmptyIngredient() {
 }
 
 
-function copyRecipeToClipboard(recipe) {
+function getRecipeTxt(recipe) {
     let recipeTxt = ''
     recipeTxt += capitalizeSentence(recipe.name) + '\n\n\n'
     const relativeIng = recipe.ingredients.find(ing => ing.id === recipe.ingToScaleId)
@@ -123,10 +126,8 @@ function copyRecipeToClipboard(recipe) {
     recipeTxt += '--Instructions--\n'
     recipeTxt += recipe.instructions
 
-
-
-
-    copyToClipboard(recipeTxt)
+    
+    return recipeTxt
 
 }
 
