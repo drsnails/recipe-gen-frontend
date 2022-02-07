@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { uploadImg } from '../services/cloudinary-service'
 import { setDialogOpen } from '../store/actions/dialogMsgActions'
 import { setLoading } from '../store/actions/loaderActions'
-import { faImage, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faCloudUploadAlt, faImage, faTrash } from '@fortawesome/free-solid-svg-icons'
 export function RecipeImg({ imgUrl, onChangeImg, isEdited }) {
     const dispatch = useDispatch()
     const [isExpand, setIsExpand] = useState();
@@ -54,8 +54,8 @@ export function RecipeImg({ imgUrl, onChangeImg, isEdited }) {
 
     const expandClass = isExpand ? 'expand' : ''
     const imgClass = imgUrl ? 'img-class' : ''
-
-    const imgSrc = require('../assets/imgs/cloud-upload.jpeg')
+    console.log('imgrendered');
+    // const imgSrc = require('../assets/imgs/cloud-upload.jpeg')
     return (
         <section className='recipe-img-container'>
 
@@ -70,7 +70,8 @@ export function RecipeImg({ imgUrl, onChangeImg, isEdited }) {
 
                     <section className="img-upload">
                         <label htmlFor="imgUploader">
-                            <img className='img-placeholder' src={imgSrc} alt="" />
+                            {/* <img className='img-placeholder' src={imgSrc} alt="" /> */}
+                            <FontAwesomeIcon className='upload-icon' icon={faCloudUploadAlt} />
                         </label>
                     </section>}
                 <input ref={inputRef} type="file" id="imgUploader" onChange={onUploadImg} hidden />

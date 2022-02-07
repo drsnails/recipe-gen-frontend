@@ -1,26 +1,14 @@
 import {
     EmailShareButton,
     FacebookShareButton,
-    HatenaShareButton,
-    InstapaperShareButton,
-    LineShareButton,
-    LinkedinShareButton,
-    LivejournalShareButton,
-    MailruShareButton,
-    OKShareButton,
-    PinterestShareButton,
-    PocketShareButton,
     RedditShareButton,
     TelegramShareButton,
-    TumblrShareButton,
     TwitterShareButton,
-    ViberShareButton,
-    VKShareButton,
     WhatsappShareButton,
     WhatsappIcon,
     FacebookIcon,
     TelegramIcon,
-    WorkplaceShareButton
+    EmailIcon,
 } from "react-share";
 
 
@@ -28,14 +16,14 @@ const DynamicShareBtn = (props) => {
     switch (props.type) {
         case 'whatsapp':
             return <WhatsappShareButton {...props}><WhatsappIcon /></WhatsappShareButton>;
-
         case 'facebook':
             return <FacebookShareButton {...props}><FacebookIcon /></FacebookShareButton>;
         case 'telegram':
             return <TelegramShareButton {...props}><TelegramIcon/></TelegramShareButton>;
-
+        case 'email':
+            return <EmailShareButton {...props}><EmailIcon/></EmailShareButton>;
         default:
-            break;
+            return <></>;
     }
 }
 

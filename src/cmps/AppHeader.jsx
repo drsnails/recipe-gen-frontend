@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPalette, faPepperHot } from '@fortawesome/free-solid-svg-icons'
+import { faCloudUploadAlt, faPalette, faPepperHot } from '@fortawesome/free-solid-svg-icons'
 import { logout } from '../store/actions/userActions';
 import { GoogleLogoutBtn } from './GoogleLogoutBtn';
 

@@ -273,6 +273,7 @@ export default function RecipeEditor() {
                 <ShareButton url=" " type="whatsapp" title={recipeTxt} />
                 <ShareButton url="facebook.com" type="facebook" quote={recipeTxt} />
                 <ShareButton url="telegram.com" type="telegram" title={recipeTxt} />
+                <ShareButton url="" type="email" subject={recipe.name} body={recipeTxt} />
 
             </section>
             <section className="title-edit">
