@@ -137,3 +137,14 @@ export const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
 
 export const capitalizeSentence = sentence => sentence.split(' ').map(capitalize).join(' ')
 
+// const addBtnHeight = useMemo(() => {
+//     if (addBtnRef.current) {
+//         const style = window.getComputedStyle(addBtnRef.current)
+//         const marginVals = style.margin.split(' ')
+//         const bottomMargin = +marginVals[marginVals.length - 1].slice(0, -2)
+//         console.log('addBtnHeight -> bottomMargin', bottomMargin)
+//         const heightRes = addBtnRef.current.getBoundingClientRect().height + bottomMargin + 100
+//         return isDrag ? heightRes : 0
+//         // return 0
+//     }
+// }, [isDrag])

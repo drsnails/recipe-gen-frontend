@@ -1,10 +1,11 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { getIdxEquality } from "../services/utilService";
 import { IngPreview } from "./ingPreview";
+import { useRef } from 'react';
 const grid = 8;
 
 export function IngList({
@@ -19,7 +20,8 @@ export function IngList({
     onReOrderIngs,
     numOfDishes
 }) {
-    const [isDrag, setIsDrag] = useState(false);
+
+
     const getItemStyle = (isDragging, draggableStyle) => ({
         // some basic styles to make the items look a bit nicer
 
@@ -32,6 +34,9 @@ export function IngList({
 
         ...draggableStyle
     });
+
+    const [isDrag, setIsDrag] = useState(false);
+
 
 
     const getListStyle = isDraggingOver => ({
@@ -53,6 +58,7 @@ export function IngList({
     //     onReOrderIngs(result)
     // }
 
+   
 
 
     return (
@@ -92,17 +98,16 @@ export function IngList({
                                         }}
                                     </Draggable>
                                 )}
-                                {!snapshot.isDraggingOver && <button onClick={addIngredient} className="add-btn"><FontAwesomeIcon icon={faPlus} /></button>}
+                                {(provided.placeholder)}
+                                {<button className="add-btn"  onClick={addIngredient} ><FontAwesomeIcon icon={faPlus} /></button>}
                                 {/* {(!snapshot.isDraggingOver||true) && <button style={{top: `${snapshot.isDraggingOver?}`}} onClick={addIngredient} className="add-btn"><FontAwesomeIcon icon={faPlus} /></button>} */}
 
                             </section>
-                            {/* {provided.placeholder} */}
                         </div>
 
                     )}
                 </Droppable>
             </DragDropContext>
-            {isDrag && <div className="gap"></div>}
         </>
     );
 }
