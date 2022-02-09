@@ -72,7 +72,11 @@ export function Home() {
     }
 
     const onRemoveRecipe = (recipeId, recipeName) => {
-        dispatch(setDialogOpen({ txt: 'This recipe will be permanently deleted', title: `Are you sure you want to delete "${recipeName}"?`, successCb: () => removeRecipe(recipeId) }))
+        dispatch(setDialogOpen({
+            txt: 'This recipe will be permanently deleted',
+            title: `Are you sure you want to delete "${recipeName}"?`,
+            successCb: () => removeRecipe(recipeId)
+        }))
 
     }
 

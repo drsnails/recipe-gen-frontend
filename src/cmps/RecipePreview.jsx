@@ -6,7 +6,7 @@ import { faCopy, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 export function RecipePreview({ recipe, removeRecipe, copyRecipe }) {
     const navigate = useNavigate()
-
+    
 
     const placeholderImgUrl = require('../assets/imgs/pepper-logo.png')
     const noImgClass = recipe.imgUrl ? '' : 'no-img'

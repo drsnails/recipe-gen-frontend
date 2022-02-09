@@ -18,6 +18,11 @@
 // }
 
 /* Desktop First */
+@mixin for-costume-layout {
+    @media (max-width: 380px) {
+        @content;
+    }
+}
 @mixin for-mobile-layout {
     @media (max-width: $mobile-breakpoint) {
         @content;
