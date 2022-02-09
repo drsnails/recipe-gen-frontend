@@ -17,7 +17,7 @@ export function Home() {
 
     const dispatch = useDispatch()
     const [recipes, setRecipes] = useState(null);
-    const [filterBy, setFilterBy] = useState({ term: '' })
+    const [filterBy, setFilterBy] = useState({ term: '', sortBy: '', sortDir: 1 })
     let { loggedInUser } = useSelector(state => state.userModule)
 
     useEffect(() => {
@@ -47,7 +47,7 @@ export function Home() {
     const saveRecipe = async (recipe) => {
         try {
             const newRecipe = await recipeService.save({ recipe })
-            setRecipes([...recipes, newRecipe])
+            setRecipes([newRecipe, ...recipes])
         } catch (err) {
             console.log('err:', err);
             showErrorMsg({ txt: "Couldn't add recipe" })
@@ -58,6 +58,8 @@ export function Home() {
     const onAddRecipe = async () => {
         const emptyRecipe = recipeService.getEmptyRecipe()
         emptyRecipe.userId = loggedInUser._id
+        const _filterBy = {...filterBy, sortBy: ''}
+        setFilterBy(_filterBy)
         saveRecipe(emptyRecipe)
     }
 
@@ -88,6 +90,7 @@ export function Home() {
     }
 
     const onChangeFilterBy = (filterBy) => {
+        console.log('onChangeFilterBy -> filterBy', filterBy)
         setFilterBy(filterBy)
 
     }

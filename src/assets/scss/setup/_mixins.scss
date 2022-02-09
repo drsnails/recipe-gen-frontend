@@ -18,8 +18,8 @@
 // }
 
 /* Desktop First */
-@mixin for-costume-layout {
-    @media (max-width: 380px) {
+@mixin for-custom-layout {
+    @media (max-width: 389px) {
         @content;
     }
 }

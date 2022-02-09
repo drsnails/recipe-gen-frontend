@@ -2,7 +2,7 @@
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     grid-auto-rows: minmax(200px, auto);
     // justify-items: center;
-    @include for-costume-layout {
+    @include for-custom-layout {
         padding-inline: 30px;
     }
 
