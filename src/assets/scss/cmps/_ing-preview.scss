@@ -2,7 +2,6 @@
     display: flex;
     align-items: center;
 
-    // margin-top: 10px;
     font-size: 1.5em;
     width: 100%;
     line-height: 1.3em;
@@ -13,7 +12,6 @@
 
     position: relative;
     > *:not(.remove-icon, :last-child) {
-        // flex-grow: 1;
         width: 10%;
         @include for-mobile-layout {
             // width: 50%;
@@ -24,13 +22,17 @@
 
     .ing-name {
         flex-grow: 2;
+        
     }
 
-    .editable {
-        // padding: 5px;
+    span.editable {
         @include trim;
     }
 
+    .ing-name,span.editable {
+        font-weight: 600;
+    }
+    
     .amount-unit {
         display: flex;
         align-items: center;
@@ -84,3 +86,4 @@
 .smaller {
     animation: move-up 0.5s forwards;
 }
+

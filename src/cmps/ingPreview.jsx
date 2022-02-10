@@ -6,7 +6,18 @@ import { getAmountToScale, selectText, sleep } from "../services/utilService";
 import { showErrorMsg } from "../services/eventBusService";
 
 
-export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredientsLength, handleIngChange, removeIngredient, providedRef, dragHandleProp, dragProp, numOfDishes }) {
+export function IngPreview({
+    ingredient,
+    ingToScale,
+    onChangeRecipeData,
+    ingredientsLength,
+    handleIngChange,
+    removeIngredient,
+    providedRef,
+    dragHandleProp,
+    dragProp,
+    numOfDishes
+}) {
 
 
     const [className, setClassName] = useState('');
@@ -62,7 +73,7 @@ export function IngPreview({ ingredient, ingToScale, onChangeRecipeData, ingredi
     const handleKeyPress = (ev) => {
 
         // if (ev.which === 13 || ev.charCode === 13 || ev.code==='Enter' || ev.nativeEvent.keyCode===13) {
-        if (ev.nativeEvent?.keyCode === 13 || ev.keyCode === 13 || ev.which === 13 || ev.charCode === 13 || ev.code==='Enter') {
+        if (ev.nativeEvent?.keyCode === 13 || ev.keyCode === 13 || ev.which === 13 || ev.charCode === 13 || ev.code === 'Enter') {
             // if (ev.keyCode === 13) {
             ev.target.blur()
             window.getSelection().empty()

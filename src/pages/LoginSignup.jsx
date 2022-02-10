@@ -28,9 +28,9 @@ export function LoginSignup(props) {
     })
 
     useEffect(() => {
-        (async () => {
-            if (loggedInUser) navigate('/')
-        })()
+        // (async () => {
+        // })()
+        if (loggedInUser) navigate('/')
 
     }, [loggedInUser]);
 
@@ -63,7 +63,6 @@ export function LoginSignup(props) {
         try {
             dispatch(setLoading(true))
             if (!_creds.googleId) {
-                console.log('try first if');
                 await dispatch(_creds.email ? signin(_creds) : login(_creds))
             } else {
                 const googleUser = await userService.getUserByGoogleId(_creds.googleId)
