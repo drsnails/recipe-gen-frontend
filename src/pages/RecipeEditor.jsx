@@ -107,7 +107,6 @@ export default function RecipeEditor() {
 
         const recipeToSave = { ...recipe, [field]: value }
         // if (!isEdited) setIsEdited(true)
-        console.log('onChangeRecipeData -> recipeToSave', recipeToSave)
         if (field === 'ingToScaleId' || field === 'imgUrl') {
             saveRecipe({ recipe: recipeToSave, field, value }, 'updateRecipe')
         } else {
@@ -124,7 +123,7 @@ export default function RecipeEditor() {
         if (target.nodeName !== 'SELECT' && target.nodeName !== 'INPUT') {
             field = target.dataset.name
             value = target.innerText
-            if (value.includes('\n')) return
+            
             if (field === 'amount') {
                 value = +value
                 if (!value) {
@@ -175,8 +174,6 @@ export default function RecipeEditor() {
 
     const handleNumOfDishesChange = ({ target }) => {
         let value = +target.value
-        console.log('handleNumOfDishesChange -> value', value)
-        console.log('numsOfDishes:', numOfDishes);
 
         if (!value || value < 0) value = ''
         setNumOfDishes(value)
@@ -216,9 +213,6 @@ export default function RecipeEditor() {
         if (!imgUrl && !isRemove) return
         await onChangeRecipeData('imgUrl', imgUrl)
         dispatch(setLoading(false))
-        // setIsEdited(false)
-
-
     }
 
 
