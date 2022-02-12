@@ -101,7 +101,14 @@ export function IngPreview({
 
 
     const ingToScaleClass = ingredient.id === ingToScale?.id ? 'chosen' : ''
-    const amountToScale = (ingToScale && ingredient.units !== 'units') ? getAmountToScale(ingredient, ingToScale) : '-'
+    /*TEST START*/
+    const amountToScale = (ingToScale) ? getAmountToScale(ingredient, ingToScale) : ''
+    console.log('handleKeyPress -> amountToScale', amountToScale)
+    /*TEST END*/
+
+    /*ORIGINAL START*/
+    // const amountToScale = (ingToScale && ingredient.units !== 'units') ? getAmountToScale(ingredient, ingToScale) : '-'
+    /*ORIGINAL END*/
     var unitsLength = ingredient.units.length + 3
 
     return (
@@ -130,7 +137,7 @@ export function IngPreview({
                     <option value="units">Units</option>
                 </select>
             </section>
-            <p title={amountToScale} onClick={onChangeRecipeDataWrap} className={ingToScaleClass}>{amountToScale}</p>
+            <p title={amountToScale} onClick={onChangeRecipeDataWrap} className={ingToScaleClass}>{amountToScale || '-'}</p>
         </article>
     );
 }

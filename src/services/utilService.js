@@ -1,3 +1,4 @@
+import { functionsIn } from "lodash";
 
 export function makeId(length = 5) {
     var text = "";
@@ -18,12 +19,6 @@ export const checkFields = (fields, isSign) => {
 }
 
 
-export const getAmountToScale = (from, to) => {
-    const fromAmount = _convertToGrams(from)
-    const toAmount = _convertToGrams(to)
-    
-    return (fromAmount / toAmount).toFixed(2)
-}
 
 export const getIdxEquality = (currIdx, ingIdx) => {
     if (ingIdx === null) return ''
@@ -37,22 +32,6 @@ export const getIdxEquality = (currIdx, ingIdx) => {
 
 }
 
-const _convertToGrams = ({ amount, units }) => {
-
-    if (units === 'L' || units === 'Kg') {
-        amount *= 1000
-    } else if (units === 'cup') {
-        amount *= 236.588
-    } else if (units === 'oz') {
-        amount *= 28.35
-    } else if (units === 'tableSpoon') {
-        amount *= 14.7868
-    } else if (units === 'teaSpoon') {
-        amount *= 4.92892
-    }
-
-    return amount
-}
 
 
 
@@ -113,21 +92,21 @@ export const selectText = ({ target }) => {
 export const refreshTokenSetup = (res) => {
     // Timing to renew access token
     let refreshTiming = (res.tokenObj.expires_in || 3600 - 5 * 60) * 1000;
-  
+
     const refreshToken = async () => {
-      const newAuthRes = await res.reloadAuthResponse();
-      refreshTiming = (newAuthRes.expires_in || 3600 - 5 * 60) * 1000;
-      console.log('newAuthRes:', newAuthRes);
-      // saveUserToken(newAuthRes.access_token);  <-- save new token
-      localStorage.setItem('authToken', newAuthRes.id_token);
-  
-      // Setup the other timer after the first one
-      setTimeout(refreshToken, refreshTiming);
+        const newAuthRes = await res.reloadAuthResponse();
+        refreshTiming = (newAuthRes.expires_in || 3600 - 5 * 60) * 1000;
+        console.log('newAuthRes:', newAuthRes);
+        // saveUserToken(newAuthRes.access_token);  <-- save new token
+        localStorage.setItem('authToken', newAuthRes.id_token);
+
+        // Setup the other timer after the first one
+        setTimeout(refreshToken, refreshTiming);
     };
-  
+
     // Setup first refresh timer
     setTimeout(refreshToken, refreshTiming);
-  };
+};
 
 export const copyToClipboard = (text) => navigator.clipboard.writeText(text);
 
@@ -137,14 +116,160 @@ export const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
 
 export const capitalizeSentence = sentence => sentence.split(' ').map(capitalize).join(' ')
 
-// const addBtnHeight = useMemo(() => {
-//     if (addBtnRef.current) {
-//         const style = window.getComputedStyle(addBtnRef.current)
-//         const marginVals = style.margin.split(' ')
-//         const bottomMargin = +marginVals[marginVals.length - 1].slice(0, -2)
-//         console.log('addBtnHeight -> bottomMargin', bottomMargin)
-//         const heightRes = addBtnRef.current.getBoundingClientRect().height + bottomMargin + 100
-//         return isDrag ? heightRes : 0
-//         // return 0
-//     }
-// }, [isDrag])
+
+
+
+
+export const getAmountToScale = (from, to) => {
+    const fromAmount = _convertToGrams(from)
+    const toAmount = _convertToGrams(to)
+
+    if (!fromAmount || !toAmount) return null
+    return (fromAmount / toAmount).toFixed(2)
+}
+
+
+function _convertToGrams({ name, amount, units }) {
+
+    name = name.trim().toLocaleLowerCase()
+
+    if (units === 'g') return amount
+
+    if (units === 'Kg') return amount * 1000
+
+    if (units === 'oz') return amount * 28.35
+
+
+
+    // * if units = 'Units' than the amount will stay the same
+    amount = _convertToMl(amount, units)
+
+    const ingredientMap = ingredientsDataMap[name]
+    // console.log('_convertToGrams -> ingredientMap', ingredientMap)
+
+    // * if we have data on this ingredient we'll do some more calculations based on its name
+    if (ingredientMap) {
+
+        if (units === 'units') {
+            const { wightPerUnit } = ingredientMap
+            amount *= wightPerUnit
+
+        } else { // * its most likely a liquid, so well calculate based on density (g/ml)
+            const { density } = ingredientMap
+            amount *= density
+        }
+    } else {
+        if (units === 'units') return null
+    }
+
+
+
+
+    return amount
+}
+
+
+function _convertToMl(amount, units) {
+
+    if (units === 'L') {
+        amount *= 1000
+    } else if (units === 'cup') {
+        amount *= 236.588
+    } else if (units === 'oz') {
+        amount *= 28.35
+    } else if (units === 'tableSpoon') {
+        amount *= 14.7868
+    } else if (units === 'teaSpoon') {
+        amount *= 4.92892
+    }
+
+    return amount
+}
+
+function formatStrForMapping(str) {
+    const strs = str.split(' ')
+    if (strs.length === 1) {
+        // if ()
+    }
+}
+
+const ingredientsDataMap = {
+
+    water: {
+        density: 1
+    },
+
+    vinegar: {
+        density: 1.01
+    },
+
+    oil: {
+        density: 0.917
+    },
+
+    milk: {
+        density: 1.03
+    },
+
+    maple: {
+        density: 1.37
+    },
+
+    'maple syrup': {
+        density: 1.37
+    },
+
+    mirin: {
+        density: 1.05
+    },
+
+    flour: {
+        density: 0.79
+
+    },
+
+    salt: {
+        density: 2.16
+    },
+
+    sugar: {
+        density: 1.59
+    },
+
+    egg: {
+        wightPerUnit: 49
+    },
+
+    eggs: {
+        wightPerUnit: 49
+    },
+
+    garlic: {
+        wightPerUnit: 4.5
+    },
+    garlics: {
+        wightPerUnit: 4.5
+    },
+
+    'garlic clove': {
+        wightPerUnit: 4.5
+    },
+
+    'garlic bulb': {
+        wightPerUnit: 59
+    },
+
+    onion: {
+        wightPerUnit: 150
+    },
+
+    onions: {
+        wightPerUnit: 150
+    },
+
+
+}
+
+
+
+
