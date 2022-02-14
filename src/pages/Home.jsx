@@ -11,6 +11,7 @@ import { RecipeFilter } from '../cmps/RecipeFilter';
 import { useEffectUpdate } from '../hooks/useEffectUpdate';
 import { setDialogOpen } from "../store/actions/dialogMsgActions";
 import { showErrorMsg } from '../services/eventBusService';
+import { goToTop } from '../services/utilService';
 
 
 export function Home() {
@@ -27,7 +28,6 @@ export function Home() {
         // })()
         loggedInUser = loggedInUser || userService.getLoggedInUser()
         _loadRecipes()
-
     }, []);
 
     useEffectUpdate(() => {
@@ -71,6 +71,7 @@ export function Home() {
         const recipeNum = recipes.filter(recipe => recipe.name.slice(0, currRecipeName.length) === currRecipeName).length + 1
         copiedRecipe.name = currRecipeName + ` (${recipeNum})`
         saveRecipe(copiedRecipe)
+        goToTop()
     }
 
     const onRemoveRecipe = (recipeId, recipeName) => {

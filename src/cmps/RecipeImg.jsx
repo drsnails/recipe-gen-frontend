@@ -54,7 +54,6 @@ export function RecipeImg({ imgUrl, onChangeImg, isEdited }) {
 
     const expandClass = isExpand ? 'expand' : ''
     const imgClass = imgUrl ? 'img-class' : ''
-    console.log('imgrendered');
     // const imgSrc = require('../assets/imgs/cloud-upload.jpeg')
     return (
         <section className='recipe-img-container'>

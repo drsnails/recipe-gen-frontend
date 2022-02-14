@@ -103,7 +103,6 @@ export function IngPreview({
     const ingToScaleClass = ingredient.id === ingToScale?.id ? 'chosen' : ''
     /*TEST START*/
     const amountToScale = (ingToScale) ? getAmountToScale(ingredient, ingToScale) : ''
-    console.log('handleKeyPress -> amountToScale', amountToScale)
     /*TEST END*/
 
     /*ORIGINAL START*/

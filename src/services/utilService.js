@@ -116,6 +116,8 @@ export const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
 
 export const capitalizeSentence = sentence => sentence.split(' ').map(capitalize).join(' ')
 
+export const goToTop = () => window.scrollTo(0, 0);
+
 
 
 
@@ -145,7 +147,6 @@ function _convertToGrams({ name, amount, units }) {
     amount = _convertToMl(amount, units)
 
     const ingredientMap = ingredientsDataMap[name]
-    // console.log('_convertToGrams -> ingredientMap', ingredientMap)
 
     // * if we have data on this ingredient we'll do some more calculations based on its name
     if (ingredientMap) {
@@ -161,8 +162,6 @@ function _convertToGrams({ name, amount, units }) {
     } else {
         if (units === 'units') return null
     }
-
-
 
 
     return amount
@@ -199,7 +198,15 @@ const ingredientsDataMap = {
         density: 1
     },
 
+    'מים': {
+        density: 1
+    },
+
     vinegar: {
+        density: 1.01
+    },
+
+    'חומץ': {
         density: 1.01
     },
 
@@ -207,7 +214,23 @@ const ingredientsDataMap = {
         density: 0.917
     },
 
+    'olive oil': {
+        density: 0.917
+    },
+
+    'שמן זית': {
+        density: 0.917
+    },
+
+    'שמן': {
+        density: 0.917
+    },
+
     milk: {
+        density: 1.03
+    },
+
+    'חלב': {
         density: 1.03
     },
 
@@ -218,8 +241,25 @@ const ingredientsDataMap = {
     'maple syrup': {
         density: 1.37
     },
+    'סירופ מייפל': {
+        density: 1.37
+    },
+
+    'מייפל': {
+        density: 1.37
+    },
+
+    honey: {
+        density: 1.424
+    },
+    'דבש': {
+        density: 1.424
+    },
 
     mirin: {
+        density: 1.05
+    },
+    'מירין': {
         density: 1.05
     },
 
@@ -227,12 +267,24 @@ const ingredientsDataMap = {
         density: 0.79
 
     },
+    'קמח': {
+        density: 0.79
+
+    },
 
     salt: {
         density: 2.16
     },
+    
+    'מלח': {
+        density: 2.16
+    },
 
     sugar: {
+        density: 1.59
+    },
+
+    'סוכר': {
         density: 1.59
     },
 
@@ -244,10 +296,18 @@ const ingredientsDataMap = {
         wightPerUnit: 49
     },
 
+    'ביצים': {
+        wightPerUnit: 49
+    },
+    'ביצה': {
+        wightPerUnit: 49
+    },
+
     garlic: {
         wightPerUnit: 4.5
     },
-    garlics: {
+    
+    'שום': {
         wightPerUnit: 4.5
     },
 
@@ -255,11 +315,23 @@ const ingredientsDataMap = {
         wightPerUnit: 4.5
     },
 
+    'שיני שום': {
+        wightPerUnit: 4.5
+    },
+
     'garlic bulb': {
         wightPerUnit: 59
     },
 
+    'ראש שום': {
+        wightPerUnit: 59
+    },
+
     onion: {
+        wightPerUnit: 150
+    },
+
+    'בצל': {
         wightPerUnit: 150
     },
 

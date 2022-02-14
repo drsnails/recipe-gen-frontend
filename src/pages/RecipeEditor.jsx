@@ -103,7 +103,6 @@ export default function RecipeEditor() {
     }, [recipe]);
 
     const onChangeRecipeData = async (field, value) => {
-        console.log('recipe:', recipe);
 
         const recipeToSave = { ...recipe, [field]: value }
         // if (!isEdited) setIsEdited(true)

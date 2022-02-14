@@ -14,7 +14,7 @@
         transition: 0.5s;
 
         &.img-class {
-            height: 300px;
+            height: min(300px, calc(100vw - 20px));
             overflow: hidden;
         }
 
