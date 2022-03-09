@@ -21,6 +21,20 @@ function App() {
   const dispatch = useDispatch()
   dispatch(setUser())
 
+  // useEffect(()=>{
+  //   document.addEventListener('visibilitychange', function() {
+  //     if (document.visibilityState == 'hidden') {
+  //       console.log('heyyyyyyy');
+  //        // send beacon request
+  //        navigator.sendBeacon('//localhost:3030/api/auth/test', {data:'data'})
+  //     }
+  //   });
+
+  //   window.addEventListener('beforeunload', function() {
+  //     navigator.sendBeacon('//localhost:3030/api/auth/test', {data:'data'})
+  //   });
+
+  // }, [])
 
   return (
     <>

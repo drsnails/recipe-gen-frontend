@@ -14,6 +14,7 @@ export function login(creds) {
 }
 
 export function signin(creds) {
+  console.log('signin -> creds', creds)
   return async (dispatch) => {
     try {
       const user = await userService.signin(creds)

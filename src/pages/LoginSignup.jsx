@@ -30,6 +30,9 @@ export function LoginSignup(props) {
     useEffect(() => {
         // (async () => {
         // })()
+        console.log('hey');
+        console.log('loggedInUser:', loggedInUser);
+        
         if (loggedInUser) navigate('/')
 
     }, [loggedInUser]);
@@ -65,11 +68,9 @@ export function LoginSignup(props) {
             if (!_creds.googleId) {
                 await dispatch(_creds.email ? signin(_creds) : login(_creds))
             } else {
+                
                 const googleUser = await userService.getUserByGoogleId(_creds.googleId)
-
-                // if (!googleUser) return 
-                // await dispatch(!googleUser ? signin(_creds) : login(_creds))
-                if (!googleUser) return await dispatch(signin(_creds))
+                if (!googleUser || !googleUser?._id) return await dispatch(signin(_creds))
                 await dispatch(login(_creds))
             }
 

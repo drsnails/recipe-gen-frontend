@@ -15,7 +15,6 @@ const BASE_URL = 'auth';
 async function login(credentials) {
     try {
         const user = await httpService.post(`${BASE_URL}/login`, credentials);
-        console.log('login -> user', user)
         sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user));
         // localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
 

@@ -1,4 +1,5 @@
 import { functionsIn } from "lodash";
+import { eggData, flourData, garlicBulbData, garlicData, honeyData, mapleData, milkData, mirinData, oilData, onionData, saltData, sugarData, vinegarData, waterData } from "./ingredientService";
 
 export function makeId(length = 5) {
     var text = "";
@@ -193,151 +194,57 @@ function formatStrForMapping(str) {
 }
 
 const ingredientsDataMap = {
+    water: waterData,
+    'מים': waterData,
 
-    water: {
-        density: 1
-    },
+    vinegar: vinegarData,
+    'חומץ': vinegarData,
 
-    'מים': {
-        density: 1
-    },
+    oil: oilData,
+    'olive oil': oilData,
+    'שמן זית': oilData,
+    'שמן': oilData,
 
-    vinegar: {
-        density: 1.01
-    },
+    milk: milkData,
+    'חלב': milkData,
 
-    'חומץ': {
-        density: 1.01
-    },
+    maple: mapleData,
+    'maple syrup': mapleData,
+    'סירופ מייפל': mapleData,
+    'מייפל': mapleData,
 
-    oil: {
-        density: 0.917
-    },
+    honey: honeyData,
+    'דבש': honeyData,
 
-    'olive oil': {
-        density: 0.917
-    },
+    mirin: mirinData,
+    'מירין': mirinData,
 
-    'שמן זית': {
-        density: 0.917
-    },
+    flour: flourData,
+    'קמח': flourData,
 
-    'שמן': {
-        density: 0.917
-    },
+    salt: saltData,
+    'מלח': saltData,
 
-    milk: {
-        density: 1.03
-    },
+    sugar: sugarData,
+    'סוכר': sugarData,
 
-    'חלב': {
-        density: 1.03
-    },
+    egg: eggData,
+    eggs: eggData,
+    'ביצים': eggData,
+    'ביצה': eggData,
 
-    maple: {
-        density: 1.37
-    },
+    garlic: garlicData,
+    'שום': garlicData,
+    'שן שום': garlicData,
+    'garlic clove': garlicData,
+    'שיני שום': garlicData,
 
-    'maple syrup': {
-        density: 1.37
-    },
-    'סירופ מייפל': {
-        density: 1.37
-    },
+    'garlic bulb': garlicBulbData,
+    'ראש שום': garlicBulbData,
 
-    'מייפל': {
-        density: 1.37
-    },
-
-    honey: {
-        density: 1.424
-    },
-    'דבש': {
-        density: 1.424
-    },
-
-    mirin: {
-        density: 1.05
-    },
-    'מירין': {
-        density: 1.05
-    },
-
-    flour: {
-        density: 0.79
-
-    },
-    'קמח': {
-        density: 0.79
-
-    },
-
-    salt: {
-        density: 2.16
-    },
-    
-    'מלח': {
-        density: 2.16
-    },
-
-    sugar: {
-        density: 1.59
-    },
-
-    'סוכר': {
-        density: 1.59
-    },
-
-    egg: {
-        wightPerUnit: 49
-    },
-
-    eggs: {
-        wightPerUnit: 49
-    },
-
-    'ביצים': {
-        wightPerUnit: 49
-    },
-    'ביצה': {
-        wightPerUnit: 49
-    },
-
-    garlic: {
-        wightPerUnit: 4.5
-    },
-    
-    'שום': {
-        wightPerUnit: 4.5
-    },
-
-    'garlic clove': {
-        wightPerUnit: 4.5
-    },
-
-    'שיני שום': {
-        wightPerUnit: 4.5
-    },
-
-    'garlic bulb': {
-        wightPerUnit: 59
-    },
-
-    'ראש שום': {
-        wightPerUnit: 59
-    },
-
-    onion: {
-        wightPerUnit: 150
-    },
-
-    'בצל': {
-        wightPerUnit: 150
-    },
-
-    onions: {
-        wightPerUnit: 150
-    },
+    onion: onionData,
+    'בצל': onionData,
+    onions: onionData,
 
 
 }

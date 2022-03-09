@@ -119,7 +119,7 @@ export function IngPreview({
             <span tabIndex="-1" className="remove-icon" ><FontAwesomeIcon onClick={onRemoveIngredient} icon={faTrash} /></span>
 
 
-            <section className="editable" className="ing-name">
+            <section className="editable ing-name" >
                 <span tabIndex="0" onKeyPress={handleKeyPress} onFocus={selectText} title={ingredient.name} data-name="name" onBlur={(ev) => handleIngChange(ev, ingredient)} contentEditable suppressContentEditableWarning={true}>{ingredient.name}</span>
             </section>
             <section className="amount-unit">
