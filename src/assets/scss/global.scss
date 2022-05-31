@@ -18,7 +18,6 @@
 @import "pages/recipe-editor";
 @import "pages/home";
 
-
 // Components
 @import "cmps/app-header";
 @import "cmps/recipe-list";
@@ -30,9 +29,6 @@
 @import "cmps/recipe-img";
 @import "cmps/loader";
 @import "cmps/input-switch";
-
-
-
 
 .new-ing {
     animation: fadein 1s forwards;

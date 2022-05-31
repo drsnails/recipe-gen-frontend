@@ -277,8 +277,10 @@ export default function RecipeEditor() {
                 <ShareButton url="" type="email" subject={recipe.name} body={recipeTxt} />
             </section>
             <section className="title-edit">
-                <strong className="ingredients">Ingredients</strong>
-                <InputSwitch value={isFixedRatio} onChange={() => setIsFixedRatio(prevIsFixed => !prevIsFixed)} />
+                {/* <section className="inner-edit"> */}
+                    {/* <strong className="ingredients">Ingredients</strong> */}
+                    <InputSwitch value={isFixedRatio} onChange={() => setIsFixedRatio(prevIsFixed => !prevIsFixed)} />
+                {/* </section> */}
                 <form onSubmit={ev => ev.preventDefault()} className="nice-form">
                     <div className="form__group field dishes-form">
                         <input value={numOfDishes} onChange={handleNumOfDishesChange} type="number" id="numOfDishes" name="numOfDishes" className="form__field" placeholder="Search by recipe or ingredient" />

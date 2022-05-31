@@ -13,6 +13,17 @@
         justify-content: space-between;
         align-items: flex-end;
         margin-bottom: 1em;
+        width: 100%;
+
+        .inner-edit {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            // > *:not(:last-child) {
+            //     margin-right: 30%;
+            // }
+        }
 
         .nice-form {
             margin-bottom: 0;
@@ -25,6 +36,10 @@
                 max-width: 190px;
             }
         }
+
+        // @include for-mobile-layout {
+        //     // width: 50%;
+        // }
     }
 
     .share-btns {
