@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import { IngList } from "../cmps/IngList";
@@ -21,22 +21,34 @@ export default function RecipeEditor() {
     const [isEdited, setIsEdited] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
     const [errMsg, setErrMsg] = useState('');
+
+    const ingToScaleRef = useRef(null)
+    const [isFixedRatio, setIsFixedRatio] = useState(false)
+    // const [fixedRatioIngredients, setFixedRatioIngredients] = useState(second)
+
     const dispatch = useDispatch()
 
 
     const params = useParams()
-    useEffect(() => {
 
+
+
+    useEffect(() => {
         loadRecipe()
     }, [params.id]);
 
-
-
+    // TODO continue for fixed scale
+    useEffect(() => {
+        if (!recipe) return
+        const ingToScale = getIngredientToScale(recipe)
+        ingToScaleRef.current = ingToScale
+    }, [recipe?.ingToScaleId])
 
     const loadRecipe = async () => {
         try {
             console.log('trying');
             const recipe = params.id ? await recipeService.getById(params.id) : recipeService.getEmptyRecipe()
+            console.log('loadRecipe -> recipe', recipe)
             setRecipe(recipe)
 
         } catch (err) {
@@ -54,6 +66,7 @@ export default function RecipeEditor() {
     const saveRecipe = async (data, type) => {
         const { recipe } = data
         const oldRecipe = cloneDeep(recipe)
+        if (isFixedRatio) return
         try {
             // dispatch(setLoading(true))
             setRecipe(recipe)
@@ -122,7 +135,7 @@ export default function RecipeEditor() {
         if (target.nodeName !== 'SELECT' && target.nodeName !== 'INPUT') {
             field = target.dataset.name
             value = target.innerText
-            
+
             if (field === 'amount') {
                 value = +value
                 if (!value) {
@@ -193,6 +206,11 @@ export default function RecipeEditor() {
         triggerSaveBtn(recipeToSave)
     }
 
+    /**
+     * remove ingredient
+     * 
+     * @param {string} ingId 
+     */
     const removeIngredient = async (ingId) => {
 
 
@@ -252,6 +270,9 @@ export default function RecipeEditor() {
 
     if (!recipe) return <div>{errMsg || <Loader _isLoading={true} />}</div>
     const ingToScale = getIngredientToScale(recipe)
+    // const ingToScale = ingToScaleRef.current
+
+
     const floatBtnClass = isEdited ? 'animate-in' : 'animate-out'
     const recipeTxt = recipeService.getRecipeTxt(recipe)
     return (
@@ -287,6 +308,7 @@ export default function RecipeEditor() {
                 ingToRemoveIdx={ingToRemoveIdx}
                 onReOrderIngs={onReOrderIngs}
                 numOfDishes={numOfDishes}
+                isFixedRatio={isFixedRatio}
             />
 
 

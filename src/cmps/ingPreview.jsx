@@ -9,6 +9,7 @@ import { showErrorMsg } from "../services/eventBusService";
 export function IngPreview({
     ingredient,
     ingToScale,
+    isFixedRatio,
     onChangeRecipeData,
     ingredientsLength,
     handleIngChange,
@@ -103,6 +104,7 @@ export function IngPreview({
     const ingToScaleClass = ingredient.id === ingToScale?.id ? 'chosen' : ''
     /*TEST START*/
     const amountToScale = (ingToScale) ? getAmountToScale(ingredient, ingToScale) : ''
+        
     /*TEST END*/
 
     /*ORIGINAL START*/

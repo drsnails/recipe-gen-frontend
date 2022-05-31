@@ -18,7 +18,8 @@ export function IngList({
     removeIngredient,
     ingToRemoveIdx,
     onReOrderIngs,
-    numOfDishes
+    numOfDishes,
+    isFixedRatio
 }) {
 
 
@@ -58,7 +59,7 @@ export function IngList({
     //     onReOrderIngs(result)
     // }
 
-   
+
 
 
     return (
@@ -89,6 +90,7 @@ export function IngList({
                                                     key={ingredient.id}
                                                     ingredient={ingredient}
                                                     ingToScale={ingToScale}
+                                                    isFixedRatio={isFixedRatio}
                                                     onChangeRecipeData={onChangeRecipeData}
                                                     numOfDishes={numOfDishes}
                                                     isRemovedClass={getIdxEquality(idx, ingToRemoveIdx)}
@@ -99,7 +101,7 @@ export function IngList({
                                     </Draggable>
                                 )}
                                 {(provided.placeholder)}
-                                {<button className="add-btn"  onClick={addIngredient} ><FontAwesomeIcon icon={faPlus} /></button>}
+                                {<button className="add-btn" onClick={addIngredient} ><FontAwesomeIcon icon={faPlus} /></button>}
                                 {/* {(!snapshot.isDraggingOver||true) && <button style={{top: `${snapshot.isDraggingOver?}`}} onClick={addIngredient} className="add-btn"><FontAwesomeIcon icon={faPlus} /></button>} */}
 
                             </section>
