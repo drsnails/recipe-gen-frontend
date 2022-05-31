@@ -278,8 +278,8 @@ export default function RecipeEditor() {
             </section>
             <section className="title-edit">
                 {/* <section className="inner-edit"> */}
-                    {/* <strong className="ingredients">Ingredients</strong> */}
-                    <InputSwitch value={isFixedRatio} onChange={() => setIsFixedRatio(prevIsFixed => !prevIsFixed)} />
+                {/* <strong className="ingredients">Ingredients</strong> */}
+                <InputSwitch value={isFixedRatio} onChange={() => setIsFixedRatio(prevIsFixed => !prevIsFixed)} />
                 {/* </section> */}
                 <form onSubmit={ev => ev.preventDefault()} className="nice-form">
                     <div className="form__group field dishes-form">

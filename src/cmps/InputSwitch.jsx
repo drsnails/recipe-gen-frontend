@@ -2,8 +2,8 @@
 export function InputSwitch({ value, onChange }) {
     return (
         <div className='input-switch'>
-            <input checked={value} type="checkbox" name="switch" id="cb2" className="tgl tgl-light" />
-            <label onClick={onChange} htmlFor="cb2" className="tgl-btn"></label>
+            <input checked={value} onChange={onChange} type="checkbox" name="switch" id="cb2" className="tgl tgl-light" />
+            <label  htmlFor="cb2" className="tgl-btn"></label>
             <h4>Fixed Mode?</h4>
         </div>
     )

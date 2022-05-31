@@ -63,7 +63,6 @@ export function IngList({
 
 
 
-
     return (
         <>
 
@@ -76,7 +75,7 @@ export function IngList({
                             style={getListStyle(snapshot.isDraggingOver)}
                         >
 
-                            <section className="ing-list">
+                            <section className='ing-list'>
                                 {ingredients.map((ingredient, idx) =>
                                     // <>
                                     <Draggable key={ingredient.id} draggableId={ingredient.id} index={idx}>

@@ -28,3 +28,12 @@
     // height: 133px;
     // background-color: red;
 }
+
+
+.not-allowed {
+    cursor: not-allowed !important;
+    
+    &:not(.remove-icon) {
+        color: #7b7b7b;
+    }
+}

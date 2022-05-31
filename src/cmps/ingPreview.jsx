@@ -31,7 +31,7 @@ export function IngPreview({
 
 
     const onRemoveIngredient = async () => {
-
+        if (isFixedRatio) return
         if (ingredientsLength === 1) {
             showErrorMsg({ txt: 'Sorry, for now you need to have at least 1 ingredient' })
             return
@@ -94,8 +94,7 @@ export function IngPreview({
     const dishesAmount = useMemo(() => {
         numOfDishes ||= 1
         if (!isFixedRatio) return (ingredient.amount * numOfDishes) % 1 === 0 ? (ingredient.amount * numOfDishes) : (ingredient.amount * numOfDishes).toFixed(2)
-        console.log('ingToScale.amount / amountToScaleFixed:', ingToScale.amount / amountToScaleFixed);
-        var res = (amountToScaleFixed / ingToScale.amount * ingredient.amount)
+        const res = amountToScaleFixed / ingToScale.amount * ingredient.amount
         return res % 1 === 0 ? res : res.toFixed(2)
     }, [numOfDishes, amountToScaleFixed])
 
@@ -112,19 +111,21 @@ export function IngPreview({
     var unitsLength = ingredient.units.length + 3
 
     const isAmountEditable = !isFixedRatio || ingredient.id === ingToScale.id
+    const notAllowedClass = isFixedRatio ? 'not-allowed' : ''
+
     return (
 
 
         <article ref={providedRef} {...dragProp} {...dragHandleProp} className={`ing-preview ${className}`}>
-            <span tabIndex="-1" className="remove-icon" ><FontAwesomeIcon onClick={onRemoveIngredient} icon={faTrash} /></span>
+            <span tabIndex="-1" className={`remove-icon ${notAllowedClass}`} ><FontAwesomeIcon onClick={onRemoveIngredient} icon={faTrash} /></span>
 
 
             <section className="editable ing-name" >
-                <span tabIndex="0" onKeyPress={handleKeyPress} onFocus={selectText} title={ingredient.name} data-name="name" onBlur={onHandleIngChange()} contentEditable={!isFixedRatio} suppressContentEditableWarning={true}>{ingredient.name}</span>
+                <span tabIndex="0" className={notAllowedClass} onKeyPress={handleKeyPress} onFocus={selectText} title={ingredient.name} data-name="name" onBlur={onHandleIngChange()} contentEditable={!isFixedRatio} suppressContentEditableWarning={true}>{ingredient.name}</span>
             </section>
             <section className="amount-unit">
-                <span tabIndex="0" onKeyPress={handleKeyPress} onFocus={selectText} inputMode="numeric" data-name="amount" onBlur={onHandleIngChange('amount')} className="editable" contentEditable={isAmountEditable} suppressContentEditableWarning={true}>{dishesAmount}</span>
-                <select tabIndex="0" style={{ width: `${unitsLength}ch` }} onChange={onHandleIngChange()} value={ingredient.units} name="units" id="units">
+                <span tabIndex="0" onKeyPress={handleKeyPress} onFocus={selectText} inputMode="numeric" data-name="amount" onBlur={onHandleIngChange('amount')} className={`editable ${!isAmountEditable && 'not-allowed'}`} contentEditable={isAmountEditable} suppressContentEditableWarning={true}>{dishesAmount}</span>
+                <select disabled={isFixedRatio} className={notAllowedClass} tabIndex="0" style={{ width: `${unitsLength}ch` }} onChange={onHandleIngChange()} value={ingredient.units} name="units" id="units">
                     <option value="g">g</option>
                     <option value="Kg">Kg</option>
                     <option value="mL">mL</option>
@@ -136,7 +137,7 @@ export function IngPreview({
                     <option value="units">Units</option>
                 </select>
             </section>
-            <p title={amountToScale} onClick={onChangeRecipeDataWrap} className={ingToScaleClass}>{amountToScale || '-'}</p>
+            <p title={amountToScale} onClick={onChangeRecipeDataWrap} className={`${ingToScaleClass} ${notAllowedClass}`}>{amountToScale || '-'}</p>
         </article>
     );
 }

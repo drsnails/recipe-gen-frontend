@@ -5,7 +5,6 @@
     padding-right: 10px;
     padding: 20px;
 
-
     @include for-mobile-layout {
         max-width: initial;
         padding: 10px;
@@ -31,8 +30,7 @@
     grid-gap: 30px;
 }
 
-
-//FORMS 
+//FORMS
 .nice-form {
     margin-bottom: 35px;
     // input {
@@ -99,10 +97,10 @@
         display: block;
         transition: 0.2s;
         font-size: 1rem;
-        
+
         color: $gray;
         @include for-mobile-layout {
-            font-size: .8rem;
+            font-size: 0.8rem;
         }
     }
 
@@ -114,7 +112,6 @@
             transition: 0.2s;
             font-size: 0.8rem;
 
-            
             // color: $primary;
             // font-weight: 700;
         }
