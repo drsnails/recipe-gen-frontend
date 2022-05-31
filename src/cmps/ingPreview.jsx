@@ -17,22 +17,17 @@ export function IngPreview({
     providedRef,
     dragHandleProp,
     dragProp,
-    numOfDishes
+    numOfDishes,
+    handleRecipeAmounts,
+    amountToScaleFixed
 }) {
 
-
     const [className, setClassName] = useState('');
-
-
-
 
     const moreRef = (el) => {
         console.log('moreREf el:', el);
 
     }
-
-
-
 
 
     const onRemoveIngredient = async () => {
@@ -62,6 +57,17 @@ export function IngPreview({
     //     };
     // };
 
+
+    const onHandleIngChange = (type) => {
+
+        if (!isFixedRatio) return (ev) => handleIngChange(ev, ingredient)
+        if (type === 'amount') {
+            return (ev) => handleRecipeAmounts(ev, ingredient)
+        }
+
+        return () => { }
+    }
+
     const onChangeRecipeDataWrap = () => {
         if (ingredient.units === 'units') {
             showErrorMsg({ txt: "Can't set 'Units' as a main relative quantity" })
@@ -85,26 +91,19 @@ export function IngPreview({
 
 
 
-
-
-    // let newClass = ''
-    // if (ingredient.isNew) {
-    //     console.log('isNEWWWW:');
-    //     newClass = 'new-ing'
-    //     delete ingredient.isNew
-    // }
-    // console.log('newClass:', newClass);
-
     const dishesAmount = useMemo(() => {
         numOfDishes ||= 1
-        return (ingredient.amount * numOfDishes) % 1 === 0 ? (ingredient.amount * numOfDishes) : (ingredient.amount * numOfDishes).toFixed(2)
-    }, [numOfDishes])
+        if (!isFixedRatio) return (ingredient.amount * numOfDishes) % 1 === 0 ? (ingredient.amount * numOfDishes) : (ingredient.amount * numOfDishes).toFixed(2)
+        console.log('ingToScale.amount / amountToScaleFixed:', ingToScale.amount / amountToScaleFixed);
+        var res = (amountToScaleFixed / ingToScale.amount * ingredient.amount)
+        return res % 1 === 0 ? res : res.toFixed(2)
+    }, [numOfDishes, amountToScaleFixed])
 
 
     const ingToScaleClass = ingredient.id === ingToScale?.id ? 'chosen' : ''
     /*TEST START*/
-    const amountToScale = (ingToScale) ? getAmountToScale(ingredient, ingToScale) : ''
-        
+    let amountToScale = (ingToScale) ? getAmountToScale(ingredient, ingToScale) : ''
+
     /*TEST END*/
 
     /*ORIGINAL START*/
@@ -112,21 +111,20 @@ export function IngPreview({
     /*ORIGINAL END*/
     var unitsLength = ingredient.units.length + 3
 
+    const isAmountEditable = !isFixedRatio || ingredient.id === ingToScale.id
     return (
 
 
-        // <article ref={mergeRefs(providedRef, articleRef)} {...dragProp} {...dragHandleProp} className={`ing-preview ${className}`}>
         <article ref={providedRef} {...dragProp} {...dragHandleProp} className={`ing-preview ${className}`}>
-            {/* <button onClick={onRemoveIngredient} className="remove-btn"></button> */}
             <span tabIndex="-1" className="remove-icon" ><FontAwesomeIcon onClick={onRemoveIngredient} icon={faTrash} /></span>
 
 
             <section className="editable ing-name" >
-                <span tabIndex="0" onKeyPress={handleKeyPress} onFocus={selectText} title={ingredient.name} data-name="name" onBlur={(ev) => handleIngChange(ev, ingredient)} contentEditable suppressContentEditableWarning={true}>{ingredient.name}</span>
+                <span tabIndex="0" onKeyPress={handleKeyPress} onFocus={selectText} title={ingredient.name} data-name="name" onBlur={onHandleIngChange()} contentEditable={!isFixedRatio} suppressContentEditableWarning={true}>{ingredient.name}</span>
             </section>
             <section className="amount-unit">
-                <span tabIndex="0" onKeyPress={handleKeyPress} onFocus={selectText} inputMode="numeric" data-name="amount" onBlur={(ev) => handleIngChange(ev, ingredient)} className="editable" contentEditable suppressContentEditableWarning={true}>{dishesAmount}</span>
-                <select tabIndex="0" style={{ width: `${unitsLength}ch` }} onChange={(ev) => handleIngChange(ev, ingredient)} value={ingredient.units} name="units" id="units">
+                <span tabIndex="0" onKeyPress={handleKeyPress} onFocus={selectText} inputMode="numeric" data-name="amount" onBlur={onHandleIngChange('amount')} className="editable" contentEditable={isAmountEditable} suppressContentEditableWarning={true}>{dishesAmount}</span>
+                <select tabIndex="0" style={{ width: `${unitsLength}ch` }} onChange={onHandleIngChange()} value={ingredient.units} name="units" id="units">
                     <option value="g">g</option>
                     <option value="Kg">Kg</option>
                     <option value="mL">mL</option>

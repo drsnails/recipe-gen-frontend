@@ -19,7 +19,9 @@ export function IngList({
     ingToRemoveIdx,
     onReOrderIngs,
     numOfDishes,
-    isFixedRatio
+    isFixedRatio,
+    handleRecipeAmounts,
+    amountToScaleFixed
 }) {
 
 
@@ -95,6 +97,8 @@ export function IngList({
                                                     numOfDishes={numOfDishes}
                                                     isRemovedClass={getIdxEquality(idx, ingToRemoveIdx)}
                                                     ingredientsLength={ingredients.length}
+                                                    handleRecipeAmounts={handleRecipeAmounts}
+                                                    amountToScaleFixed={amountToScaleFixed}
                                                 />
                                             )
                                         }}

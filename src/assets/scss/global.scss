@@ -14,21 +14,22 @@
 @import "basics/animations";
 
 // Pages
-@import "../scss/pages/login-signup";
-@import "../scss/pages/recipe-editor";
-@import "../scss/pages/home";
+@import "pages/login-signup";
+@import "pages/recipe-editor";
+@import "pages/home";
 
 
 // Components
-@import "../scss/cmps/app-header";
-@import "../scss/cmps/recipe-list";
-@import "../scss/cmps/recipe-preview";
-@import "../scss/cmps/recipe-filter";
-@import "../scss/cmps/ing-list";
-@import "../scss/cmps/ing-preview";
+@import "cmps/app-header";
+@import "cmps/recipe-list";
+@import "cmps/recipe-preview";
+@import "cmps/recipe-filter";
+@import "cmps/ing-list";
+@import "cmps/ing-preview";
 @import "cmps/toast-message";
 @import "cmps/recipe-img";
 @import "cmps/loader";
+@import "cmps/input-switch";
 
 
 
