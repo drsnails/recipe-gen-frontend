@@ -44,7 +44,7 @@ export function RecipeImg({ imgUrl, onChangeImg, isEdited }) {
         inputRef.current.click()
     }
 
-    
+
     const onRemoveImg = (ev) => {
         ev.stopPropagation()
         onChangeImg(null, true)

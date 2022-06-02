@@ -65,6 +65,10 @@
             }
         }
 
+        &.expand .img-container {
+            // background-size: contain;
+        }
+
         .img-upload {
             text-align: center;
             .upload-icon {

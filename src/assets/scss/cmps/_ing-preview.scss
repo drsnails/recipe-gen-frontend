@@ -18,21 +18,40 @@
         }
     }
 
-    
-
     .ing-name {
         flex-grow: 2;
-        
+    }
+
+    span[contentEditable] {
+        padding: 0.3em;
+        display: inline-block;
+        outline: none;
+
+        &:focus {
+            box-shadow: 0px 0px 4px 2px #4d97ffa8;
+
+        }
+
+        &::selection {
+            background-color: #4d97ff2a;
+            font-weight: 900;
+            padding: 3px;
+        }
+
+        @include for-mobile-layout {
+            // padding: 0.1em;
+        }
     }
 
     span.editable {
         @include trim;
     }
 
-    .ing-name,span.editable {
+    .ing-name,
+    span.editable {
         font-weight: 500;
     }
-    
+
     .amount-unit {
         display: flex;
         align-items: center;
@@ -86,4 +105,3 @@
 .smaller {
     animation: move-up 0.5s forwards;
 }
-
