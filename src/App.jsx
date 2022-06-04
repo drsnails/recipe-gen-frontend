@@ -65,7 +65,7 @@ function App() {
 
 
                 </main>
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense fallback={<Loader />}>
                     <ToastMessage />
                 </Suspense>
 
