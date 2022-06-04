@@ -43,7 +43,7 @@ function App() {
             <Router>
                 <AppHeader />
                 <main className='container'>
-                    <Suspense fallback={<div>Loading...</div>}>
+                    <Suspense fallback={<Loader />}>
                         <Routes>
                             <Route path="/" element={
                                 <PrivateRoute>

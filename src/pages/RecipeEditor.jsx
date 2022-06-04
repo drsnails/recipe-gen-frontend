@@ -14,10 +14,10 @@ import { recipeService } from "../services/recipeService";
 import { userService } from "../services/userService";
 import { copyToClipboard, reOrderList, selectText, sleep } from "../services/utilService";
 import { setLoading } from "../store/actions/loaderActions";
+import { IngList } from "../cmps/IngList";
+// const IngList = lazy(() => import('../cmps/IngList'))
 
 
-// import { IngList } from "../cmps/IngList";
-const IngList = lazy(() => import('../cmps/IngList'))
 
 var cloneDeep = require('lodash.clonedeep');
 

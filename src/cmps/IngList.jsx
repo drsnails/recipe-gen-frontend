@@ -8,7 +8,7 @@ import { IngPreview } from "./ingPreview";
 import { useRef } from 'react';
 const grid = 8;
 
-export default function IngList({
+export function IngList({
     ingredients,
     ingToScale,
     onChangeRecipeData,
