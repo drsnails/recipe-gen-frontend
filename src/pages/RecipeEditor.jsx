@@ -50,9 +50,7 @@ export default function RecipeEditor() {
 
     const loadRecipe = async () => {
         try {
-            console.log('trying');
             const recipe = params.id ? await recipeService.getById(params.id) : recipeService.getEmptyRecipe()
-            console.log('loadRecipe -> recipe', recipe)
             setRecipe(recipe)
 
         } catch (err) {
@@ -260,7 +258,6 @@ export default function RecipeEditor() {
     const floatBtnClass = isEdited ? 'animate-in' : 'animate-out'
     const recipeTxt = recipeService.getRecipeTxt(recipe)
     if (!amountToScaleFixed) return <Loader _isLoading={true} />
-    console.log('editor amountToScaleFixed:', amountToScaleFixed)
 
     return (
         <div className='recipe-editor'>

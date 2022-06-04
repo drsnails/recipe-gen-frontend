@@ -29,7 +29,6 @@
 
         &:focus {
             box-shadow: 0px 0px 4px 2px #4d97ffa8;
-
         }
 
         &::selection {
@@ -44,7 +43,7 @@
     }
 
     span.editable {
-        @include trim;
+        // @include trim;
     }
 
     .ing-name,
@@ -56,13 +55,23 @@
         display: flex;
         align-items: center;
         gap: 5px;
-        flex-grow: 2.5;
+        flex-grow: 3;
         margin-left: 10px;
+
+        overflow-x: clip;
+        // text-overflow: ellipsis;
+
+        span {
+            margin-left: 5%;
+        }
 
         select {
             border: none;
             border-bottom: 1px solid black;
             font-size: 0.8em;
+            // overflow-x: hidden;
+            text-overflow: ellipsis;
+            max-width: 75%;
         }
     }
 
