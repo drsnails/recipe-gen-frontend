@@ -14,7 +14,7 @@ import { showErrorMsg } from '../services/eventBusService';
 import { goToTop } from '../services/utilService';
 
 
-export function Home() {
+export default function Home() {
 
     const dispatch = useDispatch()
     const [recipes, setRecipes] = useState(null);

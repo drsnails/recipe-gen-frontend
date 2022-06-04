@@ -1,21 +1,23 @@
 
 import './assets/scss/global.scss';
 // import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import { lazy, Suspense } from 'react'
 
-import { Route, Routes, useNavigate } from 'react-router';
+import { Route, Routes } from 'react-router';
 import { BrowserRouter as Router } from 'react-router-dom';
+
 import { LoginSignup } from './pages/LoginSignup';
 import { AppHeader } from './cmps/AppHeader';
-import { ToastMessage } from './cmps/ToastMessage';
-import { Home } from './pages/Home';
 import { PrivateRoute } from './cmps/PrivateRoute';
-import RecipeEditor from './pages/RecipeEditor';
-import { useEffect } from 'react';
-import { userService } from './services/userService';
 import { useDispatch } from 'react-redux';
-import { login, setUser } from './store/actions/userActions';
+import { setUser } from './store/actions/userActions';
 import { ConfirmDialog } from './cmps/ConfirmDialog';
 import { Loader } from './cmps/Loader';
+
+const ToastMessage = lazy(() => import('./cmps/ToastMessage'))
+const Home = lazy(() => import('./pages/Home'))
+const RecipeEditor = lazy(() => import('./pages/RecipeEditor'))
+
 
 function App() {
     const dispatch = useDispatch()
@@ -41,26 +43,32 @@ function App() {
             <Router>
                 <AppHeader />
                 <main className='container'>
-                    <Routes>
-                        <Route path="/" element={
-                            <PrivateRoute>
-                                <Home />
-                            </PrivateRoute>
-                        } />
-                        <Route path='recipe' element={<RecipeEditor />} />
-                        {/* <Route path='recipe/:id' element={<RecipeEditor />} /> */}
-                        <Route path="recipe/:id" element={
-                            <PrivateRoute>
-                                <RecipeEditor />
-                            </PrivateRoute>
-                        } />
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <Routes>
+                            <Route path="/" element={
+                                <PrivateRoute>
+                                    <Home />
+                                </PrivateRoute>
+                            } />
+                            <Route path='recipe' element={<RecipeEditor />} />
+                            {/* <Route path='recipe/:id' element={<RecipeEditor />} /> */}
+                            <Route path="recipe/:id" element={
+                                <PrivateRoute>
+                                    <RecipeEditor />
+                                </PrivateRoute>
+                            } />
 
-                        <Route path="login" element={<LoginSignup />} />
-                        <Route path="signin" element={<LoginSignup />} />
-                    </Routes>
+                            <Route path="login" element={<LoginSignup />} />
+                            <Route path="signin" element={<LoginSignup />} />
+                        </Routes>
+                    </Suspense>
+
 
                 </main>
-                <ToastMessage />
+                <Suspense fallback={<div>Loading...</div>}>
+                    <ToastMessage />
+                </Suspense>
+
                 <ConfirmDialog />
                 <Loader />
             </Router>
