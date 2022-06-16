@@ -27,7 +27,6 @@ function App() {
     //   document.addEventListener('visibilitychange', function() {
     //     if (document.visibilityState == 'hidden') {
     //       console.log('heyyyyyyy');
-    //        // send beacon request
     //        navigator.sendBeacon('//localhost:3030/api/auth/test', {data:'data'})
     //     }
     //   });

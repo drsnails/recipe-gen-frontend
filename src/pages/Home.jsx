@@ -1,4 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
+// import { useTransition } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
 // var cloneDeep = require('lodash.clonedeep');
 import cloneDeep from 'lodash.clonedeep'
@@ -19,6 +21,8 @@ export default function Home() {
     const dispatch = useDispatch()
     const [recipes, setRecipes] = useState(null);
     const [filterBy, setFilterBy] = useState({ term: '', sortBy: '', sortDir: 1 })
+    // const [isPending, startTransition] = useTransition()
+
     let { loggedInUser } = useSelector(state => state.userModule)
 
     useEffect(() => {
@@ -56,11 +60,17 @@ export default function Home() {
 
 
     const onAddRecipe = async () => {
-        const emptyRecipe = recipeService.getEmptyRecipe()
-        emptyRecipe.userId = loggedInUser._id
-        const _filterBy = {...filterBy, sortBy: ''}
-        setFilterBy(_filterBy)
-        saveRecipe(emptyRecipe)
+        try {
+            const emptyRecipe = recipeService.getEmptyRecipe()
+            emptyRecipe.userId = loggedInUser._id
+            const _filterBy = { ...filterBy, sortBy: '' }
+            setFilterBy(_filterBy)
+            saveRecipe(emptyRecipe)
+
+        } catch (error) {
+            console.log('error:', error)
+
+        }
     }
 
 
@@ -84,10 +94,15 @@ export default function Home() {
     }
 
     const removeRecipe = async (recipeId) => {
+        try {
+            await recipeService.remove(recipeId)
+            const newRecipes = recipes.filter(recipe => recipe._id !== recipeId)
+            setRecipes(newRecipes)
 
-        await recipeService.remove(recipeId)
-        const newRecipes = recipes.filter(recipe => recipe._id !== recipeId)
-        setRecipes(newRecipes)
+        } catch (err) {
+            console.log('err:', err)
+
+        }
     }
 
     const onChangeFilterBy = (filterBy) => {

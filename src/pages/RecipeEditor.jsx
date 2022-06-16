@@ -10,7 +10,7 @@ import { ShareButton } from "../cmps/ShareButton";
 import { useEffectUpdate } from "../hooks/useEffectUpdate";
 import { useForm } from "../hooks/useFormRegister";
 import { showErrorMsg, showSuccessMsg } from "../services/eventBusService";
-import { recipeService } from "../services/recipeService";
+import { recipeService, testCall } from "../services/recipeService";
 import { userService } from "../services/userService";
 import { copyToClipboard, reOrderList, selectText, sleep } from "../services/utilService";
 import { setLoading } from "../store/actions/loaderActions";
@@ -43,6 +43,7 @@ export default function RecipeEditor() {
 
     useEffect(() => {
         loadRecipe()
+    
     }, [params.id]);
 
     // TODO continue for fixed scale

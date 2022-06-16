@@ -54,7 +54,7 @@ async function remove(recipeId) {
 /*TEST START*/
 async function save(data, type) {
     try {
-        return data?.recipe._id ? httpService.put(BASE_URL, {data, type}) : httpService.post(BASE_URL, data.recipe)
+        return data?.recipe._id ? httpService.put(BASE_URL, { data, type }) : httpService.post(BASE_URL, data.recipe)
     } catch (err) {
         return
     }
@@ -94,7 +94,7 @@ function getEmptyRecipe() {
         createdAt: Date.now(),
         ingToScaleId: firstIng.id,
         ingredients: [firstIng],
-        imgUrl:'',
+        imgUrl: '',
         instructions: ''
     }
 }
@@ -115,7 +115,7 @@ function getRecipeTxt(recipe) {
     const relativeIng = recipe.ingredients.find(ing => ing.id === recipe.ingToScaleId)
     recipeTxt += '--Ingredients--\n'
     for (const ingredient of recipe.ingredients) {
-        
+
         const relativeAmount = relativeIng && getAmountToScale(ingredient, relativeIng)
         recipeTxt += capitalize(ingredient.name) + '\t\t '
         recipeTxt += ingredient.amount + ' ' + ingredient.units + '\t\t '
@@ -126,7 +126,7 @@ function getRecipeTxt(recipe) {
     recipeTxt += '--Instructions--\n'
     recipeTxt += recipe.instructions
 
-    
+
     return recipeTxt
 
 }
