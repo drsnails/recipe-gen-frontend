@@ -10,21 +10,27 @@ const clientId = '207535718576-hdkb870gloso3ln5s90rrd1rfkjl62g2.apps.googleuserc
 
 
 export function GoogleLogoutBtn({ onSubmit, setCreds }) {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const onSuccess = async (res) => {
-    await dispatch(logout())
-    navigate('/login')
-  };
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const onSuccess = async (res) => {
+        await dispatch(logout())
+        navigate('/login')
+    };
 
-  return (
-    <div>
-      <GoogleLogout
-        clientId={clientId}
-        className='logout-btn'
-        buttonText="Logout"
-        onLogoutSuccess={onSuccess}
-      ></GoogleLogout>
-    </div>
-  );
+    return (
+        <div>
+            <GoogleLogout
+                clientId={clientId}
+                className='logout-btn'
+                buttonText="Logout"
+                onLogoutSuccess={onSuccess}
+            ></GoogleLogout>
+            {/* <button
+
+                className='logout-btn'
+
+                onClick={onSuccess}
+            >Logout</button> */}
+        </div>
+    );
 }
