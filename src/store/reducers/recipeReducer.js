@@ -12,8 +12,6 @@ export function recipeReducer(state = INITIAL_STATE, action) {
                 recipes: [...action.recipes]
             };
 
-        
-
         default:
             return state;
     }

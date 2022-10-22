@@ -31,6 +31,7 @@ export default function RecipeEditor() {
 
     const ingToScaleRef = useRef(null)
     const [isFixedRatio, setIsFixedRatio] = useState(false)
+    const [isWeightRatio, setIsWeightRatio] = useState(false)
     const [amountToScaleFixed, setAmountToScaleFixed] = useState()
     // const [fixedRatioIngredients, setFixedRatioIngredients] = useState(second)
 
@@ -43,7 +44,7 @@ export default function RecipeEditor() {
 
     useEffect(() => {
         loadRecipe()
-    
+
     }, [params.id]);
 
     // TODO continue for fixed scale
@@ -71,6 +72,7 @@ export default function RecipeEditor() {
         if (!isFixedRatio) {
             const ingToScale = getIngredientToScale(recipe)
             setAmountToScaleFixed(ingToScale.amount)
+            setIsWeightRatio(false)
         }
     }, [isFixedRatio])
 
@@ -123,6 +125,7 @@ export default function RecipeEditor() {
         let amount = +target.innerText
         if (!amount) amount = ingToScale.amount
         setAmountToScaleFixed(amount)
+
     }
 
     const handleIngChange = async (ev, ingredient) => {
@@ -228,7 +231,7 @@ export default function RecipeEditor() {
         await onChangeRecipeData('imgUrl', imgUrl)
         dispatch(setLoading(false))
     }
-    
+
 
 
 
@@ -264,6 +267,7 @@ export default function RecipeEditor() {
     const floatBtnClass = isEdited ? 'animate-in' : 'animate-out'
     const recipeTxt = recipeService.getRecipeTxt(recipe)
     if (!amountToScaleFixed) return <Loader _isLoading={true} />
+    console.log('isFixedRatio:', isFixedRatio);
 
     return (
         <div className='recipe-editor'>
@@ -282,7 +286,10 @@ export default function RecipeEditor() {
             <section className="title-edit">
                 {/* <section className="inner-edit"> */}
                 {/* <strong className="ingredients">Ingredients</strong> */}
-                <InputSwitch value={isFixedRatio} onChange={() => setIsFixedRatio(prevIsFixed => !prevIsFixed)} />
+                <section className="input-check-container">
+                    <InputSwitch id="fixedMode" txt="Fixed Mode" value={isFixedRatio} onChange={() => setIsFixedRatio(prevIsFixed => !prevIsFixed)} />
+                    {isFixedRatio && <InputSwitch id="weightMode" txt="Weight Ratio" value={isWeightRatio} onChange={() => setIsWeightRatio(prevIsWeightRatio => !prevIsWeightRatio)} />}
+                </section>
                 {/* </section> */}
                 <form onSubmit={ev => ev.preventDefault()} className="nice-form">
                     <div className="form__group field dishes-form">
@@ -302,6 +309,7 @@ export default function RecipeEditor() {
                 onReOrderIngs={onReOrderIngs}
                 numOfDishes={numOfDishes}
                 isFixedRatio={isFixedRatio}
+                isWeightRatio={isWeightRatio}
                 handleRecipeAmounts={handleRecipeAmounts}
                 amountToScaleFixed={amountToScaleFixed}
             />

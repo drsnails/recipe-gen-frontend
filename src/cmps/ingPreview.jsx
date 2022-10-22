@@ -10,6 +10,7 @@ export function IngPreview({
     ingredient,
     ingToScale,
     isFixedRatio,
+    isWeightRatio,
     onChangeRecipeData,
     ingredientsLength,
     handleIngChange,
@@ -89,29 +90,67 @@ export function IngPreview({
 
     }
 
+    function getUnitsValue() {
+        let unitsValue = isWeightRatio ? 'g' : ingredient.units
+        if (ingredient.units === 'units') unitsValue = 'units'
+        return unitsValue
+    }
 
+
+    let amountToScale = (ingToScale) ? getAmountToScale(ingredient, ingToScale) : ''
+
+    /*TEST START*/
 
     const dishesAmount = useMemo(() => {
         numOfDishes ||= 1
         if (!isFixedRatio) return (ingredient.amount * numOfDishes) % 1 === 0 ? (ingredient.amount * numOfDishes) : (ingredient.amount * numOfDishes).toFixed(2)
+        console.log('ingredient', ingredient);
+        if (ingredient.units === 'units') return ingredient.amount
+
+        // linear ratio
+        // const res = amountToScaleFixed / ingToScale.amount * ingredient.amount
+
+        // weight ratio
+        const res = (isWeightRatio ? amountToScaleFixed * amountToScale : amountToScaleFixed / ingToScale.amount * ingredient.amount) * numOfDishes
+
+        // amount To Scale Ratio
+        // const res = ingToScale.amount * amountToScale
+        return res % 1 === 0 ? res : res.toFixed(2)
+    }, [numOfDishes, amountToScaleFixed, amountToScale, isFixedRatio, isWeightRatio])
+
+    /*TEST END*/
+
+
+
+    /*ORIGINAL START*/
+
+    /*
+    const dishesAmount = useMemo(() => {
+        numOfDishes ||= 1
+        if (!isFixedRatio) return (ingredient.amount * numOfDishes) % 1 === 0 ? (ingredient.amount * numOfDishes) : (ingredient.amount * numOfDishes).toFixed(2)
+        // linear ratio
         const res = amountToScaleFixed / ingToScale.amount * ingredient.amount
+
+        // amount To Scale Ratio
+        // const res = ingToScale.amount * amountToScale
         return res % 1 === 0 ? res : res.toFixed(2)
     }, [numOfDishes, amountToScaleFixed])
+    */
+
+    /*ORIGINAL END*/
 
 
     const ingToScaleClass = ingredient.id === ingToScale?.id ? 'chosen' : ''
-    /*TEST START*/
-    let amountToScale = (ingToScale) ? getAmountToScale(ingredient, ingToScale) : ''
 
-    /*TEST END*/
 
     /*ORIGINAL START*/
     // const amountToScale = (ingToScale && ingredient.units !== 'units') ? getAmountToScale(ingredient, ingToScale) : '-'
     /*ORIGINAL END*/
-    var unitsLength = ingredient.units.length + 3
+    var unitsLength = ingredient.units.length + 4
 
     const isAmountEditable = !isFixedRatio || ingredient.id === ingToScale.id
     const notAllowedClass = isFixedRatio ? 'not-allowed' : ''
+
 
     return (
 
@@ -125,8 +164,8 @@ export function IngPreview({
             </section>
             <section className="amount-unit">
                 <span tabIndex="0" onKeyPress={handleKeyPress} onFocus={selectText} inputMode="numeric" data-name="amount" onBlur={onHandleIngChange('amount')} className={`editable ${!isAmountEditable && 'not-allowed'}`} contentEditable={isAmountEditable} suppressContentEditableWarning={true}>{dishesAmount}</span>
-                <select disabled={isFixedRatio} className={notAllowedClass} tabIndex="0" style={{ width: `${unitsLength}ch` }} onChange={onHandleIngChange()} value={ingredient.units} name="units" id="units">
-                {/* <select disabled={isFixedRatio} className={notAllowedClass} tabIndex="0"  onChange={onHandleIngChange()} value={ingredient.units} name="units" id="units"> */}
+                <select disabled={isFixedRatio} className={notAllowedClass} tabIndex="0" style={{ width: `${unitsLength}ch` }} onChange={onHandleIngChange()} value={getUnitsValue()} name="units" id="units">
+                    {/* <select disabled={isFixedRatio} className={notAllowedClass} tabIndex="0"  onChange={onHandleIngChange()} value={ingredient.units} name="units" id="units"> */}
                     <option value="g">g</option>
                     <option value="Kg">Kg</option>
                     <option value="mL">mL</option>
