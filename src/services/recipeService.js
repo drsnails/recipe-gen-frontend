@@ -117,9 +117,10 @@ function getRecipeTxt(recipe) {
     for (const ingredient of recipe.ingredients) {
 
         const relativeAmount = relativeIng && getAmountToScale(ingredient, relativeIng)
-        recipeTxt += capitalize(ingredient.name) + '\t\t '
-        recipeTxt += ingredient.amount + ' ' + getFormattedIngUnit(ingredient.units) + '\t\t '
-        recipeTxt += relativeAmount || ''
+        recipeTxt += '* '
+        recipeTxt += capitalize(ingredient.name) + '\t|\t'
+        recipeTxt += ingredient.amount + ' ' + getFormattedIngUnit(ingredient.units) + '\t'
+        recipeTxt += relativeAmount ? '|\t' + relativeAmount : ''
         recipeTxt += '\n\n'
     }
     recipeTxt += '\n\n'
