@@ -32,7 +32,8 @@ export function IngPreview({
     }
 
 
-    const onRemoveIngredient = async () => {
+    const onRemoveIngredient = async (ev) => {
+        ev.stopPropagation()
         if (isFixedRatio) return
         if (ingredientsLength === 1) {
             showErrorMsg({ txt: 'Sorry, for now you need to have at least 1 ingredient' })
@@ -177,10 +178,10 @@ export function IngPreview({
 
 
             <section onClick={onStopPropAndBlur} className="editable ing-name" >
-                <span tabIndex="0" className={notAllowedClass} onKeyPress={handleKeyPress} onFocus={selectText} title={ingredient.name} data-name="name" onBlur={onHandleIngChange()} contentEditable={!isFixedRatio} suppressContentEditableWarning={true}>{ingredient.name}</span>
+                <span onClick={ev=>ev.stopPropagation()} tabIndex="0" className={notAllowedClass} onKeyPress={handleKeyPress} onFocus={selectText} title={ingredient.name} data-name="name" onBlur={onHandleIngChange()} contentEditable={!isFixedRatio} suppressContentEditableWarning={true}>{ingredient.name}</span>
             </section>
             <section onClick={onStopPropAndBlur} className="amount-unit">
-                <span tabIndex="0" onKeyPress={handleKeyPress} onFocus={selectText} inputMode="numeric" data-name="amount" onBlur={onHandleIngChange('amount')} className={`editable ${!isAmountEditable && 'not-allowed'}`} contentEditable={isAmountEditable} suppressContentEditableWarning={true}>{dishesAmount}</span>
+                <span onClick={ev=>ev.stopPropagation()} tabIndex="0" onKeyPress={handleKeyPress} onFocus={selectText} inputMode="numeric" data-name="amount" onBlur={onHandleIngChange('amount')} className={`editable ${!isAmountEditable && 'not-allowed'}`} contentEditable={isAmountEditable} suppressContentEditableWarning={true}>{dishesAmount}</span>
                 <select onClick={ev => ev.stopPropagation()} disabled={isFixedRatio} className={notAllowedClass} tabIndex="0" style={{ width: `${unitsLength}ch` }} onChange={onHandleIngChange()} value={getUnitsValue()} name="units" id="units">
                     {/* <select disabled={isFixedRatio} className={notAllowedClass} tabIndex="0"  onChange={onHandleIngChange()} value={ingredient.units} name="units" id="units"> */}
                     <option value="g">g</option>
