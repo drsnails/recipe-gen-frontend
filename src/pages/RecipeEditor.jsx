@@ -268,7 +268,6 @@ export default function RecipeEditor() {
     const floatBtnClass = isEdited ? 'animate-in' : 'animate-out'
     const recipeTxt = recipeService.getRecipeTxt(recipe)
     if (!amountToScaleFixed) return <Loader _isLoading={true} />
-    console.log('isFixedRatio:', isFixedRatio);
 
     return (
         <div className='recipe-editor'>

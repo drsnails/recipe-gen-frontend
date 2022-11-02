@@ -14,11 +14,9 @@ export function login(creds) {
 }
 
 export function signin(creds) {
-  console.log('signin -> creds', creds)
   return async (dispatch) => {
     try {
       const user = await userService.signin(creds)
-      console.log('return -> user', user)
       return dispatch({ type: 'SET_USER', user })
     } catch (err) {
       console.log('err:', err);

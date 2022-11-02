@@ -106,7 +106,6 @@ export default function Home() {
     }
 
     const onChangeFilterBy = (filterBy) => {
-        console.log('onChangeFilterBy -> filterBy', filterBy)
         setFilterBy(filterBy)
 
     }

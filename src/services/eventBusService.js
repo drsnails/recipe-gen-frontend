@@ -23,7 +23,6 @@ export function showSuccessMsg(toastMessage) {
   showToastMessage({ ...toastMessage, type: 'success' });
 }
 export function showErrorMsg(toastMessage) {
-  console.log('hey');
   showToastMessage({ ...toastMessage, type: 'error' });
 }
 

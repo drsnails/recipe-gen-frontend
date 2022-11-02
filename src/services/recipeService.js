@@ -118,7 +118,7 @@ function getRecipeTxt(recipe) {
 
         const relativeAmount = relativeIng && getAmountToScale(ingredient, relativeIng)
         recipeTxt += capitalize(ingredient.name) + '\t\t '
-        recipeTxt += ingredient.amount + ' ' + ingredient.units + '\t\t '
+        recipeTxt += ingredient.amount + ' ' + getFormattedIngUnit(ingredient.units) + '\t\t '
         recipeTxt += relativeAmount || ''
         recipeTxt += '\n\n'
     }
@@ -131,4 +131,17 @@ function getRecipeTxt(recipe) {
 
 }
 
+function getFormattedIngUnit(str) {
+    if (str.length <= 2) return str
+    return capitalizeSentence(separateKebabCase(str))
+}
+
+const separateKebabCase = str => {
+
+    return str && str
+        .match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
+        .map(x => x.toLowerCase())
+        .join(' ');
+
+}
 

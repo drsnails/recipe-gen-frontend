@@ -27,7 +27,6 @@ export function IngPreview({
     const [className, setClassName] = useState('');
 
     const moreRef = (el) => {
-        console.log('moreREf el:', el);
 
     }
 
@@ -122,7 +121,6 @@ export function IngPreview({
     const dishesAmount = useMemo(() => {
         numOfDishes ||= 1
         if (!isFixedRatio) return (ingredient.amount * numOfDishes) % 1 === 0 ? (ingredient.amount * numOfDishes) : (ingredient.amount * numOfDishes).toFixed(2)
-        console.log('ingredient', ingredient);
         if (ingredient.units === 'units') return ingredient.amount
 
         // linear ratio
