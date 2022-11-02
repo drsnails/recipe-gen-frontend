@@ -33,6 +33,7 @@ export default function RecipeEditor() {
     const [isFixedRatio, setIsFixedRatio] = useState(false)
     const [isWeightRatio, setIsWeightRatio] = useState(false)
     const [amountToScaleFixed, setAmountToScaleFixed] = useState()
+
     // const [fixedRatioIngredients, setFixedRatioIngredients] = useState(second)
 
     const dispatch = useDispatch()
@@ -271,7 +272,7 @@ export default function RecipeEditor() {
 
     return (
         <div className='recipe-editor'>
-
+            <div className="focus-div"></div>
             <section className="title-container">
                 <h2 onFocus={selectText} onBlur={({ target }) => onChangeRecipeData('name', target.innerText)} contentEditable suppressContentEditableWarning={true} >{recipe.name}</h2>
                 <button className="btn copy" onClick={onCopyToClipBoard}>Copy To Clipboard</button>

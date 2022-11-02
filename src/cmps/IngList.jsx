@@ -22,9 +22,10 @@ export function IngList({
     isFixedRatio,
     isWeightRatio,
     handleRecipeAmounts,
-    amountToScaleFixed
+    amountToScaleFixed,
 }) {
 
+    const focusRef = useRef()
 
     const getItemStyle = (isDragging, draggableStyle) => ({
         // some basic styles to make the items look a bit nicer
@@ -76,7 +77,7 @@ export function IngList({
                             style={getListStyle(snapshot.isDraggingOver)}
                         >
 
-                            <section className='ing-list'>
+                            <section ref={focusRef} className='ing-list'>
                                 {ingredients.map((ingredient, idx) =>
                                     // <>
                                     <Draggable key={ingredient.id} draggableId={ingredient.id} index={idx}>
@@ -100,6 +101,7 @@ export function IngList({
                                                     ingredientsLength={ingredients.length}
                                                     handleRecipeAmounts={handleRecipeAmounts}
                                                     amountToScaleFixed={amountToScaleFixed}
+                                                    focusRef={focusRef}
                                                 />
                                             )
                                         }}

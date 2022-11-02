@@ -45,10 +45,14 @@ export const reOrderList = (list, destIdx, sourceIdx) => {
 
 
 
-export const selectText = ({ target }) => {
+export const selectText = (ev, isUnSelect) => {
+    const { target } = ev
     window.setTimeout(function () {
         var sel, range;
-        if (window.getSelection && document.createRange) {
+        if (isUnSelect) {
+            sel = window.getSelection();
+            sel.removeAllRanges();
+        } else if (window.getSelection && document.createRange) {
             range = document.createRange();
             range.selectNodeContents(target);
             sel = window.getSelection();
@@ -59,6 +63,7 @@ export const selectText = ({ target }) => {
             range.moveToElementText(target);
             range.select();
         }
+
     }, 1);
 };
 
