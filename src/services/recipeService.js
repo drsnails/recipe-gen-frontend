@@ -134,7 +134,7 @@ function getRecipeTxt(recipe) {
 
 function getFormattedIngUnit(str) {
     if (str.length <= 2) return str
-    return capitalizeSentence(separateKebabCase(str))
+    return capitalize(separateKebabCase(str))
 }
 
 const separateKebabCase = str => {
