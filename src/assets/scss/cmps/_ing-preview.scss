@@ -11,6 +11,9 @@
     margin-bottom: 10px;
 
     position: relative;
+
+    
+
     > *:not(.remove-icon, :last-child) {
         width: 10%;
         @include for-mobile-layout {

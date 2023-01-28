@@ -22,7 +22,7 @@ async function query(userId, filterBy) {
     try {
         return httpService.get(BASE_URL, { userId, filterBy })
     } catch (err) {
-        return
+        return 
     }
 }
 
@@ -120,7 +120,7 @@ function getRecipeTxt(recipe) {
         recipeTxt += '* '
         recipeTxt += capitalize(ingredient.name) + '\t|\t'
         recipeTxt += ingredient.amount + ' ' + getFormattedIngUnit(ingredient.units) + '\t'
-        recipeTxt += relativeAmount ? '|\t' + relativeAmount : ''
+        // recipeTxt += relativeAmount ? '|\t' + relativeAmount : ''
         recipeTxt += '\n\n'
     }
     recipeTxt += '\n\n'

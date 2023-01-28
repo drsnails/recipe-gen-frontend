@@ -30,12 +30,12 @@ export function IngList({
     const getItemStyle = (isDragging, draggableStyle) => ({
         // some basic styles to make the items look a bit nicer
 
-        userSelect: "none",
-        padding: grid * 2,
-        margin: `0 0 ${grid}px 0`,
+        // userSelect: "none",
+        // padding: grid * 2,
+        // margin: `0 0 ${grid}px 0`,
 
         // change background colour if dragging
-        background: isDragging ? "lightgreen" : "'grey'",
+        backgroundColor: isDragging ? "blue" : "red",
 
         ...draggableStyle
     });
@@ -45,13 +45,16 @@ export function IngList({
 
 
     const getListStyle = isDraggingOver => ({
+        // rotate: isDraggingOver ? '10deg' : '0'
         // background: isDraggingOver ? "lightblue" : "lightgrey",
         // padding: grid,
-        // width: 250
+
+        // width: 250,
     });
 
     const onDragStart = () => {
         setIsDrag(true)
+
 
     }
     const onDragEnd = (res) => {
@@ -74,14 +77,14 @@ export function IngList({
                         <div
                             {...provided.droppableProps}
                             ref={provided.innerRef}
-                            style={getListStyle(snapshot.isDraggingOver)}
+                        // style={getListStyle(snapshot.isDraggingOver)}
                         >
 
                             <section ref={focusRef} className='ing-list'>
                                 {ingredients.map((ingredient, idx) =>
                                     // <>
-                                    <Draggable key={ingredient.id} draggableId={ingredient.id} index={idx}>
-                                        {(provided) => {
+                                    <Draggable key={ingredient.id} draggableId={ingredient.id} index={idx} >
+                                        {(provided, snapshot) => {
                                             return (
                                                 <IngPreview
                                                     providedRef={provided.innerRef}
@@ -102,6 +105,8 @@ export function IngList({
                                                     handleRecipeAmounts={handleRecipeAmounts}
                                                     amountToScaleFixed={amountToScaleFixed}
                                                     focusRef={focusRef}
+                                                    isDraggingOver={snapshot.isDraggingOver}
+                                                    isDragStyle={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
                                                 />
                                             )
                                         }}

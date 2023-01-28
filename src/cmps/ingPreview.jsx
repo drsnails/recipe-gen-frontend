@@ -4,9 +4,10 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 import { getAmountToScale, selectText, sleep } from "../services/utilService";
 import { showErrorMsg } from "../services/eventBusService";
+import { useCallback } from "react";
 
 
-export function IngPreview({
+export const IngPreview = ({
     ingredient,
     ingToScale,
     isFixedRatio,
@@ -21,16 +22,17 @@ export function IngPreview({
     numOfDishes,
     handleRecipeAmounts,
     amountToScaleFixed,
-    focusRef
-}) {
+    isDraggingOver,
+    focusRef,
+    isDragStyle
+}) => {
 
     const [className, setClassName] = useState('');
 
     const moreRef = (el) => {
 
     }
-
-
+    const num = 5
     const onRemoveIngredient = async (ev) => {
         ev.stopPropagation()
         if (isFixedRatio) return
@@ -114,6 +116,28 @@ export function IngPreview({
 
 
 
+
+
+
+
+    const getOnDoubleTouch = useCallback((cb) => {
+        let gTimeoutId = null
+        return () => {
+            if (!gTimeoutId) {
+                gTimeoutId = setTimeout(() => {
+                    gTimeoutId = null
+                }, 350);
+            } else {
+                clearTimeout(gTimeoutId)
+                gTimeoutId = null
+                cb?.()
+            }
+        }
+    }, [])
+
+
+
+
     let amountToScale = (ingToScale) ? getAmountToScale(ingredient, ingToScale) : ''
 
     /*TEST START*/
@@ -154,7 +178,17 @@ export function IngPreview({
     */
 
     /*ORIGINAL END*/
+    const getIngStyle = () => {
 
+        console.log('isDraggingOver:', isDraggingOver)
+        return {
+            // rotate: isDraggingOver ? '40deg' : '0'
+            // background: isDraggingOver ? "lightblue" : "lightgrey",
+            // padding: grid,
+
+            // width: 250,
+        }
+    };
 
     const ingToScaleClass = ingredient.id === ingToScale?.id ? 'chosen' : ''
 
@@ -166,20 +200,20 @@ export function IngPreview({
 
     const isAmountEditable = !isFixedRatio || ingredient.id === ingToScale.id
     const notAllowedClass = isFixedRatio ? 'not-allowed' : ''
-
+    // console.log(ingredient.name)
 
     return (
 
 
-        <article onClick={onUnSelectText} ref={providedRef} {...dragProp} {...dragHandleProp} className={`ing-preview ${className}`}>
+        <article onTouchEnd={getOnDoubleTouch(() => console.log('db Tab!'))} onClick={onUnSelectText}  ref={providedRef} {...dragProp} {...dragHandleProp} className={`ing-preview ${className}`} >
             <span tabIndex="-1" className={`remove-icon ${notAllowedClass}`} ><FontAwesomeIcon onClick={onRemoveIngredient} icon={faTrash} /></span>
 
 
             <section onClick={onStopPropAndBlur} className="editable ing-name" >
-                <span onClick={ev=>ev.stopPropagation()} tabIndex="0" className={notAllowedClass} onKeyPress={handleKeyPress} onFocus={selectText} title={ingredient.name} data-name="name" onBlur={onHandleIngChange()} contentEditable={!isFixedRatio} suppressContentEditableWarning={true}>{ingredient.name}</span>
+                <span onClick={ev => ev.stopPropagation()} tabIndex="0" className={notAllowedClass} onKeyPress={handleKeyPress} onFocus={selectText} title={ingredient.name} data-name="name" onBlur={onHandleIngChange()} contentEditable={!isFixedRatio} suppressContentEditableWarning={true}>{ingredient.name}</span>
             </section>
             <section onClick={onStopPropAndBlur} className="amount-unit">
-                <span onClick={ev=>ev.stopPropagation()} tabIndex="0" onKeyPress={handleKeyPress} onFocus={selectText} inputMode="numeric" data-name="amount" onBlur={onHandleIngChange('amount')} className={`editable ${!isAmountEditable && 'not-allowed'}`} contentEditable={isAmountEditable} suppressContentEditableWarning={true}>{dishesAmount}</span>
+                <span onClick={ev => ev.stopPropagation()} tabIndex="0" onKeyPress={handleKeyPress} onFocus={selectText} inputMode="numeric" data-name="amount" onBlur={onHandleIngChange('amount')} className={`editable ${!isAmountEditable && 'not-allowed'}`} contentEditable={isAmountEditable} suppressContentEditableWarning={true}>{dishesAmount}</span>
                 <select onClick={ev => ev.stopPropagation()} disabled={isFixedRatio} className={notAllowedClass} tabIndex="0" style={{ width: `${unitsLength}ch` }} onChange={onHandleIngChange()} value={getUnitsValue()} name="units" id="units">
                     {/* <select disabled={isFixedRatio} className={notAllowedClass} tabIndex="0"  onChange={onHandleIngChange()} value={ingredient.units} name="units" id="units"> */}
                     <option value="g">g</option>

@@ -56,8 +56,10 @@ export default function RecipeEditor() {
     }, [recipe?.ingToScaleId])
 
     const loadRecipe = async () => {
+
         try {
             const recipe = params.id ? await recipeService.getById(params.id) : recipeService.getEmptyRecipe()
+            // console.log(recipe);
             setRecipe(recipe)
 
         } catch (err) {
@@ -128,6 +130,10 @@ export default function RecipeEditor() {
         setAmountToScaleFixed(amount)
 
     }
+
+    
+
+
 
     const handleIngChange = async (ev, ingredient) => {
         const { target } = ev
