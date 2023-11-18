@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
 
@@ -8,11 +8,9 @@ import { Loader } from "../cmps/Loader";
 import { RecipeImg } from "../cmps/RecipeImg";
 import { ShareButton } from "../cmps/ShareButton";
 import { useEffectUpdate } from "../hooks/useEffectUpdate";
-import { useForm } from "../hooks/useFormRegister";
 import { showErrorMsg, showSuccessMsg } from "../services/eventBusService";
-import { recipeService, testCall } from "../services/recipeService";
-import { userService } from "../services/userService";
-import { copyToClipboard, reOrderList, selectText, sleep } from "../services/utilService";
+import { recipeService } from "../services/recipeService";
+import { copyToClipboard, reOrderList, selectText } from "../services/utilService";
 import { setLoading } from "../store/actions/loaderActions";
 import { IngList } from "../cmps/IngList";
 // const IngList = lazy(() => import('../cmps/IngList'))
@@ -85,7 +83,6 @@ export default function RecipeEditor() {
         if (isFixedRatio) return
         try {
             setRecipe(recipe)
-
             await recipeService.save(data, type)
             return 'res'
             // * if field is null thats means were removing an ingredient
@@ -131,7 +128,7 @@ export default function RecipeEditor() {
 
     }
 
-    
+
 
 
 
@@ -204,6 +201,7 @@ export default function RecipeEditor() {
 
 
     const addIngredient = async () => {
+        if (isFixedRatio) return
         const ingToAdd = recipeService.getEmptyIngredient()
         ingToAdd.isNew = true
         const recipeToSave = {
@@ -330,7 +328,12 @@ export default function RecipeEditor() {
 
 
             {/* {isMounted && <button onClick={()=>setIsEdited(false)} className={`edit-btn cancel-changes ${floatBtnClass}`}>Cancel</button>} */}
-            {isMounted && <button onClick={onSaveRecipe} className={`edit-btn save-changes ${floatBtnClass}`}>Save Changes</button>}
+            {isMounted &&
+                <section className={`edit-btn-container  ${floatBtnClass}`}>
+                    <button onClick={onSaveRecipe} className={`edit-btn save save-changes`}>Save Changes</button>
+                    <button className={`edit-btn cancel save-changes`}>Cancel</button>
+                </section>
+            }
 
         </div>
     );

@@ -80,42 +80,65 @@
         }
     }
 
-    .edit-btn {
-        display: none;
-        color: white;
-        font-size: 1.1em;
-        font-weight: 500;
-        border: none;
-        border-radius: 3px;
-        position: fixed;
+    .edit-btn-container {
+        // display: none;
         margin: auto;
         right: 0;
         bottom: 5%;
         left: 0;
-        width: 170px;
-        margin: auto;
-        padding: 0.7em 1.2em;
-        box-shadow: 2px 2px 3px #999;
-    }
+        position: fixed;
+        display: flex;
+        // width: 500px;
+        // height: 550px;
 
-    button.save-changes {
-        background-color: #0c9;
-    }
-
-    button.save-changes {
-        &.animate-in {
-            display: inline-block;
-            animation: fade-scale-up 0.3s cubic-bezier(0.29, 0.41, 0.15, 1.24) forwards;
-
-            // animation: fade-scale-up 0.3s ease forwards;
+        .edit-btn {
+            color: white;
+            font-size: 1.1em;
+            font-weight: 500;
+            border: none;
+            border-radius: 3px;
+            width: 170px;
+            // margin: auto;
+            padding: 0.7em 1.2em;
+            box-shadow: 2px 2px 3px #999;
         }
 
-        &.animate-out {
+        &.animate-in button.save-changes {
+            display: inline-block;
+            animation: fade-scale-up 0.3s cubic-bezier(0.29, 0.41, 0.15, 1.24) forwards;
+        }
+
+        &.animate-out button.save-changes {
             display: inline-block;
             animation: fade-scale-down 0.3s ease forwards;
         }
+
+        button.save {
+            background-color: #0c9;
+        }
+        button.cancel {
+            background-color: rgb(204, 75, 0);
+        }
     }
 
-    // button.save-changes
-    // button.save-changes
+    .not-allowed {
+        cursor: not-allowed !important;
+
+        &:not(.remove-icon, .scale-amount.chosen, .add-btn) {
+            color: #7b7b7b9e;
+        }
+
+        &.remove-icon {
+            color: #fa86867c;
+        }
+    }
+
+    [contentEditable],
+    input,
+    button,
+    select,
+    svg,
+    .scale-amount {
+        transition: color 0.2s;
+    }
 }

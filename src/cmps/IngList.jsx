@@ -1,11 +1,10 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import { getIdxEquality } from "../services/utilService";
 import { IngPreview } from "./ingPreview";
-import { useRef } from 'react';
 const grid = 8;
 
 export function IngList({
@@ -25,7 +24,7 @@ export function IngList({
     amountToScaleFixed,
 }) {
 
-    const focusRef = useRef()
+    
 
     const getItemStyle = (isDragging, draggableStyle) => ({
         // some basic styles to make the items look a bit nicer
@@ -66,7 +65,7 @@ export function IngList({
     //     onReOrderIngs(result)
     // }
 
-
+    const notAllowedClass = isFixedRatio ? 'not-allowed' : ''
 
     return (
         <>
@@ -80,7 +79,7 @@ export function IngList({
                         // style={getListStyle(snapshot.isDraggingOver)}
                         >
 
-                            <section ref={focusRef} className='ing-list'>
+                            <section className='ing-list'>
                                 {ingredients.map((ingredient, idx) =>
                                     // <>
                                     <Draggable key={ingredient.id} draggableId={ingredient.id} index={idx} >
@@ -104,7 +103,6 @@ export function IngList({
                                                     ingredientsLength={ingredients.length}
                                                     handleRecipeAmounts={handleRecipeAmounts}
                                                     amountToScaleFixed={amountToScaleFixed}
-                                                    focusRef={focusRef}
                                                     isDraggingOver={snapshot.isDraggingOver}
                                                     isDragStyle={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
                                                 />
@@ -113,9 +111,7 @@ export function IngList({
                                     </Draggable>
                                 )}
                                 {(provided.placeholder)}
-                                {<button className="add-btn" onClick={addIngredient} ><FontAwesomeIcon icon={faPlus} /></button>}
-                                {/* {(!snapshot.isDraggingOver||true) && <button style={{top: `${snapshot.isDraggingOver?}`}} onClick={addIngredient} className="add-btn"><FontAwesomeIcon icon={faPlus} /></button>} */}
-
+                                {<button disabled={isFixedRatio} className={`add-btn ${notAllowedClass}`} onClick={addIngredient} ><FontAwesomeIcon icon={faPlus} /></button>}
                             </section>
                         </div>
 

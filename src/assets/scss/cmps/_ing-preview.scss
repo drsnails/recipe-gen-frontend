@@ -9,10 +9,12 @@
     box-shadow: 0px 1px 7px #00000024;
     border-radius: 3px;
     margin-bottom: 10px;
-
     position: relative;
-
     
+
+    &:has(.chosen) {
+        box-shadow: 0 0 0 5px #4f98fe2b;
+    }
 
     > *:not(.remove-icon, :last-child) {
         width: 10%;
@@ -31,11 +33,13 @@
         outline: none;
 
         &:focus {
-            box-shadow: 0px 0px 4px 2px #4d97ffa8;
+            // box-shadow: 0px 0px 4px 2px #4d97ffa8;
+            box-shadow: inset 0px 0px 2px 1px #4d97ff6e;
         }
 
         &::selection {
-            background-color: #4d97ff2a;
+            // background-color: #4d97ff08;
+            background-color: #fa86862b;
             font-weight: 900;
             padding: 3px;
         }

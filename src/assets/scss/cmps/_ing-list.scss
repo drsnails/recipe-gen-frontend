@@ -20,20 +20,14 @@
             font-size: 1.2em;
         }
 
-        
+        &.not-allowed {
+            background-color: #1c7afd91;
+            color: white;
+        }
     }
 }
 
 .gap {
     // height: 133px;
     // background-color: red;
-}
-
-
-.not-allowed {
-    cursor: not-allowed !important;
-    
-    &:not(.remove-icon) {
-        color: #7b7b7b;
-    }
 }
