@@ -1,10 +1,11 @@
-import { forwardRef, useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 import { getAmountToScale, selectText, sleep } from "../services/utilService";
 import { showErrorMsg } from "../services/eventBusService";
 import { useCallback } from "react";
+import { useEffectUpdate } from "../hooks/useEffectUpdate";
 
 
 export const IngPreview = ({
@@ -23,13 +24,12 @@ export const IngPreview = ({
     handleRecipeAmounts,
     amountToScaleFixed,
     isDraggingOver,
+    isEdited
 }) => {
 
     const [className, setClassName] = useState('');
-
-    const moreRef = (el) => {
-
-    }
+    const isChosenIng = ingredient.id === ingToScale?.id
+    const elIngAmountRef = useRef()
     const num = 5
     const onRemoveIngredient = async (ev) => {
         ev.stopPropagation()
@@ -44,20 +44,12 @@ export const IngPreview = ({
         removeIngredient(ingredient.id)
     }
 
-    // const mergeRefs = (...refs) => {
-    //     const filteredRefs = refs.filter(Boolean);
-    //     if (!filteredRefs.length) return null;
-    //     if (filteredRefs.length === 0) return filteredRefs[0];
-    //     return inst => {
-    //         for (const ref of filteredRefs) {
-    //             if (typeof ref === 'function') {
-    //                 ref(inst);
-    //             } else if (ref) {
-    //                 ref.current = inst;
-    //             }
-    //         }
-    //     };
-    // };
+    useEffectUpdate(() => {
+        if (isChosenIng) {
+            elIngAmountRef.current.focus()
+        }
+    }, [isFixedRatio, ingToScale])
+
 
 
     const onHandleIngChange = (type) => {
@@ -138,42 +130,21 @@ export const IngPreview = ({
 
     let amountToScale = (ingToScale) ? getAmountToScale(ingredient, ingToScale) : ''
 
-    /*TEST START*/
 
     const dishesAmount = useMemo(() => {
         numOfDishes ||= 1
         if (!isFixedRatio) return (ingredient.amount * numOfDishes) % 1 === 0 ? (ingredient.amount * numOfDishes) : (ingredient.amount * numOfDishes).toFixed(2)
         if (ingredient.units === 'units') return ingredient.amount
-
         // linear ratio
         // const res = amountToScaleFixed / ingToScale.amount * ingredient.amount
-
         // weight ratio
         const res = (isWeightRatio ? amountToScaleFixed * amountToScale : amountToScaleFixed / ingToScale.amount * ingredient.amount) * numOfDishes
 
         // amount To Scale Ratio
         // const res = ingToScale.amount * amountToScale
         return res % 1 === 0 ? res : res.toFixed(2)
-    }, [numOfDishes, amountToScaleFixed, amountToScale, isFixedRatio, isWeightRatio])
+    }, [numOfDishes, amountToScaleFixed, amountToScale, isFixedRatio, isWeightRatio, ingToScale, isEdited])
 
-    /*TEST END*/
-
-
-
-    /*ORIGINAL START*/
-
-    /*
-    const dishesAmount = useMemo(() => {
-        numOfDishes ||= 1
-        if (!isFixedRatio) return (ingredient.amount * numOfDishes) % 1 === 0 ? (ingredient.amount * numOfDishes) : (ingredient.amount * numOfDishes).toFixed(2)
-        // linear ratio
-        const res = amountToScaleFixed / ingToScale.amount * ingredient.amount
-
-        // amount To Scale Ratio
-        // const res = ingToScale.amount * amountToScale
-        return res % 1 === 0 ? res : res.toFixed(2)
-    }, [numOfDishes, amountToScaleFixed])
-    */
 
     /*ORIGINAL END*/
     const getIngStyle = () => {
@@ -188,8 +159,7 @@ export const IngPreview = ({
         }
     };
 
-    const ingToScaleClass = ingredient.id === ingToScale?.id ? 'chosen' : ''
-
+    const ingToScaleClass = isChosenIng ? 'chosen' : ''
 
     /*ORIGINAL START*/
     // const amountToScale = (ingToScale && ingredient.units !== 'units') ? getAmountToScale(ingredient, ingToScale) : '-'
@@ -211,7 +181,7 @@ export const IngPreview = ({
                 <span onClick={ev => ev.stopPropagation()} tabIndex="0" className={notAllowedClass} onKeyPress={handleKeyPress} onFocus={selectText} title={ingredient.name} data-name="name" onBlur={onHandleIngChange()} contentEditable={!isFixedRatio} suppressContentEditableWarning={true}>{ingredient.name}</span>
             </section>
             <section autoFocus={true} onClick={onStopPropAndBlur} className="amount-unit">
-                <span onClick={ev => ev.stopPropagation()} tabIndex="0" onKeyPress={handleKeyPress} onFocus={selectText} inputMode="numeric" data-name="amount" onBlur={onHandleIngChange('amount')} className={`editable ${!isAmountEditable && 'not-allowed'}`} contentEditable={isAmountEditable} suppressContentEditableWarning={true}>{dishesAmount}</span>
+                <span ref={elIngAmountRef} onClick={ev => ev.stopPropagation()} tabIndex="0" onKeyPress={handleKeyPress} onFocus={selectText} inputMode="numeric" data-name="amount" onBlur={onHandleIngChange('amount')} className={`editable ${!isAmountEditable && 'not-allowed'}`} contentEditable={isAmountEditable} suppressContentEditableWarning={true}>{dishesAmount}</span>
                 <select onClick={ev => ev.stopPropagation()} disabled={isFixedRatio} className={notAllowedClass} tabIndex="0" style={{ width: `${unitsLength}ch` }} onChange={onHandleIngChange()} value={getUnitsValue()} name="units" id="units">
                     {/* <select disabled={isFixedRatio} className={notAllowedClass} tabIndex="0"  onChange={onHandleIngChange()} value={ingredient.units} name="units" id="units"> */}
                     <option value="g">g</option>

@@ -22,6 +22,7 @@ export function IngList({
     isWeightRatio,
     handleRecipeAmounts,
     amountToScaleFixed,
+    isEdited
 }) {
 
     
@@ -105,6 +106,7 @@ export function IngList({
                                                     amountToScaleFixed={amountToScaleFixed}
                                                     isDraggingOver={snapshot.isDraggingOver}
                                                     isDragStyle={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
+                                                    isEdited={isEdited}
                                                 />
                                             )
                                         }}

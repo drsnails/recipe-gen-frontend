@@ -8,6 +8,6 @@ export const useEffectUpdate = (cb, dependencies) => {
             isFirstTime.current = false
             return
         }
-        cb()
+        return cb()
     }, dependencies)
 }

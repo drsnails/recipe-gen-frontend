@@ -182,9 +182,8 @@ export default function RecipeEditor() {
     const onCancelEdit = () => {
         setIsEdited(false)
         loadRecipe()
-        showErrorMsg({ txt: 'Changes canceled', time: 2000 })
+        showErrorMsg({ txt: 'Canceled changes', time: 2000 })
     }
-
 
 
     const triggerSaveBtn = (recipeToSave) => {
@@ -322,6 +321,7 @@ export default function RecipeEditor() {
                 isWeightRatio={isWeightRatio}
                 handleRecipeAmounts={handleRecipeAmounts}
                 amountToScaleFixed={amountToScaleFixed}
+                isEdited={isEdited}
             />
 
 
