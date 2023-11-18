@@ -48,7 +48,7 @@ export const IngPreview = ({
         if (isChosenIng) {
             elIngAmountRef.current.focus()
         }
-    }, [isFixedRatio, ingToScale])
+    }, [isFixedRatio])
 
 
 
