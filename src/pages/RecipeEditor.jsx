@@ -179,6 +179,12 @@ export default function RecipeEditor() {
         }
     }
 
+    const onCancelEdit = () => {
+        setIsEdited(false)
+        loadRecipe()
+        showErrorMsg({ txt: 'Changes canceled', time: 2000 })
+    }
+
 
 
     const triggerSaveBtn = (recipeToSave) => {
@@ -331,7 +337,7 @@ export default function RecipeEditor() {
             {isMounted &&
                 <section className={`edit-btn-container  ${floatBtnClass}`}>
                     <button onClick={onSaveRecipe} className={`edit-btn save save-changes`}>Save Changes</button>
-                    <button className={`edit-btn cancel save-changes`}>Cancel</button>
+                    <button onClick={onCancelEdit} className={`edit-btn cancel save-changes`}>Cancel</button>
                 </section>
             }
 

@@ -2,11 +2,13 @@
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     grid-auto-rows: minmax(200px, auto);
     // justify-items: center;
-    @include for-custom-layout {
-        padding-inline: 30px;
-    }
+    grid-gap: 30px;
 
-    
+    @include for-custom-layout {
+        grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+        grid-auto-rows: minmax(180px, auto);
+        grid-gap: 15px;
+    }
 
     .nice-btn {
     }

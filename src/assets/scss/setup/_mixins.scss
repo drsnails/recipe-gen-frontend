@@ -19,7 +19,7 @@
 
 /* Desktop First */
 @mixin for-custom-layout {
-    @media (max-width: 389px) {
+    @media (max-width: 379px) {
         @content;
     }
 }
