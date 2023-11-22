@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 // import { useTransition } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,8 +19,9 @@ import { goToTop } from '../services/utilService';
 export default function Home() {
 
     const dispatch = useDispatch()
+    const startIdxRef = useRef(0)
     const [recipes, setRecipes] = useState(null);
-    const [filterBy, setFilterBy] = useState({ term: '', sortBy: '', sortDir: 1 })
+    const [filterBy, setFilterBy] = useState({ term: '', sortBy: '', sortDir: 1, startIdx: startIdxRef.current })
     // const [isPending, startTransition] = useTransition()
 
     let { loggedInUser } = useSelector(state => state.userModule)
