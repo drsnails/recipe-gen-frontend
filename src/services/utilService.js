@@ -68,6 +68,11 @@ export const selectText = (ev, isUnSelect) => {
 };
 
 
+export function clearSelection() {
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+}
+
 export const refreshTokenSetup = (res) => {
     // Timing to renew access token
     let refreshTiming = (res.tokenObj.expires_in || 3600 - 5 * 60) * 1000;

@@ -2,7 +2,7 @@ import { useMemo, useRef, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
-import { getAmountToScale, selectText, sleep } from "../services/utilService";
+import { clearSelection, getAmountToScale, selectText, sleep } from "../services/utilService";
 import { showErrorMsg } from "../services/eventBusService";
 import { useCallback } from "react";
 import { useEffectUpdate } from "../hooks/useEffectUpdate";
@@ -38,17 +38,25 @@ export const IngPreview = ({
             showErrorMsg({ txt: 'Sorry, for now you need to have at least 1 ingredient' })
             return
         }
-
         setClassName('equal')
         await sleep(350)
         removeIngredient(ingredient.id)
     }
 
     useEffectUpdate(() => {
-        if (isChosenIng) {
+        if (!isChosenIng) return
+        if (isFixedRatio) {
             elIngAmountRef.current.focus()
+        } else {
+            clearSelection()
         }
     }, [isFixedRatio])
+
+
+    useEffectUpdate(() => {
+        if (!isChosenIng) return
+        clearSelection()
+    }, [isWeightRatio])
 
 
 
@@ -183,7 +191,6 @@ export const IngPreview = ({
             <section autoFocus={true} onClick={onStopPropAndBlur} className="amount-unit">
                 <span ref={elIngAmountRef} onClick={ev => ev.stopPropagation()} tabIndex="0" onKeyPress={handleKeyPress} onFocus={selectText} inputMode="numeric" data-name="amount" onBlur={onHandleIngChange('amount')} className={`editable ${!isAmountEditable && 'not-allowed'}`} contentEditable={isAmountEditable} suppressContentEditableWarning={true}>{dishesAmount}</span>
                 <select onClick={ev => ev.stopPropagation()} disabled={isFixedRatio} className={notAllowedClass} tabIndex="0" style={{ width: `${unitsLength}ch` }} onChange={onHandleIngChange()} value={getUnitsValue()} name="units" id="units">
-                    {/* <select disabled={isFixedRatio} className={notAllowedClass} tabIndex="0"  onChange={onHandleIngChange()} value={ingredient.units} name="units" id="units"> */}
                     <option value="g">g</option>
                     <option value="Kg">Kg</option>
                     <option value="mL">mL</option>

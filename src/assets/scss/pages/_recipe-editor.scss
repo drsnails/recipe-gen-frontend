@@ -142,6 +142,7 @@
     select,
     svg,
     .scale-amount {
-        transition: color 0.2s;
+        transition-property: color, background-color;
+        transition-duration: 0.2s;
     }
 }

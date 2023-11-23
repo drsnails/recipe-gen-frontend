@@ -1,7 +1,6 @@
 .ing-preview {
     display: flex;
     align-items: center;
-
     font-size: 1.5em;
     width: 100%;
     line-height: 1.3em;
@@ -10,7 +9,6 @@
     border-radius: 3px;
     margin-bottom: 10px;
     position: relative;
-    
 
     &:has(.chosen) {
         box-shadow: 0 0 0 5px #4f98fe2b;
@@ -66,6 +64,10 @@
         margin-left: 6px;
         overflow-x: clip;
         // text-overflow: ellipsis;
+        @include for-custom-layout {
+            gap: 0;
+            flex-grow: 3.5;
+        }
 
         span {
             margin-left: 5%;
