@@ -62,7 +62,7 @@ export default function RecipeEditor() {
 
         } catch (err) {
             console.log('failing');
-            setErrMsg("Sorry,  can't find this recipe at the moment")
+            setErrMsg("Sorry,  can't find this recipe at this moment")
         } finally {
 
         }
@@ -127,9 +127,6 @@ export default function RecipeEditor() {
         setAmountToScaleFixed(amount)
 
     }
-
-
-
 
 
     const handleIngChange = async (ev, ingredient) => {
