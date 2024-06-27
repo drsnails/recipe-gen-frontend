@@ -116,11 +116,18 @@
             animation: fade-scale-down 0.3s ease forwards;
         }
 
+        button.save,button.cancel {
+            background-color: #111111;
+        }
+
         button.save {
-            background-color: #0c9;
+            background-color: #315993;
+            // outline: 5px solid #315993;
         }
         button.cancel {
-            background-color: #fa6363;
+            background-color: #b11a1a;
+            // outline: 5px solid #b11a1a;
+
         }
     }
 
